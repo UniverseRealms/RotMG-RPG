@@ -226,10 +226,6 @@ namespace wServer.realm.entities
                 if ((i.Value == this || (i.Value.Client.Account != null && i.Value.Client.Player.CanBeSeenBy(this))) && _clientEntities.Add(i.Value))
                     yield return i.Value;
 
-            foreach (var i in Owner.PlayersCollision.HitTest(X, Y, Radius))
-                if ((i is Decoy || i is Pet) && _clientEntities.Add(i))
-                    yield return i;
-
             var p = new IntPoint(0, 0);
             foreach (var i in Owner.EnemiesCollision.HitTest(X, Y, Radius))
             {

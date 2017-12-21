@@ -42,7 +42,6 @@ namespace wServer.realm.worlds
         public const int Arena = -9;
         public const int ClothBazaar = -10;
         public const int FreeItems = -11;
-        public const int PetYard = -12;
         public const int ArenaSolo = -13;
         public const int DeathArena = -14;
         public const int MarketPlace = -15;
@@ -86,8 +85,7 @@ namespace wServer.realm.worlds
 
         public ConcurrentDictionary<int, Player> Players { get; private set; }
         public ConcurrentDictionary<int, Enemy> Enemies { get; private set; }
-        public ConcurrentDictionary<int, Enemy> Quests { get; private set; }
-        public ConcurrentDictionary<int, Pet> Pets { get; private set; } 
+        public ConcurrentDictionary<int, Enemy> Quests { get; private set; } 
         public ConcurrentDictionary<Tuple<int, byte>, Projectile> Projectiles { get; private set; }
         public ConcurrentDictionary<int, StaticObject> StaticObjects { get; private set; }
         
@@ -127,7 +125,6 @@ namespace wServer.realm.worlds
             Players = new ConcurrentDictionary<int, Player>();
             Enemies = new ConcurrentDictionary<int, Enemy>();
             Quests = new ConcurrentDictionary<int, Enemy>();
-            Pets = new ConcurrentDictionary<int, Pet>();
             Projectiles = new ConcurrentDictionary<Tuple<int, byte>, Projectile>();
             StaticObjects = new ConcurrentDictionary<int, StaticObject>();
             Timers = new List<WorldTimer>();
@@ -269,13 +266,11 @@ namespace wServer.realm.worlds
                 DisposeEntities(Enemies);
                 DisposeEntities(Projectiles);
                 DisposeEntities(StaticObjects);
-                DisposeEntities(Pets);
 
                 Players = null;
                 Enemies = null;
                 Projectiles = null;
                 StaticObjects = null;
-                Pets = null;
                 
                 return true;
             }
@@ -380,13 +375,6 @@ namespace wServer.realm.worlds
                 else
                     EnemiesCollision.Insert(entity);
             }
-            else if (entity is Pet)
-            {
-                entity.Id = GetNextEntityId();
-                entity.Init(this);
-                Pets.TryAdd(entity.Id, entity as Pet);
-                PlayersCollision.Insert(entity);
-            }
             return entity.Id;
         }
 
@@ -401,9 +389,6 @@ namespace wServer.realm.worlds
                 // if in trade, cancel it...
                 if (dummy.tradeTarget != null)
                     dummy.CancelTrade();
-
-                if (dummy.Pet != null)
-                    LeaveWorld(dummy.Pet);
             }
             else if (entity is Enemy)
             {
@@ -437,12 +422,6 @@ namespace wServer.realm.worlds
                     PlayersCollision.Remove(entity);
                 else
                     EnemiesCollision.Remove(entity);
-            }
-            else if (entity is Pet)
-            {
-                Pet dummy;
-                Pets.TryRemove(entity.Id, out dummy);
-                PlayersCollision.Remove(entity);
             }
                 
             entity.Dispose();
@@ -713,9 +692,6 @@ namespace wServer.realm.worlds
                     foreach (var i in StaticObjects)
                         i.Value.Tick(time);
                 }
-
-                foreach (var i in Pets)
-                    i.Value.Tick(time);
             }
         }
         

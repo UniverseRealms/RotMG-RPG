@@ -23,7 +23,6 @@ namespace common.resources
         public int[] PotionPurchaseCosts { get; private set; }
         public bool DisableRegistration { get; private set; }
         public int MysteryBoxRefresh { get; private set; }
-        public int MaxPetCount { get; private set; }
         public NewAccounts Accounts { get; private set; }
         public NewCharacters Characters { get; private set; }
 
@@ -44,7 +43,6 @@ namespace common.resources
             PotionPurchaseCostCooldown = GetIntValue("PotionPurchaseCostCooldown");
             DisableRegistration = GetBoolValue("DisableRegist");
             MysteryBoxRefresh = GetIntValue("MysteryBoxRefresh");
-            MaxPetCount = GetIntValue("MaxPetCount");
             Accounts = new NewAccounts(elem.Element("NewAccounts"));
             Characters = new NewCharacters(elem.Element("NewCharacters"));
 
@@ -72,7 +70,6 @@ namespace common.resources
         public int Fame { get; private set; }
         public bool ClassesUnlocked { get; private set; }
         public bool SkinsUnlocked { get; private set; }
-        public int PetYardType { get; private set; }
         public int VaultCount { get; private set; }
         public int MaxCharSlot { get; private set; }
 
@@ -84,7 +81,6 @@ namespace common.resources
             Fame = GetIntValue("Fame");
             ClassesUnlocked = GetBoolValue("ClassesUnlocked");
             SkinsUnlocked = GetBoolValue("SkinsUnlocked");
-            PetYardType = GetIntValue("PetYardType");
             VaultCount = GetIntValue("VaultCount");
             MaxCharSlot = GetIntValue("MaxCharSlot");
         }

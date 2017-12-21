@@ -149,7 +149,7 @@ namespace wServer.realm
                 return;
             }
 
-            if (_desc.Character || _desc.IsPet)
+            if (_desc.Character)
             {
                 _effects = new int[EffectCount];
                 return;
@@ -562,7 +562,7 @@ namespace wServer.realm
 
         public void MoveEntity(float x, float y)
         {
-            if (Owner != null && !(this is Projectile) && !(this is Pet) && (!(this is StaticObject) || (this as StaticObject).Hittestable))
+            if (Owner != null && !(this is Projectile) && (!(this is StaticObject) || (this as StaticObject).Hittestable))
                 ((this is Enemy || this is StaticObject && !(this is Decoy)) ? Owner.EnemiesCollision : Owner.PlayersCollision)
                     .Move(this, x, y);
             X = x; Y = y;
@@ -639,8 +639,6 @@ namespace wServer.realm
                 case "MarketNPC":
                 case "QuestRewards":
                     return new StaticObject(manager, id, null, true, false, false);
-                case "Pet":
-                    return new Pet(manager, id);
                 default:
                     Log.WarnFormat("Not supported type: {0}", type);
                     return new Entity(manager, id);

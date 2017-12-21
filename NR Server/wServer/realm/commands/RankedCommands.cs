@@ -1818,27 +1818,6 @@ namespace wServer.realm.commands
         }
     }
 
-    class RemovePets : Command
-    {
-        public RemovePets() : base("removeAllPets", permLevel: 100) { }
-
-        protected override bool Process(Player player, RealmTime time, string args)
-        {
-            // close all worlds / disconnect all players
-            foreach (var w in player.Manager.Worlds.Values)
-            {
-                w.Closed = true;
-                foreach (var p in w.Players.Values)
-                    p.Client.Disconnect();
-            }
-
-            player.Manager.Database.RemoveAllPets(player.Manager.Resources.GameData);
-
-            Program.Stop();
-            return true;
-        }
-    }
-
     class RemoveServerGold : Command
     {
         public RemoveServerGold() : base("removeAllGold", permLevel: 100) { }

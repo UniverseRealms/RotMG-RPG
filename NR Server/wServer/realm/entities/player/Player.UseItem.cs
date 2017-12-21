@@ -6,10 +6,8 @@ using common.resources;
 using StackExchange.Redis;
 using wServer.networking.packets;
 using wServer.networking.packets.outgoing;
-using wServer.networking.packets.outgoing.pets;
 using wServer.realm.worlds;
 using wServer.realm.worlds.logic;
-using PetYard = wServer.realm.worlds.logic.PetYard;
 
 namespace wServer.realm.entities
 {
@@ -343,9 +341,6 @@ namespace wServer.realm.entities
                     case ActivateEffects.UnlockPortal:
                         AEUnlockPortal(time, item, target, eff);
                         break;
-                    case ActivateEffects.CreatePet:
-                        AECreatePet(time, item, target, eff);
-                        break;
                     case ActivateEffects.UnlockEmote:
                         AEUnlockEmote(time, item, eff);
                         break;
@@ -375,35 +370,6 @@ namespace wServer.realm.entities
             SendInfo($"{eff.Id} Emote unlocked successfully");
         }
 
-        private void AECreatePet(RealmTime time, Item item, Position target, ActivateEffect eff)
-        {
-            if (!Manager.Config.serverSettings.enablePets)
-            {
-                SendError("Cannot create pet. Pets are currently disabled.");
-                return;
-            }
-
-            var petYard = Owner as PetYard;
-            if (petYard == null)
-            {
-                SendError("server.use_in_petyard");
-                return;
-            }
-            
-            var pet = Pet.Create(Manager, this, item);
-            if (pet == null)
-                return;
-
-            var sPos = petYard.GetPetSpawnPosition();
-            pet.Move(sPos.X, sPos.Y);
-            Owner.EnterWorld(pet);
-
-            Client.SendPacket(new HatchPetMessage()
-            {
-                PetName = pet.Skin,
-                PetSkin = pet.SkinId
-            });
-        }
 
         private void AEUnlockPortal(RealmTime time, Item item, Position target, ActivateEffect eff)
         {

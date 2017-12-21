@@ -101,7 +101,6 @@
     <Compile Include="networking\packets\incoming\ClaimDailyRewardMessage.cs" />
     <Compile Include="networking\packets\incoming\GoToQuestRoom.cs" />
     <Compile Include="networking\packets\incoming\KeyInfoRequest.cs" />
-    <Compile Include="networking\packets\incoming\ReskinPet.cs" />
     <Compile Include="networking\packets\outgoing\ClaimDailyRewardResponse.cs" />
     <Compile Include="networking\packets\outgoing\KeyInfoResponse.cs" />
     <Compile Include="realm\ISControl.cs" />
@@ -113,16 +112,6 @@
     <Compile Include="logic\behaviors\MultiplyLootValue.cs" />
     <Compile Include="logic\behaviors\DropPortalOnDeath.cs" />
     <Compile Include="logic\behaviors\MutePlayer.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetBehavior.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetDecoy.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetFollow.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetHeal.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetMagicHeal.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetRisingFury.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetSavage.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetShoot.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetWander.cs" />
-    <Compile Include="logic\behaviors\PetBehaviors\PetZap.cs" />
     <Compile Include="logic\behaviors\ReproduceChildren.cs" />
     <Compile Include="logic\behaviors\BringEnemy.cs" />
     <Compile Include="logic\behaviors\TeleporttoTarget.cs" />
@@ -169,8 +158,6 @@
     <Compile Include="networking\handlers\GuildRemoveHandler.cs" />
     <Compile Include="networking\handlers\JoinGuildHandler.cs" />
     <Compile Include="networking\handlers\AcceptArenaDeathHandler.cs" />
-    <Compile Include="networking\handlers\ActivePetUpdateRequestHandler.cs" />
-    <Compile Include="networking\handlers\PetUpgradeRequestHandler.cs" />
     <Compile Include="networking\handlers\QueuePongHandler.cs" />
     <Compile Include="networking\handlers\ReskinHandler.cs" />
     <Compile Include="networking\handlers\SetConditionHandler.cs" />
@@ -186,8 +173,6 @@
     <Compile Include="networking\packets\incoming\AcceptArenaDeath.cs" />
     <Compile Include="networking\packets\incoming\MarketCommand.cs" />
     <Compile Include="networking\packets\incoming\QueuePong.cs" />
-    <Compile Include="networking\packets\incoming\ActivePetUpdateRequest.cs" />
-    <Compile Include="networking\packets\incoming\PetUpgradeRequest.cs" />
     <Compile Include="networking\packets\incoming\Reskin.cs" />
     <Compile Include="networking\packets\incoming\SetCondition.cs" />
     <Compile Include="networking\packets\incoming\QuestRedeem.cs" />
@@ -200,12 +185,6 @@
     <Compile Include="networking\packets\outgoing\arena\ImminentArenaWave.cs" />
     <Compile Include="networking\packets\outgoing\InvitedToGuild.cs" />
     <Compile Include="networking\packets\outgoing\PasswordPrompt.cs" />
-    <Compile Include="networking\packets\outgoing\pets\HatchPetMessage.cs" />
-    <Compile Include="networking\packets\outgoing\EvolvedPetMessage.cs" />
-    <Compile Include="networking\packets\outgoing\NewAbilityMessage.cs" />
-    <Compile Include="networking\packets\outgoing\pets\DeletePetMessage.cs" />
-    <Compile Include="networking\packets\outgoing\ActivePet.cs" />
-    <Compile Include="networking\packets\outgoing\PetYard.cs" />
     <Compile Include="networking\packets\outgoing\Pic.cs" />
     <Compile Include="networking\packets\outgoing\PlaySound.cs" />
     <Compile Include="networking\packets\outgoing\QuestFetchResponse.cs" />
@@ -321,7 +300,6 @@
     <Compile Include="realm\ActivateBoost.cs" />
     <Compile Include="realm\entities\GiftChest.cs" />
     <Compile Include="realm\entities\OneWayContainer.cs" />
-    <Compile Include="realm\entities\Pet.cs" />
     <Compile Include="realm\entities\player\Player.AntiCheat.cs" />
     <Compile Include="realm\entities\player\Player.Market.cs" />
     <Compile Include="realm\entities\vendors\ClosedVaultChest.cs" />
@@ -435,7 +413,6 @@
     <Compile Include="realm\terrain\WorldMapExporter.cs" />
     <Compile Include="realm\worlds\logic\Marketplace.cs" />
     <Compile Include="realm\worlds\logic\Castle.cs" />
-    <Compile Include="realm\worlds\logic\PetYard.cs" />
     <Compile Include="realm\worlds\logic\Realm.cs" />
     <Compile Include="realm\worlds\logic\Nexus.cs" />
     <Compile Include="realm\worlds\logic\Test.cs" />

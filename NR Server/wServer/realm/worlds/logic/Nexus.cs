@@ -75,22 +75,7 @@ namespace wServer.realm.worlds.logic
                     monitor.AddPortal(i.Id, portal, pos);
                     continue;
                 }
-
-                if (i is PetYard)
-                {
-                    var portal = new Portal(Manager, 0x166, null)
-                    {
-                        Name = "Pet Yard",
-                        WorldInstance = i
-                    };
-
-                    var pos = GetRegionPosition(TileRegion.Store_40);
-                    if (pos == null)
-                        continue;
-
-                    monitor.AddPortal(i.Id, portal, pos);
-                    continue;
-                }
+               
 
                 if (i.Name.Equals("ClothBazaar"))
                 {

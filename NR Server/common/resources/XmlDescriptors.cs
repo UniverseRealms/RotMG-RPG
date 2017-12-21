@@ -252,7 +252,6 @@ namespace common.resources
         RemoveNegativeConditionsSelf,
         IncrementStat,
         Drake,
-        PermaPet,
         Create,
         DazeBlast,
         ClearConditionEffectAura,
@@ -275,8 +274,6 @@ namespace common.resources
         Belt,
         Totem,
         UnlockPortal,
-        CreatePet,
-        Pet,
         UnlockSkin,
         GenericActivate,
         MysteryPortal,
@@ -288,7 +285,6 @@ namespace common.resources
         LTBoost,
         UnlockEmote,
         HealingGrenade,
-        PetSkin,
         Unlock,
         MysteryDyes
     }
@@ -487,8 +483,6 @@ namespace common.resources
         public bool Secret { get; private set; }
         public int Doses { get; private set; }
         public int FeedPower { get; private set; }
-        public PFamily Family { get; private set; }
-        public PRarity Rarity { get; private set; }
 
         public KeyValuePair<int, int>[] StatsBoost { get; private set; }
         public ActivateEffect[] ActivateEffects { get; private set; }
@@ -597,9 +591,6 @@ namespace common.resources
                 FeedPower = Utils.FromString(n.Value);
             else
                 FeedPower = 0;
-
-            Family = PetDesc.GetFamily(elem.Element("PetFamily"));
-            Rarity = PetDesc.GetRarity(elem.Element("Rarity"));
 
             if ((n = elem.Element("SuccessorId")) != null)
                 SuccessorId = n.Value;
@@ -905,11 +896,6 @@ namespace common.resources
         public int? PerRealmMax { get; private set; }
         public float? ExpMultiplier { get; private set; }    //Exp gained = level total / 10 * multi
         public bool Restricted { get; private set; }
-        public bool IsPet { get; private set; }
-        public bool IsPetSkin { get; private set; }
-        public bool IsPetProjectile { get; private set; }
-        public bool IsPetBehavior { get; private set; }
-        public bool IsPetAbility { get; private set; }
         public bool Connects { get; private set; }
         public bool TrollWhiteBag { get; private set; }
 
@@ -1003,12 +989,6 @@ namespace common.resources
             else
                 ExpMultiplier = null;
 
-            IsPet = elem.Element("Pet") != null;
-            IsPetSkin = elem.Element("PetSkin") != null;
-            IsPetProjectile = elem.Element("PetProjectile") != null;
-            IsPetBehavior = elem.Element("PetBehavior") != null;
-            IsPetAbility = elem.Element("PetAbility") != null;
-            Connects = elem.Element("Connects") != null;
             TrollWhiteBag = elem.Element("TrollWhiteBag") != null;
         }
     }

@@ -102,18 +102,18 @@ namespace server
         private int _currentFame;
         private int _totalFame;
         private string _hallType;
-        private List<GuildMember> _members; 
+        private List<GuildMember> _members;
 
         public static Guild FromDb(Database db, DbGuild guild)
         {
             var members = (from member in guild.Members
                            select db.GetAccount(member) into acc
                            where acc != null
-                           orderby acc.GuildRank descending, 
-                                   acc.GuildFame descending, 
+                           orderby acc.GuildRank descending,
+                                   acc.GuildFame descending,
                                    acc.Name ascending
                            select GuildMember.FromDb(acc)).ToList();
-            
+
             return new Guild()
             {
                 _id = guild.Id,
@@ -276,7 +276,6 @@ namespace server
         public bool VerifiedEmail { get; private set; }
         public bool AgeVerified { get; private set; }
         public bool FirstDeath { get; private set; }
-        public int PetYardType { get; private set; }
 
         public int Credits { get; private set; }
         public int NextCharSlotPrice { get; private set; }
@@ -310,7 +309,6 @@ namespace server
                 VerifiedEmail = acc.Verified,
                 AgeVerified = acc.AgeVerified,
                 FirstDeath = acc.FirstDeath,
-                PetYardType = acc.PetYardType,
 
                 Credits = acc.Credits,
                 NextCharSlotPrice = Program.Resources.Settings.CharacterSlotCost,
@@ -341,12 +339,11 @@ namespace server
                     NameChosen ? new XElement("NameChosen", "") : null,
                     Converted ? new XElement("Converted", "") : null,
                     Admin ? new XElement("Admin", "") : null,
-                    new XElement("Rank", Rank), 
+                    new XElement("Rank", Rank),
                     new XElement("LastSeen", LastSeen),
                     VerifiedEmail ? new XElement("VerifiedEmail", "") : null,
                     new XElement("IsAgeVerified", (AgeVerified) ? 1 : 0),
                     FirstDeath ? new XElement("isFirstDeath", "") : null,
-                    new XElement("PetYardType", PetYardType == 0 ? 1 : PetYardType), // todo, a value of zero doesn't work. old accounts throw error...
                     Banned ? new XElement("Banned", BanReasons).AddAttribute("liftTime", BanLiftTime) : null,
 
                     new XElement("Credits", Credits),
@@ -390,7 +387,6 @@ namespace server
         public int MagicStackCount { get; private set; }
         public bool Dead { get; private set; }
         public bool HasBackpack { get; private set; }
-        public Pet Pet { get; private set; }
 
         public static Character FromDb(DbChar character, bool dead)
         {
@@ -420,7 +416,6 @@ namespace server
                 MagicStackCount = character.MagicStackCount,
                 Dead = dead,
                 HasBackpack = character.HasBackpack,
-                Pet = Pet.FromDb(new DbPet(character.Account, character.PetId))
             };
         }
 
@@ -451,8 +446,7 @@ namespace server
                     new XElement("HealthStackCount", HealthStackCount),
                     new XElement("MagicStackCount", MagicStackCount),
                     new XElement("Dead", Dead),
-                    new XElement("HasBackpack", (HasBackpack) ? "1" : "0"),
-                    Pet?.ToXml()
+                    new XElement("HasBackpack", (HasBackpack) ? "1" : "0")
                 );
         }
     }
@@ -792,13 +786,13 @@ namespace server
         private IEnumerable<FameListEntry> _entries;
         private int _lastUpdate;
 
-        private static readonly ConcurrentDictionary<string, FameList> StoredLists = 
+        private static readonly ConcurrentDictionary<string, FameList> StoredLists =
             new ConcurrentDictionary<string, FameList>();
-        
+
         public static FameList FromDb(Database db, string timeSpan, DbChar character)
         {
             timeSpan = timeSpan.ToLower();
-            
+
             // check if we already got updated list
             var lastUpdate = db.LastLegendsUpdateTime();
             if (StoredLists.ContainsKey(timeSpan))
@@ -809,7 +803,7 @@ namespace server
                     return fl;
                 }
             }
-            
+
             // get & store list
             var entries = db.GetLegendsBoard(timeSpan);
             var fameList = new FameList()
@@ -830,89 +824,6 @@ namespace server
                     new XAttribute("timespan", _timeSpan),
                     _entries.Select(x => x.ToXml())
                 );
-        }
-    }
-
-    public class Pet
-    {
-        public string SkinName { get; private set; }
-        public int Type { get; private set; }
-        public int InstanceId { get; private set; }
-        public int MaxAbilityPower { get; private set; }
-        public int Skin { get; private set; }
-        public int Rarity { get; private set; }
-        public IEnumerable<PetAbility> Abilities { get; private set; }
-
-        public XElement ToXml()
-        {
-            return
-                new XElement("Pet",
-                    new XAttribute("name", SkinName),
-                    new XAttribute("type", Type),
-                    new XAttribute("instanceId", InstanceId),
-                    new XAttribute("maxAbilityPower", MaxAbilityPower),
-                    new XAttribute("skin", Skin),
-                    new XAttribute("rarity", Rarity),
-                    new XElement("Abilities",
-                        Abilities.Select(_ => _.ToXml())
-                    )
-                );
-        }
-
-        public static Pet FromDb(DbPet dbPet)
-        {
-            if (dbPet== null || dbPet.IsNull) return null;
-            return new Pet
-            {
-                InstanceId = dbPet.PetId,
-                MaxAbilityPower = dbPet.MaxLevel,
-                Rarity = (int)dbPet.Rarity,
-                Skin = Program.Resources.GameData.PetSkins[Program.Resources.GameData.IdToObjectType[Program.Resources.GameData.Pets[dbPet.ObjectType].DefaultSkin]].ObjectType,
-                SkinName = Program.Resources.GameData.Pets[dbPet.ObjectType].DefaultSkin,
-                Type = dbPet.ObjectType,
-                Abilities = PetAbility.LoadFromDb(dbPet.Ability)
-            };
-        }
-    }
-    public class PetAbility
-    {
-        public PAbility Type { get; private set; }
-        public int Power { get; private set; }
-        public int Points { get; private set; }
-
-        public XElement ToXml()
-        {
-            return
-                new XElement("Ability",
-                    new XAttribute("type", (int)Type),
-                    new XAttribute("power", Power),
-                    new XAttribute("points", Points)
-                );
-        }
-
-        public static IEnumerable<PetAbility> LoadFromDb(DbPetAbility[] dbPetAbility)
-        {
-            return new List<PetAbility>(3)
-            {
-                new PetAbility
-                {
-                    Points = dbPetAbility[0].Power,
-                    Power = dbPetAbility[0].Level,
-                    Type = dbPetAbility[0].Type
-                },
-                new PetAbility
-                {
-                    Points = dbPetAbility[1].Power,
-                    Power = dbPetAbility[1].Level,
-                    Type = dbPetAbility[1].Type
-                },
-                new PetAbility
-                {
-                    Points = dbPetAbility[2].Power,
-                    Power = dbPetAbility[2].Level,
-                    Type = dbPetAbility[2].Type
-                }
-            };
         }
     }
 }

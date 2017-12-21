@@ -321,12 +321,6 @@ namespace common
             set { SetValue<bool>("firstDeath", value); }
         }
 
-        public int PetYardType
-        {
-            get { return GetValue<int>("petYardType"); }
-            set { SetValue<int>("petYardType", value); }
-        }
-
         public int GuildId
         {
             get { return GetValue<int>("guildId"); }
@@ -475,12 +469,6 @@ namespace common
         {
             get { return GetValue<string>("ip"); }
             set { SetValue<string>("ip", value); }
-        }
-
-        public int[] PetList
-        {
-            get { return GetValue<int[]>("petList") ?? new int[0]; }
-            set { SetValue<int[]>("petList", value); }
         }
 
         public uint LastMarketId
@@ -704,12 +692,6 @@ namespace common
         {
             get { return GetValue<int>("skin"); }
             set { SetValue<int>("skin", value); }
-        }
-
-        public int PetId
-        {
-            get { return GetValue<int>("petId"); }
-            set { SetValue<int>("petId", value); }
         }
 
         public byte[] FameStats
@@ -1133,89 +1115,6 @@ namespace common
         public void Flush()
         {
             _db.HashSetAsync("ips", IP, JsonConvert.SerializeObject(this));
-        }
-    }
-
-    public class DbPetAbility
-    {
-        private readonly DbPet _owner;
-        private readonly string _typeKey;
-        private readonly string _levelKey;
-        private readonly string _powerKey;
-
-        public DbPetAbility(DbPet owner, int abilityId)
-        {
-            _owner = owner;
-            _typeKey = string.Format("A{0}Type", abilityId);
-            _levelKey = string.Format("A{0}Level", abilityId);
-            _powerKey = string.Format("A{0}Power", abilityId);
-        }
-
-        public PAbility Type
-        {
-            get { return (PAbility)_owner.GetValue(_typeKey); }
-            set { _owner.SetValue(_typeKey, (int)value); }
-        }
-
-        public int Level
-        {
-            get { return _owner.GetValue(_levelKey); }
-            set { _owner.SetValue(_levelKey, value); }
-        }
-
-        public int Power
-        {
-            get { return _owner.GetValue(_powerKey); }
-            set { _owner.SetValue(_powerKey, value); }
-        }
-    }
-
-    public class DbPet : RedisObject
-    {
-        public const int NumAbilities = 3;
-
-        public DbAccount Account { get; private set; }
-        public int PetId { get; set; }
-        public DbPetAbility[] Ability { get; private set; }
-
-        public DbPet(DbAccount acc, int petId)
-        {
-            Account = acc;
-            PetId = petId;
-
-            Init(acc.Database, $"pet.{acc.AccountId}.{petId}");
-
-            Ability = new DbPetAbility[NumAbilities];
-            for (var i = 0; i < NumAbilities; i++)
-                Ability[i] = new DbPetAbility(this, i);
-        }
-
-        public ushort ObjectType
-        {
-            get { return GetValue<ushort>("objType"); }
-            set { SetValue<ushort>("objType", value); }
-        }
-
-        public PRarity Rarity
-        {
-            get { return (PRarity)GetValue<ushort>("rarity"); }
-            set { SetValue<ushort>("rarity", (ushort)value); }
-        }
-
-        public int MaxLevel
-        {
-            get { return GetValue<int>("maxLevel"); }
-            set { SetValue<int>("maxLevel", value); }
-        }
-
-        internal int GetValue(string key)
-        {
-            return GetValue<int>(key);
-        }
-
-        internal void SetValue(string key, int value)
-        {
-            SetValue<int>(key, value);
         }
     }
     

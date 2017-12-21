@@ -29,7 +29,6 @@ namespace wServer.logic.behaviors
 
         protected override void TickCore(Entity host, RealmTime time, ref object state)
         {
-            if((host as Pet)?.PlayerOwner != null) return;
             Status = CycleStatus.NotStarted;
 
             if (host.HasConditionEffect(ConditionEffects.Paralyzed))

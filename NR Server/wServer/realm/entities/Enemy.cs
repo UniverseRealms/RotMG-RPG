@@ -12,7 +12,6 @@ namespace wServer.realm.entities
 {
     public class Enemy : Character
     {
-        public bool isPet; // TODO quick hack for backwards compatibility
         bool stat;
         public Enemy ParentEntity;
 

@@ -80,7 +80,6 @@ namespace common
                 Verified = false,
                 AgeVerified = true,
                 FirstDeath = true,
-                PetYardType = newAccounts.PetYardType,
                 GuildId = 0,
                 GuildRank = 0,
                 VaultCount = newAccounts.VaultCount,
@@ -360,7 +359,6 @@ namespace common
                 Verified = false,
                 AgeVerified = true,
                 FirstDeath = true,
-                PetYardType = newAccounts.PetYardType,
                 GuildId = 0,
                 GuildRank = 0,
                 VaultCount = newAccounts.VaultCount,
@@ -1006,7 +1004,6 @@ namespace common
                 Tex1 = 0,
                 Tex2 = 0,
                 Skin = skinType,
-                PetId = 0xffff,
                 FameStats = new byte[0],
                 CreateTime = DateTime.Now,
                 LastSeen = DateTime.Now
@@ -1328,43 +1325,6 @@ namespace common
         {
             var abi = new DbIpInfo(_db, ip);
             return abi.Banned;
-        }
-
-
-        public DbPet NewPet(DbAccount acc)
-        {
-            var petList = acc.PetList.ToList();
-            if (petList.Count >= _resources.Settings.MaxPetCount)
-                return null;
-
-            var nextPetId = (int) _db.StringIncrement("nextPetId");
-            
-            petList.Add(nextPetId);
-            acc.PetList = petList.ToArray();
-            acc.FlushAsync();
-
-            return new DbPet(acc, nextPetId);
-        }
-
-        public bool RemovePet(DbAccount acc, int petId)
-        {
-            var petList = acc.PetList.ToList();
-            if (!petList.Contains(petId))
-                return false;
-
-            petList.Remove(petId);
-            acc.PetList = petList.ToArray();
-            acc.FlushAsync();
-
-            _db.KeyDeleteAsync($"pet.{acc.AccountId}.{petId}", CommandFlags.FireAndForget);
-            return true;
-        }
-
-        public void RemoveAllPets(XmlData dat)
-        {
-
-            foreach (var key in _server.Keys(pattern: "pet.*.*", database: DatabaseIndex))
-                _db.KeyDeleteAsync(key, CommandFlags.FireAndForget);
         }
 
         public bool AddGift(DbAccount acc, ushort item, ITransaction tran = null)

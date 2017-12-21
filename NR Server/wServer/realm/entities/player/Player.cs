@@ -197,7 +197,6 @@ namespace wServer.realm.entities
         public int LTBoostTime { get; set; }
         public ushort SetSkin { get; set; }
         public int SetSkinSize { get; set; }
-        public Pet Pet { get; set; }
         public int? GuildInvite { get; set; }
         public bool Muted { get; set; }
 
@@ -373,7 +372,6 @@ namespace wServer.realm.entities
             chr.XPBoostTime = XPBoostTime;
             chr.LDBoostTime = LDBoostTime;
             chr.LTBoostTime = LTBoostTime;
-            chr.PetId = Pet?.PetId ?? 0;
             chr.Items = Inventory.GetItemTypes();
         }
 
@@ -528,20 +526,6 @@ namespace wServer.realm.entities
             }
             Move(x + 0.5f, y + 0.5f);
             tiles = new byte[owner.Map.Width, owner.Map.Height];
-
-            // spawn pet if player has one attached
-            var petId = _client.Character.PetId;
-            if (petId > 0 && Manager.Config.serverSettings.enablePets)
-            {
-                var dbPet = new DbPet(Client.Account, petId);
-                if (dbPet.ObjectType != 0)
-                {
-                    var pet = new Pet(Manager, this, dbPet);
-                    pet.Move(X, Y);
-                    owner.EnterWorld(pet);
-                    Pet = pet;
-                }
-            }
             
             FameCounter = new FameCounter(this);
             FameGoal = GetFameGoal(FameCounter.ClassStats[ObjectType].BestFame);

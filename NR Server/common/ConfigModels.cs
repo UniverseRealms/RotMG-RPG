@@ -64,7 +64,6 @@ namespace common
         public int maxPlayers { get; set; } = 100;
         public int maxPlayersWithPriority { get; set; } = 120;
         public string sendGridApiKey { get; set; } = "";
-        public bool enablePets { get; set; } = false;
         public bool enableMarket { get; set; } = true;
     }
 

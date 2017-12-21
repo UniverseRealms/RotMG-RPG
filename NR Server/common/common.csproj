@@ -79,7 +79,6 @@
     <Compile Include="resources\Ranks.cs" />
     <Compile Include="resources\Tinker.cs" />
     <Compile Include="resources\WorldData.cs" />
-    <Compile Include="resources\XmlDescriptors.Pets.cs" />
     <Compile Include="terrain\Json2Wmap.cs" />
     <Compile Include="terrain\TerrainTile.cs" />
     <Compile Include="terrain\WorldMapExporter.cs" />

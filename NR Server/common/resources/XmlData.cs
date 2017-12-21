@@ -40,10 +40,6 @@ namespace common.resources
         Dictionary<ushort, EquipmentSetDesc> equipmentSets;
         Dictionary<ushort, PlayerDesc> classes;
         Dictionary<ushort, ObjectDesc> merchants; 
-        Dictionary<ushort, PetDesc> pets;
-        Dictionary<ushort, PetSkinDesc> petSkins;
-        Dictionary<ushort, PetBehaviorDesc> petBehaviors;
-        Dictionary<ushort, PetAbilityDesc> petAbilities;
         Dictionary<int, ItemType> slotType2ItemType;
 
         public IDictionary<ushort, XElement> ObjectTypeToElement { get; private set; }
@@ -65,10 +61,6 @@ namespace common.resources
         public IDictionary<ushort, EquipmentSetDesc> EquipmentSets { get; private set; } 
         public IDictionary<ushort, PlayerDesc> Classes { get; private set; }
         public IDictionary<ushort, ObjectDesc> Merchants { get; private set; }
-        public IDictionary<ushort, PetDesc> Pets { get; private set; }
-        public IDictionary<ushort, PetSkinDesc> PetSkins { get; private set; }
-        public IDictionary<ushort, PetBehaviorDesc> PetBehaviors { get; private set; }
-        public IDictionary<ushort, PetAbilityDesc> PetAbilities { get; private set; }
         public IDictionary<int, ItemType> SlotType2ItemType { get; private set; }
 
         int updateCount = 0;
@@ -145,18 +137,6 @@ namespace common.resources
             Merchants =
                 new ReadOnlyDictionary<ushort, ObjectDesc>(
                     merchants = new Dictionary<ushort, ObjectDesc>());
-            Pets =
-                new ReadOnlyDictionary<ushort, PetDesc>(
-                    pets = new Dictionary<ushort, PetDesc>());
-            PetSkins =
-                new ReadOnlyDictionary<ushort, PetSkinDesc>(
-                    petSkins = new Dictionary<ushort, PetSkinDesc>());
-            PetBehaviors =
-                new ReadOnlyDictionary<ushort, PetBehaviorDesc>(
-                    petBehaviors = new Dictionary<ushort, PetBehaviorDesc>());
-            PetAbilities =
-                new ReadOnlyDictionary<ushort, PetAbilityDesc>(
-                    petAbilities = new Dictionary<ushort, PetAbilityDesc>());
             SlotType2ItemType =
                 new ReadOnlyDictionary<int, ItemType>(
                     slotType2ItemType = new Dictionary<int, ItemType>());
@@ -188,10 +168,6 @@ namespace common.resources
             log.InfoFormat("{0} Classes", classes.Count);
             log.InfoFormat("{0} Portals", portals.Count);
             log.InfoFormat("{0} Merchants", merchants.Count);
-            log.InfoFormat("{0} Pets", pets.Count);
-            log.InfoFormat("{0} PetSkins", petSkins.Count);
-            log.InfoFormat("{0} PetBehaviors", petBehaviors.Count);
-            log.InfoFormat("{0} PetsAbility", petAbilities.Count);
             log.InfoFormat("{0} Remote Textures", _usedRemoteTextures.Count);
             log.InfoFormat("{0} Additions", addition.Elements().Count());
         }
@@ -280,19 +256,6 @@ namespace common.resources
                     case "Equipment":
                     case "Dye":
                         items[type] = new Item(type, elem);
-                        break;
-                    case "Pet":
-                        pets[type] = new PetDesc(type, elem);
-                        objDescs[type] = pets[type];
-                        break;
-                    case "PetSkin":
-                        petSkins[type] = new PetSkinDesc(type, elem);
-                        break;
-                    case "PetBehavior":
-                        petBehaviors[type] = new PetBehaviorDesc(type, elem);
-                        break;
-                    case "PetAbility":
-                        petAbilities[type] = new PetAbilityDesc(type, elem);
                         break;
                     case "Skin":
                         var skinDesc = SkinDesc.FromElem(type, elem);
