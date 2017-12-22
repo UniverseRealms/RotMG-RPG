@@ -3,7 +3,6 @@ import flash.display.DisplayObject;
 import flash.display.Sprite;
 
 import kabam.rotmg.assets.EmbeddedAssets;
-import kabam.rotmg.messaging.impl.EvolvePetInfo;
 import kabam.rotmg.pets.data.PetVO;
 import kabam.rotmg.pets.view.components.PetIcon;
 import kabam.rotmg.pets.view.components.PetIconFactory;
@@ -23,25 +22,10 @@ public class EvolveAnimation extends Sprite {
     public var transition:EvolveTransition;
     public var initialPet:PetIcon;
     public var evolvedPet:EvolvedPet;
-    private var evolvePetInfo:EvolvePetInfo;
 
     public function EvolveAnimation() {
         addChild(this.background);
         addChild(this.backgroundMask);
-    }
-
-    public function setEvolvedPets(_arg1:EvolvePetInfo):void {
-        this.petIconFactory.outlineSize = 6;
-        this.evolvePetInfo = _arg1;
-        this.addInitialPet(_arg1.initialPet);
-        this.makeEvolvedPet(_arg1.finalPet);
-        addChild(this.transition);
-        this.transition.opaqueReached.addOnce(this.onOpaque);
-        this.transition.play();
-    }
-
-    public function getPetInfo():EvolvePetInfo {
-        return (this.evolvePetInfo);
     }
 
     private function makeEvolvedPet(_arg1:PetVO):void {

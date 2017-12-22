@@ -14,7 +14,6 @@ import com.company.assembleegameclient.objects.Merchant;
 import com.company.assembleegameclient.objects.NameChanger;
 import com.company.assembleegameclient.objects.ObjectLibrary;
 import com.company.assembleegameclient.objects.ObjectProperties;
-import com.company.assembleegameclient.objects.Pet;
 import com.company.assembleegameclient.objects.Player;
 import com.company.assembleegameclient.objects.Portal;
 import com.company.assembleegameclient.objects.Projectile;
@@ -109,7 +108,6 @@ import kabam.rotmg.messaging.impl.data.ObjectData;
 import kabam.rotmg.messaging.impl.data.ObjectStatusData;
 import kabam.rotmg.messaging.impl.data.StatData;
 import kabam.rotmg.messaging.impl.incoming.AccountList;
-import kabam.rotmg.messaging.impl.incoming.ActivePet;
 import kabam.rotmg.messaging.impl.incoming.AllyShoot;
 import kabam.rotmg.messaging.impl.incoming.Aoe;
 import kabam.rotmg.messaging.impl.incoming.BuyResult;
@@ -118,8 +116,6 @@ import kabam.rotmg.messaging.impl.incoming.CreateSuccess;
 import kabam.rotmg.messaging.impl.incoming.Damage;
 import kabam.rotmg.messaging.impl.incoming.Death;
 import kabam.rotmg.messaging.impl.incoming.EnemyShoot;
-import kabam.rotmg.messaging.impl.incoming.EvolvedMessageHandler;
-import kabam.rotmg.messaging.impl.incoming.EvolvedPetMessage;
 import kabam.rotmg.messaging.impl.incoming.Failure;
 import kabam.rotmg.messaging.impl.incoming.File;
 import kabam.rotmg.messaging.impl.incoming.GlobalNotification;
@@ -134,7 +130,6 @@ import kabam.rotmg.messaging.impl.incoming.NewAbilityMessage;
 import kabam.rotmg.messaging.impl.incoming.NewTick;
 import kabam.rotmg.messaging.impl.incoming.Notification;
 import kabam.rotmg.messaging.impl.incoming.PasswordPrompt;
-import kabam.rotmg.messaging.impl.incoming.PetYard;
 import kabam.rotmg.messaging.impl.incoming.Pic;
 import kabam.rotmg.messaging.impl.incoming.Ping;
 import kabam.rotmg.messaging.impl.incoming.PlaySound;
@@ -158,10 +153,7 @@ import kabam.rotmg.messaging.impl.incoming.Update;
 import kabam.rotmg.messaging.impl.incoming.VerifyEmail;
 import kabam.rotmg.messaging.impl.incoming.arena.ArenaDeath;
 import kabam.rotmg.messaging.impl.incoming.arena.ImminentArenaWave;
-import kabam.rotmg.messaging.impl.incoming.pets.DeletePetMessage;
-import kabam.rotmg.messaging.impl.incoming.pets.HatchPetMessage;
 import kabam.rotmg.messaging.impl.outgoing.AcceptTrade;
-import kabam.rotmg.messaging.impl.outgoing.ActivePetUpdateRequest;
 import kabam.rotmg.messaging.impl.outgoing.AoeAck;
 import kabam.rotmg.messaging.impl.outgoing.Buy;
 import kabam.rotmg.messaging.impl.outgoing.CancelTrade;
@@ -196,7 +188,6 @@ import kabam.rotmg.messaging.impl.outgoing.Pong;
 import kabam.rotmg.messaging.impl.outgoing.QueuePong;
 import kabam.rotmg.messaging.impl.outgoing.RequestTrade;
 import kabam.rotmg.messaging.impl.outgoing.Reskin;
-import kabam.rotmg.messaging.impl.outgoing.ReskinPet;
 import kabam.rotmg.messaging.impl.outgoing.SetCondition;
 import kabam.rotmg.messaging.impl.outgoing.ShootAck;
 import kabam.rotmg.messaging.impl.outgoing.SquareHit;
@@ -240,7 +231,6 @@ public class GameServerConnectionConcrete extends GameServerConnection {
 
     private static const TO_MILLISECONDS:int = 1000;
 
-    private var petUpdater:PetUpdater;
     private var messages:MessageProvider;
     private var playerId_:int = -1;
     private var player:Player;
@@ -316,19 +306,11 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         mapJSON_ = _arg8;
         isFromArena_ = _arg9;
         this.friendModel.setCurrentServer(server_);
-        this.getPetUpdater();
         instance = this;
     }
 
     private static function isStatPotion(_arg1:int):Boolean {
         return ((((((((((((((((((((_arg1 == 2591)) || ((_arg1 == 5465)))) || ((_arg1 == 9064)))) || ((((((_arg1 == 2592)) || ((_arg1 == 5466)))) || ((_arg1 == 9065)))))) || ((((((_arg1 == 2593)) || ((_arg1 == 5467)))) || ((_arg1 == 9066)))))) || ((((((_arg1 == 2612)) || ((_arg1 == 5468)))) || ((_arg1 == 9067)))))) || ((((((_arg1 == 2613)) || ((_arg1 == 5469)))) || ((_arg1 == 9068)))))) || ((((((_arg1 == 2636)) || ((_arg1 == 5470)))) || ((_arg1 == 9069)))))) || ((((((_arg1 == 2793)) || ((_arg1 == 5471)))) || ((_arg1 == 9070)))))) || ((((((_arg1 == 2794)) || ((_arg1 == 5472)))) || ((_arg1 == 9071))))));
-    }
-
-
-    private function getPetUpdater():void {
-        this.injector.map(AGameSprite).toValue(gs_);
-        this.petUpdater = this.injector.getInstance(PetUpdater);
-        this.injector.unmap(AGameSprite);
     }
 
     override public function disconnect():void {
@@ -404,14 +386,12 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         _local1.map(JOINGUILD).toMessage(JoinGuild);
         _local1.map(CHANGEGUILDRANK).toMessage(ChangeGuildRank);
         _local1.map(EDITACCOUNTLIST).toMessage(EditAccountList);
-        _local1.map(ACTIVE_PET_UPDATE_REQUEST).toMessage(ActivePetUpdateRequest);
         _local1.map(PETUPGRADEREQUEST).toMessage(PetUpgradeRequest);
         _local1.map(ENTER_ARENA).toMessage(EnterArena);
         _local1.map(ACCEPT_ARENA_DEATH).toMessage(OutgoingMessage);
         _local1.map(QUEST_FETCH_ASK).toMessage(OutgoingMessage);
         _local1.map(QUEST_REDEEM).toMessage(QuestRedeem);
         _local1.map(KEY_INFO_REQUEST).toMessage(KeyInfoRequest);
-        _local1.map(PET_CHANGE_FORM_MSG).toMessage(ReskinPet);
         _local1.map(CLAIM_LOGIN_REWARD_MSG).toMessage(ClaimDailyRewardMessage);
         _local1.map(FAILURE).toMessage(Failure).toMethod(this.onFailure);
         _local1.map(CREATE_SUCCESS).toMessage(CreateSuccess).toMethod(this.onCreateSuccess);
@@ -445,13 +425,6 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         _local1.map(CLIENTSTAT).toMessage(ClientStat).toMethod(this.onClientStat);
         _local1.map(FILE).toMessage(File).toMethod(this.onFile);
         _local1.map(INVITEDTOGUILD).toMessage(InvitedToGuild).toMethod(this.onInvitedToGuild);
-        _local1.map(PLAYSOUND).toMessage(PlaySound).toMethod(this.onPlaySound);
-        _local1.map(ACTIVEPETUPDATE).toMessage(ActivePet).toMethod(this.onActivePetUpdate);
-        _local1.map(NEW_ABILITY).toMessage(NewAbilityMessage).toMethod(this.onNewAbility);
-        _local1.map(PETYARDUPDATE).toMessage(PetYard).toMethod(this.onPetYardUpdate);
-        _local1.map(EVOLVE_PET).toMessage(EvolvedPetMessage).toMethod(this.onEvolvedPet);
-        _local1.map(DELETE_PET).toMessage(DeletePetMessage).toMethod(this.onDeletePet);
-        _local1.map(HATCH_PET).toMessage(HatchPetMessage).toMethod(this.onHatchPet);
         _local1.map(IMMINENT_ARENA_WAVE).toMessage(ImminentArenaWave).toMethod(this.onImminentArenaWave);
         _local1.map(ARENA_DEATH).toMessage(ArenaDeath).toMethod(this.onArenaDeath);
         _local1.map(VERIFY_EMAIL).toMessage(VerifyEmail).toMethod(this.onVerifyEmail);
@@ -485,38 +458,6 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         qp.serial_ = _arg1.serial_;
         qp.time_ = getTimer();
         serverConnection.queueMessage(qp);
-    }
-
-    private function onHatchPet(_arg1:HatchPetMessage):void {
-        var _local2:HatchPetSignal = this.injector.getInstance(HatchPetSignal);
-        _local2.dispatch(_arg1.petName, _arg1.petSkin);
-    }
-
-    private function onDeletePet(_arg1:DeletePetMessage):void {
-        var _local2:DeletePetSignal = this.injector.getInstance(DeletePetSignal);
-        _local2.dispatch(_arg1.petID);
-    }
-
-    private function onNewAbility(_arg1:NewAbilityMessage):void {
-        var _local2:NewAbilitySignal = this.injector.getInstance(NewAbilitySignal);
-        _local2.dispatch(_arg1.type);
-    }
-
-    private function onPetYardUpdate(_arg1:PetYard):void {
-        var _local2:UpdatePetYardSignal = StaticInjectorContext.getInjector().getInstance(UpdatePetYardSignal);
-        _local2.dispatch(_arg1.type);
-    }
-
-    private function onEvolvedPet(_arg1:EvolvedPetMessage):void {
-        var _local2:EvolvedMessageHandler = this.injector.getInstance(EvolvedMessageHandler);
-        _local2.handleMessage(_arg1);
-    }
-
-    private function onActivePetUpdate(_arg1:ActivePet):void {
-        this.updateActivePet.dispatch(_arg1.instanceID);
-        var _local2:String = (((_arg1.instanceID > 0)) ? this.petsModel.getPet(_arg1.instanceID).getName() : "");
-        var _local3:String = (((_arg1.instanceID < 0)) ? TextKey.PET_NOT_FOLLOWING : TextKey.PET_FOLLOWING);
-        this.addTextLine.dispatch(ChatMessage.make(Parameters.SERVER_CHAT_NAME, _local3, -1, -1, "", false, {"petName": _local2}));
     }
 
     private function unmapMessages():void {
@@ -1477,14 +1418,6 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         var _local10:int;
         var _local4:Player = (_arg1 as Player);
         var _local5:Merchant = (_arg1 as Merchant);
-        var _local6:Pet = (_arg1 as Pet);
-        if (_local6) {
-            this.petUpdater.updatePet(_local6, _arg2);
-            if (gs_.map.isPetYard) {
-                this.petUpdater.updatePetVOs(_local6, _arg2);
-            }
-            return;
-        }
         for each (_local7 in _arg2) {
             _local8 = _local7.statValue_;
             switch (_local7.statType_) {

@@ -84,21 +84,6 @@ public class StatData {
     public static const BACKPACK_7_STAT:int = 78;
     public static const HASBACKPACK_STAT:int = 79;
     public static const TEXTURE_STAT:int = 80;
-    public static const PET_INSTANCEID_STAT:int = 81;
-    public static const PET_NAME_STAT:int = 82;
-    public static const PET_TYPE_STAT:int = 83;
-    public static const PET_RARITY_STAT:int = 84;
-    public static const PET_MAXABILITYPOWER_STAT:int = 85;
-    public static const PET_FAMILY_STAT:int = 86;
-    public static const PET_FIRSTABILITY_POINT_STAT:int = 87;
-    public static const PET_SECONDABILITY_POINT_STAT:int = 88;
-    public static const PET_THIRDABILITY_POINT_STAT:int = 89;
-    public static const PET_FIRSTABILITY_POWER_STAT:int = 90;
-    public static const PET_SECONDABILITY_POWER_STAT:int = 91;
-    public static const PET_THIRDABILITY_POWER_STAT:int = 92;
-    public static const PET_FIRSTABILITY_TYPE_STAT:int = 93;
-    public static const PET_SECONDABILITY_TYPE_STAT:int = 94;
-    public static const PET_THIRDABILITY_TYPE_STAT:int = 95;
     public static const NEW_CON_STAT:int = 96;
     public static const FORTUNE_TOKEN_STAT:int = 97;
     
@@ -154,7 +139,6 @@ public class StatData {
         switch (this.statType_) {
             case NAME_STAT:
             case GUILD_NAME_STAT:
-            case PET_NAME_STAT:
             case ACCOUNT_ID_STAT:
             case OWNER_ACCOUNT_ID_STAT:
                 return (true);
