@@ -1,8 +1,8 @@
-RotMG:RPG
+# RotMG:RPG
 
 Credits:
 
-Developers:
+## Developers:
 
 -DemonLives(Demon09090123)
   
@@ -10,7 +10,7 @@ Developers:
   
 -Kierze(Kierze) 
 
-Original Source Credit:
+## Original Source Credit:
 
 -Nilly Realm Team.
   
