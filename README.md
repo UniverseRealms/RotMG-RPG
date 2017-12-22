@@ -4,15 +4,15 @@ Credits:
 
 Developers:
 
--*DemonLives(Demon09090123)
+-DemonLives(Demon09090123)
   
--*Vuala(SwyftLoe) 
+-Vuala(SwyftLoe) 
   
--*Kierze(Kierze) 
+-Kierze(Kierze) 
 
 Original Source Credit:
 
-*Nilly Realm Team.
+-Nilly Realm Team.
   
 
 
