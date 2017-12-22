@@ -1,2 +1,6 @@
-# RPG-Realm
-New Pserver project
+RotMG:RPG
+
+Credits:
+-DemonLives(Demon09090123)
+-Kierze(Kierze)
+-Vuala
