@@ -58,7 +58,8 @@ namespace wServer.networking.handlers
 
         private void HandlePortal(Player player, Portal portal)
         {
-            if (portal == null || !portal.Usable)
+            if (portal == null || !portal.Usable || SetPortalRequirement(player, portal,
+                player.Level) == false)
                 return;
 
             using (TimedLock.Lock(portal.CreateWorldLock))
@@ -74,8 +75,7 @@ namespace wServer.networking.handlers
                 }
 
                 if (world is Realm && !player.Manager.Resources.GameData.ObjectTypeToId[portal.ObjectDesc.ObjectType].Contains("Cowardice"))
-                {
-                    
+                { 
                     player.FameCounter.CompleteDungeon(player.Owner.Name);
                 }
 
@@ -104,6 +104,29 @@ namespace wServer.networking.handlers
 
                 portal.WorldInstanceSet += player.Reconnect;
             }
+        }
+
+        private bool SetPortalRequirement(Player player,Portal portal, int level)
+        {
+            switch(portal.ObjectType)
+            {
+                case 0x071b:
+                    if (level < 50) return FalseNotification(player, level);
+                    else return true;
+                case 0x070c:
+                    if (level < 100) return FalseNotification(player, level);
+                    else return true;
+                case 0x0717:
+                    if (level < 200) return FalseNotification(player, level);
+                    else return true;
+            }
+            return true;
+        }
+
+        private bool FalseNotification(Player player, int level)
+        {
+            player.SendInfo("You must be level:" + level + " To enter this portal!");
+            return false;
         }
     }
 }

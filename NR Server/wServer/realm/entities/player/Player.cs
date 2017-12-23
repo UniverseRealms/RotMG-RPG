@@ -537,32 +537,6 @@ namespace wServer.realm.entities
 
             SetNewbiePeriod();
 
-            if (owner.IsNotCombatMapArea)
-            {
-                Client.SendPacket(new GlobalNotification
-                {
-                    Text = Client.Account.Gifts.Length > 0 ? "giftChestOccupied" : "giftChestEmpty"
-                });
-
-                if (DeathArena.Instance?.CurrentState != DeathArena.ArenaState.NotStarted && DeathArena.Instance?.CurrentState != DeathArena.ArenaState.Ended)
-                {
-                    Client.SendPacket(new GlobalNotification
-                    {
-                        Type = GlobalNotification.ADD_ARENA,
-                        Text = $"{{\"name\":\"Oryx Arena\",\"open\":{DeathArena.Instance?.CurrentState == DeathArena.ArenaState.CountDown}}}"
-                    });
-                }
-
-                if (worlds.logic.Arena.Instance?.CurrentState != worlds.logic.Arena.ArenaState.NotStarted)
-                {
-                    Client.SendPacket(new GlobalNotification
-                    {
-                        Type = GlobalNotification.ADD_ARENA,
-                        Text = $"{{\"name\":\"Public Arena\",\"open\":{worlds.logic.Arena.Instance?.CurrentState == worlds.logic.Arena.ArenaState.CountDown}}}"
-                    });
-                }
-            }
-
             base.Init(owner);
         }
 
@@ -602,10 +576,6 @@ namespace wServer.realm.entities
         void TickActivateEffects(RealmTime time)
         {
             var dt = time.ElaspedMsDelta;
-
-            if (XPBoostTime != 0)
-                if (Level >= 20)
-                    XPBoostTime = 0;
             
             if (XPBoostTime > 0)
                 XPBoostTime = Math.Max(XPBoostTime - dt, 0);
