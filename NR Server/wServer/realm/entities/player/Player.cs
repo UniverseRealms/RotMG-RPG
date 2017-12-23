@@ -879,8 +879,8 @@ namespace wServer.realm.entities
                 Random ran = new Random();
                 Random ran2 = new Random();
 
-                int chance = ran.Next(0, 1);
-                int _chance = ran2.Next(0, 1);
+                int chance = ran.Next(0, 3);
+                int _chance = ran2.Next(0, 4);
 
                 if (chance != _chance)
                     Inventory[i] = null;
