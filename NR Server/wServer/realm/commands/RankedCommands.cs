@@ -1902,6 +1902,26 @@ namespace wServer.realm.commands
         }
     }
 
+    class LevelUpCommand : Command
+    {
+        public LevelUpCommand() : base("lvlup", permLevel: 80, alias: "lup") { }
+
+        protected override bool Process(Player player, RealmTime time, string args)
+        {
+            if (args == null)
+            {
+                player.SendInfo("/lvlup <amount>");
+                return false;
+            }
+            int lvlinc = Convert.ToInt32(args);
+            int lvl = player.Level + lvlinc;
+
+            player.Experience = Player.GetLevelExp(lvl);
+            player.Level = lvl;
+            return true;
+        }
+    }
+
     class Level20Command : Command
     {
         public Level20Command() : base("level20", permLevel: 80, alias: "l20") { }
@@ -1912,10 +1932,8 @@ namespace wServer.realm.commands
             {
                 player.Experience = Player.GetLevelExp(20);
                 player.Level = 20;
-                player.CalculateFame();
                 return true;
             }
-
             return false;
         }
     }

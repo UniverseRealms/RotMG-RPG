@@ -826,85 +826,6 @@ namespace wServer.realm.entities
                       src);
         }
 
-        void GenerateGravestone(bool phantomDeath = false)
-        {
-            var playerDesc = Manager.Resources.GameData.Classes[ObjectType];
-            var maxed = playerDesc.Stats.Where((t, i) => Stats.Base[i] >= t.MaxValue).Count();
-            ushort objType;
-            int time;
-            switch (maxed)
-            {
-                case 8: objType = 0x0735; time = 600000; break;
-                case 7: objType = 0x0734; time = 600000; break;
-                case 6: objType = 0x072b; time = 600000; break;
-                case 5: objType = 0x072a; time = 600000; break;
-                case 4: objType = 0x0729; time = 600000; break;
-                case 3: objType = 0x0728; time = 600000; break;
-                case 2: objType = 0x0727; time = 600000; break;
-                case 1: objType = 0x0726; time = 600000; break;
-                default:
-                    objType = 0x0725; time = 300000;
-                    if (Level < 20) { objType = 0x0724; time = 60000; }
-                    if (Level <= 1) { objType = 0x0723; time = 30000; }
-                    break;
-            }
-
-            var obj = new StaticObject(Manager, objType, time, true, true, false);
-            obj.Move(X, Y);
-            obj.Name = (!phantomDeath) ? Name : $"{Name} got rekt";
-            Owner.EnterWorld(obj);
-        }
-
-        private bool Arena(string killer)
-        {
-            if (!(Owner is Arena) && !(Owner is ArenaSolo))
-                return false;
-
-            foreach (var player in Owner.Players.Values)
-                player.SendInfo("{\"key\":\"{arena.death}\",\"tokens\":{\"player\":\"" + Name + "\",\"enemy\":\"" + killer + "\"}}");
-            
-            ReconnectToNexus();
-            return true;
-        }
-
-        private bool NonPermaKillEnemy(Entity entity, string killer)
-        {
-            if (entity == null)
-            {
-                return false;
-            }
-
-            if (!entity.Spawned && entity.Controller == null)
-                return false;
-
-            //foreach (var player in Owner.Players.Values)
-            //    player.SendInfo(Name + " was sent home crying by a phantom " + killer);
-
-            GenerateGravestone(true);
-            ReconnectToNexus();
-            return true;
-        }
-
-        private bool Rekted(bool rekt)
-        {
-            if (!rekt)
-                return false;
-
-            GenerateGravestone(true);
-            ReconnectToNexus();
-            return true;
-        }
-
-        private bool TestWorld(string killer)
-        {
-            if (!(Owner is Test))
-                return false;
-
-            GenerateGravestone();
-            ReconnectToNexus();
-            return true;
-        }
-
         bool _dead;
         bool Resurrection()
         {
@@ -939,54 +860,9 @@ namespace wServer.realm.entities
 
         private void AnnounceDeath(string killer)
         {
-            var playerDesc = Manager.Resources.GameData.Classes[ObjectType];
-            var maxed = playerDesc.Stats.Where((t, i) => Stats.Base[i] >= t.MaxValue).Count();
-            var deathMessage = string.Format(
-                "{{\"key\":\"{{server.deathStats}}\",\"tokens\":{{\"player\":\"{0}\",\"level\":\"{1}\",\"fame\":\"{2}\",\"maxed\":\"{3}\",\"enemy\":\"{4}\"}}}}",
-                Name, Level, _client.Character.FinalFame, maxed, killer);
-
-            // notable deaths
-            if ((maxed >= 6 || Fame >= 1000) && !Client.Account.Admin)
-            {
-                foreach (var w in Manager.Worlds.Values)
-                    foreach (var p in w.Players.Values)
-                        p.SendHelp(deathMessage);
-                return;
-            }
-
-            var pGuild = Client.Account.GuildId;
-
-            // guild case, only for level 20
-            if(pGuild > 0 && Level == 20)
-            {
-                foreach(var w in Manager.Worlds.Values)
-                {
-                    foreach (var p in w.Players.Values)
-                    {
-                        if (p.Client.Account.GuildId == pGuild)
-                        {
-                            p.SendGuildDeath(deathMessage);
-                        }
-                    }
-                }
-
-                foreach (var i in Owner.Players.Values)
-                {
-                    if (i.Client.Account.GuildId != pGuild)
-                    {
-                        i.SendInfo(deathMessage);
-                    }
-                 }
-            }
-            // guild less case
-            else
-            {
-                foreach (var i in Owner.Players.Values)
-                {
-                    i.SendInfo(deathMessage);
-                }
-            }         
-                
+            foreach (var w in Manager.Worlds.Values)
+                foreach (var i in w.Players.Values)
+                    i.SendInfo(Name + " was killed by:" + killer + " at level:" + Level); 
         }
 
         public void Death(string killer, Entity entity = null, WmapTile tile = null, bool rekt = false)
@@ -994,46 +870,23 @@ namespace wServer.realm.entities
             if (_client.State == ProtocolState.Disconnected || _dead)
                 return;
 
-            if (tile != null && tile.Spawned)
-            {
-                rekt = true;
-            }
 
-            _dead = true;
-
-            if (Rekted(rekt))
-                return;
-            if (Arena(killer))
-                return;
-            if (NonPermaKillEnemy(entity, killer))
-                return;
-            if (TestWorld(killer))
-                return;
             if (Resurrection())
                 return;
 
-            SaveToCharacter();
-            Manager.Database.Death(Manager.Resources.GameData, _client.Account,
-                _client.Character, FameCounter.Stats, killer);
+            for (var i = 0; i <= Inventory.Length; i++)
+            {
+                Random ran = new Random();
+                Random ran2 = new Random();
 
-            GenerateGravestone();
+                int chance = ran.Next(0, 1);
+                int _chance = ran2.Next(0, 1);
+
+                if (chance != _chance)
+                    Inventory[i] = null;
+            }
             AnnounceDeath(killer);
-
-            _client.SendPacket(new Death()
-            {
-                AccountId = AccountId.ToString(),
-                CharId = _client.Character.CharId,
-                KilledBy = killer,
-                ZombieId = -1
-            });
-
-            Owner.Timers.Add(new WorldTimer(1000, (w, t) =>
-            {
-                if (_client.Player != this)
-                    return;
-
-                _client.Disconnect();
-            }));
+            ReconnectToNexus();
         }
 
         public void Reconnect(World world)

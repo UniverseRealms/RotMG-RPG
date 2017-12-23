@@ -9,13 +9,31 @@ namespace wServer.realm.entities
     {
         public static int GetExpGoal(int level)
         {
-            return 50 + (level - 1) * 100;
+            if (level < 100)
+                return (level * 2) * 200;
+            else if (level >= 100 && level < 300)
+                return (level * 2) * 400;
+            else if (level >= 300 && level < 500)
+                return (level * 2) * 600;
+            else if (level >= 500 && level < 1000)
+                return (level * 2) * 800;
+            return (level * 2) * 800; 
         }
         public static int GetLevelExp(int level)
         {
-            if (level == 1) return 0;
-            return 50 * (level - 1) + (level - 2) * (level - 1) * 50;
+            if (level == 1)
+                return 0;
+            else if (level < 100 && level > 1)
+                return ((level * level) * 200) - ((level * 2) * 100);
+            else if (level >= 100 && level < 300)
+                return ((level * level) * 400) - ((level * 2) * 200);
+            else if (level >= 300 && level < 500)
+                return ((level * level) * 600) - ((level * 2) * 300);
+            else if (level >= 500 && level < 1000)
+                return ((level * level) * 800) - ((level * 2) * 400);
+            return ((level * level) * 800) - ((level * 2) * 400); 
         }
+                   
         public static int GetFameGoal(int fame)
         {
             if (fame >= 2000) return 0;
@@ -221,45 +239,45 @@ namespace wServer.realm.entities
             }
         }
 
-        public void CalculateFame()
-        {
-            var newFame = (Experience < 200 * 1000) ?
-                Experience / 1000 :
-                200 + (Experience - 200 * 1000) / 1000;
+        //public void CalculateFame()
+        //{
+        //    var newFame = (Experience < 200 * 1000) ?
+        //        Experience / 1000 :
+        //        200 + (Experience - 200 * 1000) / 1000;
 
-            if (newFame == Fame) 
-                return;
+        //    if (newFame == Fame) 
+        //        return;
 
-            var stats = FameCounter.ClassStats[ObjectType];
-            var newGoal = GetFameGoal(stats.BestFame > newFame ? stats.BestFame : newFame);
+        //    var stats = FameCounter.ClassStats[ObjectType];
+        //    var newGoal = GetFameGoal(stats.BestFame > newFame ? stats.BestFame : newFame);
 
-            if (newGoal > FameGoal)
-            {
-                BroadcastSync(new Notification()
-                {
-                    ObjectId = Id,
-                    Color = new ARGB(0xFF00FF00),
-                    Message = "{\"key\": \"server.class_quest_complete\"}"
-                }, p => this.DistSqr(p) < RadiusSqr);
-                Stars = GetStars();
-            }
-            else if (newFame != Fame)
-            {
-                BroadcastSync(new Notification()
-                {
-                    ObjectId = Id,
-                    Color = new ARGB(0xFFE25F00),
-                    Message = "+" + (newFame - Fame) + "Fame"
-                }, p => this.DistSqr(p) < RadiusSqr);
-            }
+        //    if (newGoal > FameGoal)
+        //    {
+        //        BroadcastSync(new Notification()
+        //        {
+        //            ObjectId = Id,
+        //            Color = new ARGB(0xFF00FF00),
+        //            Message = "{\"key\": \"server.class_quest_complete\"}"
+        //        }, p => this.DistSqr(p) < RadiusSqr);
+        //        Stars = GetStars();
+        //    }
+        //    else if (newFame != Fame)
+        //    {
+        //        BroadcastSync(new Notification()
+        //        {
+        //            ObjectId = Id,
+        //            Color = new ARGB(0xFFE25F00),
+        //            Message = "+" + (newFame - Fame) + "Fame"
+        //        }, p => this.DistSqr(p) < RadiusSqr);
+        //    }
 
-            Fame = newFame;
-            FameGoal = newGoal;
-        }
+        //    Fame = newFame;
+        //    FameGoal = newGoal;
+        //}
 
         bool CheckLevelUp()
         {
-            if (Experience - GetLevelExp(Level) >= ExperienceGoal && Level < 20)
+            if (Experience - GetLevelExp(Level) >= ExperienceGoal)
             {
                 Level++;
                 ExperienceGoal = GetExpGoal(Level);
@@ -276,25 +294,41 @@ namespace wServer.realm.entities
                 HP = Stats[0];
                 MP = Stats[1];
 
-                if (Level == 20)
-                {
-                    foreach (var i in Owner.Players.Values)
-                    {
-                        i.SendInfo(Name + " achieved level 20");
-                    }
-                }
-                else
-                {
-                    // to get exp scaled to new exp goal
-                    InvokeStatChange(StatsType.Experience, Experience - GetLevelExp(Level), true);
-                }
-                      
-                questEntity = null;
+                InvokeStatChange(StatsType.Experience, Experience - GetLevelExp(Level), true);
 
+                switch(Level)
+                {
+                    case 100:
+                        BroadCastLevel(Level);
+                        break;
+                    case 300:
+                        BroadCastLevel(Level);
+                        break;
+                    case 500:
+                        BroadCastLevel(Level);
+                        break;
+                    case 1000:
+                        BroadCastLevel(Level);
+                        break;
+                }  
+                questEntity = null;
                 return true;
             }
-            CalculateFame();
             return false;
+        }
+
+        private void BroadCastLevel(int level)
+        {
+            foreach (var m in Manager.Worlds.Values)
+                foreach (var i in m.Players.Values)
+                    i.SendInfo(Name + " has achieved level:" + level);
+
+            BroadcastSync(new Notification()
+            {
+                ObjectId = Id,
+                Color = new ARGB(0xFF00FF00),
+                Message = "Level:" + level + " achieved!"
+            }, p => this.DistSqr(p) < RadiusSqr);
         }
 
         public bool EnemyKilled(Enemy enemy, int exp, bool killer)
@@ -306,8 +340,13 @@ namespace wServer.realm.entities
                     Color = new ARGB(0xFF00FF00),
                     Message = "{\"key\":\"server.quest_complete\"}"
                 }, p => this.DistSqr(p) < RadiusSqr);
-            if (exp != 0)
+            if (exp != 0 && exp < ExperienceGoal)
             {
+                Experience += exp;
+            }
+            else if (exp != 0 && exp >= ExperienceGoal)
+            {
+                exp -= (exp - ExperienceGoal) - 1;
                 Experience += exp;
             }
             FameCounter.Killed(enemy, killer);
