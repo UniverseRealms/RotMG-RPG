@@ -73,13 +73,11 @@ public class TitleView extends Sprite {
         var _local1:TitleMenuOption = ButtonFactory.getPlayButton();
         var _local2:TitleMenuOption = ButtonFactory.getServersButton();
         var _local3:TitleMenuOption = ButtonFactory.getAccountButton();
-        var _local4:TitleMenuOption = ButtonFactory.getLegendsButton();
         var _local5:TitleMenuOption = ButtonFactory.getSupportButton();
         var _local6:TitleMenuOption = ButtonFactory.getTextureEditorButton();
         this.playClicked = _local1.clicked;
         this.serversClicked = _local2.clicked;
         this.accountClicked = _local3.clicked;
-        this.legendsClicked = _local4.clicked;
         this.supportClicked = _local5.clicked;
         this.textureEditorClicked = _local6.clicked;
         var _local7:MenuOptionsBar = new MenuOptionsBar();
@@ -87,8 +85,7 @@ public class TitleView extends Sprite {
         _local7.addButton(_local2, MenuOptionsBar.LEFT);
         _local7.addButton(_local5, MenuOptionsBar.LEFT);
         _local7.addButton(_local3, MenuOptionsBar.RIGHT);
-        _local7.addButton(_local4, MenuOptionsBar.RIGHT);
-        _local7.addButton(_local6, MenuOptionsBar.LEFT);
+        _local7.addButton(_local6, MenuOptionsBar.RIGHT);
         return (_local7);
     }
 
