@@ -10,7 +10,9 @@ import com.company.util.KeyCodes;
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
+import flash.filters.BitmapFilter;
 import flash.filters.DropShadowFilter;
+import flash.filters.GlowFilter;
 import flash.utils.Dictionary;
 
 import kabam.rotmg.constants.ActivationType;
@@ -60,6 +62,7 @@ public class EquipmentToolTip extends ToolTip {
     private var powerText:TextFieldDisplayConcrete;
     private var keyInfoResponse:KeyInfoResponseSignal;
     private var originalObjectType:int;
+    private var glowFilter:GlowFilter;
 
     public function EquipmentToolTip(_arg1:int, _arg2:Player, _arg3:int, _arg4:String) {
         var _local8:HUDModel;
@@ -130,6 +133,11 @@ public class EquipmentToolTip extends ToolTip {
         this.makeRestrictionList();
         this.makeRestrictionText();
         this.makeItemPowerText();
+        this.makeNameColor();
+    }
+
+    private function makeNameColor():void {
+        this.titleText.setColor(ObjectLibrary.getItemNameColor(this.objectType));
     }
 
     private function makeItemPowerText():void {
@@ -197,7 +205,15 @@ public class EquipmentToolTip extends ToolTip {
         var _local3:BitmapData = ObjectLibrary.getRedrawnTextureFromType(this.objectType, 60, true, true, _local2);
         _local3 = BitmapUtil.cropToBitmapData(_local3, 4, 4, (_local3.width - 8), (_local3.height - 8));
         this.icon = new Bitmap(_local3);
+        MakeGlow(this.icon);
         addChild(this.icon);
+    }
+
+    private function MakeGlow(_arg1:Bitmap):void{
+        var _local1:int = ObjectLibrary.getItemNameColor(objectType)
+        this.glowFilter = new GlowFilter(_local1, 1, 6, 6, 2, 1);
+
+        _arg1.filters = [glowFilter];
     }
 
     private function addTierText():void {

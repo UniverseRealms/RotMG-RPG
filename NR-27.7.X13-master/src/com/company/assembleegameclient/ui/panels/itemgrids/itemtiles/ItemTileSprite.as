@@ -5,6 +5,7 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.filters.ColorMatrixFilter;
+import flash.filters.GlowFilter;
 import flash.geom.Matrix;
 
 import kabam.rotmg.constants.ItemConstants;
@@ -24,6 +25,7 @@ public class ItemTileSprite extends Sprite {
     public var itemId:int;
     public var itemBitmap:Bitmap;
     private var bitmapFactory:BitmapTextFactory;
+    private var glowFilter:GlowFilter;
 
     public function ItemTileSprite() {
         this.itemBitmap = new Bitmap();
@@ -61,9 +63,12 @@ public class ItemTileSprite extends Sprite {
                 _local4 = this.bitmapFactory.make(new StaticStringBuilder(String(_local3.Quantity)), 12, 0xFFFFFF, false, IDENTITY_MATRIX, false);
                 _local2.draw(_local4, DOSE_MATRIX);
             }
+            var _local5:int = ObjectLibrary.getItemNameColor(_local1);
+            this.glowFilter = new GlowFilter(_local5, 1, 6, 6, 1.5, 1);
             this.itemBitmap.bitmapData = _local2;
             this.itemBitmap.x = (-(_local2.width) / 2);
             this.itemBitmap.y = (-(_local2.height) / 2);
+            this.itemBitmap.filters = [glowFilter];
             visible = true;
         }
         else {

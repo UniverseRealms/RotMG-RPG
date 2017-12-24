@@ -1458,6 +1458,7 @@
          <LifetimeMS>260</LifetimeMS>
       </Projectile>
       <BagType>6</BagType>
+	  <Rarity>Rare</Rarity>
       <FameBonus>6</FameBonus>
       <NumProjectiles>2</NumProjectiles>
       <ArcGap>40</ArcGap>

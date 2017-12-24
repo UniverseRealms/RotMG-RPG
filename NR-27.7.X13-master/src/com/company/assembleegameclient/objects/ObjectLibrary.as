@@ -292,6 +292,41 @@ public class ObjectLibrary {
         return (false);
     }
 
+    public static function getRarity(_arg1:int):String {
+        var _local1:XML = xmlLibrary_[_arg1];
+        if(_local1 == null) {
+            return "Common";
+        }
+        var _local2:String = "Common";
+        if(_local1.hasOwnProperty("Rarity")) {
+            _local2 = _local1.Rarity;
+        }
+        return _local2;
+    }
+
+    public static function getRarityColor(_arg1:String):int {
+        switch(_arg1) {
+            case "Poor":
+                return 0x9d9d9d;
+            case "Common":
+                return 0xffffff;
+            case "Uncommon":
+                return 0x1eff00;
+            case "Rare":
+                return 0x0070dd;
+            case "Heroic":
+                return 0xa335ee;
+            case "Legendary":
+                return 0xff8000;
+            default:
+                return 0xffffff;
+        }
+    }
+
+    public static function getItemNameColor(_arg1:int):int {
+        return getRarityColor(getRarity(_arg1));
+    }
+
     public static function isSoulbound(_arg1:int):Boolean {
         var _local2:XML = xmlLibrary_[_arg1];
         return (((!((_local2 == null))) && (_local2.hasOwnProperty("Soulbound"))));
