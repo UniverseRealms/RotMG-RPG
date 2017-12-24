@@ -256,9 +256,6 @@ namespace common
 
             if (field != null)
                 return;
-
-            if (DiscordId != null)
-                DiscordRank = (int) db.HashGet("discordRank", DiscordId);
             
             var time = Utils.FromUnixTimestamp(BanLiftTime);
             if (!Banned || (BanLiftTime <= -1 || time > DateTime.UtcNow)) return;
@@ -268,7 +265,6 @@ namespace common
         }
 
         public int AccountId { get; private set; }
-        public int DiscordRank { get; private set; }
 
         public int AccountIdOverride
         {
@@ -515,7 +511,7 @@ namespace common
 
         public int Rank
         {
-            get { return DiscordRank > LegacyRank ? DiscordRank : LegacyRank; }
+            get { return LegacyRank; }
         }
 
         public PrivateMessages PrivateMessages
@@ -755,55 +751,6 @@ namespace common
         }
     }
 
-    public class DbDeath : RedisObject
-    {
-        public DbAccount Account { get; private set; }
-        public int CharId { get; private set; }
-
-        public DbDeath(DbAccount acc, int charId)
-        {
-            Account = acc;
-            CharId = charId;
-            Init(acc.Database, "death." + acc.AccountId + "." + charId);
-        }
-
-        public ushort ObjectType
-        {
-            get { return GetValue<ushort>("objType"); }
-            set { SetValue<ushort>("objType", value); }
-        }
-
-        public int Level
-        {
-            get { return GetValue<int>("level"); }
-            set { SetValue<int>("level", value); }
-        }
-
-        public int TotalFame
-        {
-            get { return GetValue<int>("totalFame"); }
-            set { SetValue<int>("totalFame", value); }
-        }
-
-        public string Killer
-        {
-            get { return GetValue<string>("killer"); }
-            set { SetValue<string>("killer", value); }
-        }
-
-        public bool FirstBorn
-        {
-            get { return GetValue<bool>("firstBorn"); }
-            set { SetValue<bool>("firstBorn", value); }
-        }
-
-        public DateTime DeathTime
-        {
-            get { return GetValue<DateTime>("deathTime"); }
-            set { SetValue<DateTime>("deathTime", value); }
-        }
-    }
-
     public struct DbNewsEntry
     {
         [JsonIgnore] public DateTime Date;
@@ -892,135 +839,7 @@ namespace common
             Field = "items";
             Init(acc.Database, "char." + acc.AccountId + "." + charId, Field);
         }
-    }
-
-    public struct DbLegendEntry
-    {
-        public readonly int AccId;
-        public readonly int ChrId;
-
-        public DbLegendEntry(int accId, int chrId)
-        {
-            AccId = accId;
-            ChrId = chrId;
-        }
-    }
-
-    public static class DbLegend
-    {
-        private const int MaxListings = 20;
-        private const int MaxGlowingRank = 10;
-        private static readonly Dictionary<string, TimeSpan> TimeSpans = new Dictionary<string, TimeSpan>()
-        {
-            {"week", TimeSpan.FromDays(7) },
-            {"month", TimeSpan.FromDays(30) },
-            {"all", TimeSpan.MaxValue }
-        };
-
-        public static void Clean(IDatabase db)
-        {
-            // remove legend entries that expired
-            foreach (var span in TimeSpans)
-            {
-                if (span.Value == TimeSpan.MaxValue)
-                {
-                    // bound legend by count
-                    db.SortedSetRemoveRangeByRankAsync($"legends:{span.Key}:byFame",
-                        0, -MaxListings - 1, CommandFlags.FireAndForget);
-                    continue;
-                }
-
-                // bound legend by time
-                var outdated = db.SortedSetRangeByScore(
-                    $"legends:{span.Key}:byTimeOfDeath", 0,
-                    DateTime.UtcNow.ToUnixTimestamp());
-                
-                var trans = db.CreateTransaction();
-                trans.SortedSetRemoveAsync($"legends:{span.Key}:byFame", outdated, CommandFlags.FireAndForget);
-                trans.SortedSetRemoveAsync($"legends:{span.Key}:byTimeOfDeath", outdated, CommandFlags.FireAndForget);
-                trans.ExecuteAsync(CommandFlags.FireAndForget);
-            }
-
-            // refresh legend hash
-            db.KeyDeleteAsync("legend", CommandFlags.FireAndForget);
-            foreach (var span in TimeSpans)
-            {
-                var legendTask = db.SortedSetRangeByRankAsync($"legends:{span.Key}:byFame", 
-                    0, MaxGlowingRank - 1, Order.Descending);
-                legendTask.ContinueWith(r =>
-                {
-                    var trans = db.CreateTransaction();
-                    foreach (var e in r.Result)
-                    {
-                        var accId = BitConverter.ToInt32(e, 0);
-                        trans.HashSetAsync("legend", accId, "",
-                            flags: CommandFlags.FireAndForget);
-                    }
-                    trans.ExecuteAsync(CommandFlags.FireAndForget);
-                });
-            }
-
-            db.StringSetAsync("legends:updateTime", DateTime.UtcNow.ToUnixTimestamp(),
-                flags: CommandFlags.FireAndForget);
-        }
-
-        public static void Insert(IDatabase db,
-            int accId, int chrId, int totalFame)
-        {
-            var buff = new byte[8];
-            Buffer.BlockCopy(BitConverter.GetBytes(accId), 0, buff, 0, 4);
-            Buffer.BlockCopy(BitConverter.GetBytes(chrId), 0, buff, 4, 4);
-
-            // add entry to each legends list
-            var trans = db.CreateTransaction();
-            foreach (var span in TimeSpans)
-            {
-                trans.SortedSetAddAsync($"legends:{span.Key}:byFame", 
-                    buff, totalFame, CommandFlags.FireAndForget);
-
-                if (span.Value == TimeSpan.MaxValue)
-                    continue;
-
-                double t = DateTime.UtcNow.Add(span.Value).ToUnixTimestamp();
-                trans.SortedSetAddAsync($"legends:{span.Key}:byTimeOfDeath", 
-                    buff, t, CommandFlags.FireAndForget);
-            }
-            trans.ExecuteAsync();
-
-            // add legend if character falls within MaxGlowingRank
-            foreach (var span in TimeSpans)
-            {
-                db.SortedSetRankAsync($"legends:{span.Key}:byFame", buff, Order.Descending)
-                    .ContinueWith(r =>
-                    {
-                        if (r.Result >= MaxGlowingRank)
-                            return;
-
-                        db.HashSetAsync("legend", accId, "",
-                            flags: CommandFlags.FireAndForget);
-                    });
-            }
-
-            db.StringSetAsync("legends:updateTime", DateTime.UtcNow.ToUnixTimestamp(),
-                flags: CommandFlags.FireAndForget);
-        }
-
-        public static DbLegendEntry[] Get(IDatabase db, string timeSpan)
-        {
-            if (!TimeSpans.ContainsKey(timeSpan))
-                return new DbLegendEntry[0];
-            
-            var listings = db.SortedSetRangeByRank(
-                $"legends:{timeSpan}:byFame", 
-                0, MaxListings - 1, Order.Descending);
-
-            return listings
-                .Select(e => new DbLegendEntry(
-                    BitConverter.ToInt32(e, 0),
-                    BitConverter.ToInt32(e, 4)))
-                .ToArray();
-        }
-    }
+    }    
 
     public class DbGuild : RedisObject
     {

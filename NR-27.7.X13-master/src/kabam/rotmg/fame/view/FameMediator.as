@@ -13,7 +13,6 @@ import kabam.rotmg.core.signals.SetScreenSignal;
 import kabam.rotmg.death.model.DeathModel;
 import kabam.rotmg.fame.model.FameModel;
 import kabam.rotmg.fame.service.RequestCharacterFameTask;
-import kabam.rotmg.legends.view.LegendsView;
 import kabam.rotmg.messaging.impl.incoming.Death;
 
 import robotlegs.bender.bundles.mvcs.Mediator;
@@ -39,13 +38,11 @@ public class FameMediator extends Mediator {
 
 
     override public function initialize():void {
-        this.view.closed.add(this.onClosed);
         this.setViewDataFromDeath();
         this.requestFameData();
     }
 
     override public function destroy():void {
-        this.view.closed.remove(this.onClosed);
         this.view.clearBackground();
         ((this.death) && (this.death.disposeBackground()));
         this.task.finished.removeAll();
@@ -92,16 +89,5 @@ public class FameMediator extends Mediator {
         var _local3:MaskedImage = _local2.imageFromDir(AnimatedChar.RIGHT, AnimatedChar.STAND, 0);
         return (TextureRedrawer.resize(_local3.image_, _local3.mask_, 250, true, this.task.texture1, this.task.texture2));
     }
-
-    private function onClosed():void {
-        if (this.isFreshDeath) {
-            this.setScreen.dispatch(new LegendsView());
-        }
-        else {
-            this.gotoPrevious.dispatch();
-        }
-    }
-
-
 }
 }

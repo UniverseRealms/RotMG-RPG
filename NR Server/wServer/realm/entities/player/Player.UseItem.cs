@@ -284,12 +284,12 @@ namespace wServer.realm.entities
                     case ActivateEffects.Teleport:
                         AETeleport(time, item, target, eff);
                         break;
-                    case ActivateEffects.VampireBlast:
-                        AEVampireBlast(time, item, target, eff);
-                        break;
-                    case ActivateEffects.Trap:
-                        AETrap(time, item, target, eff);
-                        break;
+                    //case ActivateEffects.VampireBlast:
+                    //    AEVampireBlast(time, item, target, eff);
+                    //    break;
+                    //case ActivateEffects.Trap:
+                    //    AETrap(time, item, target, eff);
+                    //    break;
                     case ActivateEffects.StasisBlast:
                         StasisBlast(time, item, target, eff);
                         break;
@@ -299,9 +299,9 @@ namespace wServer.realm.entities
                     case ActivateEffects.Lightning:
                         AELightning(time, item, target, eff);
                         break;
-                    case ActivateEffects.PoisonGrenade:
-                        AEPoisonGrenade(time, item, target, eff);
-                        break;
+                    //case ActivateEffects.PoisonGrenade:
+                    //    AEPoisonGrenade(time, item, target, eff);
+                    //    break;
                     case ActivateEffects.RemoveNegativeConditions:
                         AERemoveNegativeConditions(time, item, target, eff);
                         break;
@@ -320,9 +320,9 @@ namespace wServer.realm.entities
                     case ActivateEffects.Dye:
                         AEDye(time, item, target, eff);
                         break;
-                    case ActivateEffects.ShurikenAbility:
-                        AEShurikenAbility(time, item, target, eff);
-                        break;
+                    //case ActivateEffects.ShurikenAbility:
+                    //    AEShurikenAbility(time, item, target, eff);
+                    //    break;
                     case ActivateEffects.Fame:
                         AEAddFame(time, item, target, eff);
                         break;
@@ -498,22 +498,22 @@ namespace wServer.realm.entities
             trans.Execute(CommandFlags.FireAndForget);
         }
 
-        private void AEShurikenAbility(RealmTime time, Item item, Position target, ActivateEffect eff)
-        {
-            if (!HasConditionEffect(ConditionEffects.NinjaSpeedy))
-            {
-                ApplyConditionEffect(ConditionEffectIndex.NinjaSpeedy);
-                return;
-            }
+        //private void AEShurikenAbility(RealmTime time, Item item, Position target, ActivateEffect eff)
+        //{
+        //    if (!HasConditionEffect(ConditionEffects.NinjaSpeedy))
+        //    {
+        //        ApplyConditionEffect(ConditionEffectIndex.NinjaSpeedy);
+        //        return;
+        //    }
             
-            if (MP >= item.MpEndCost)
-            {
-                MP -= item.MpEndCost;
-                AEShoot(time, item, target, eff);
-            }
+        //    if (MP >= item.MpEndCost)
+        //    {
+        //        MP -= item.MpEndCost;
+        //        AEShoot(time, item, target, eff);
+        //    }
 
-            ApplyConditionEffect(ConditionEffectIndex.NinjaSpeedy, 0);
-        }
+        //    ApplyConditionEffect(ConditionEffectIndex.NinjaSpeedy, 0);
+        //}
 
         private void AEDye(RealmTime time, Item item, Position target, ActivateEffect eff)
         {
@@ -770,87 +770,87 @@ namespace wServer.realm.entities
             BroadcastSync(pkts, p => this.DistSqr(p) < RadiusSqr);
         }
 
-        private void AETrap(RealmTime time, Item item, Position target, ActivateEffect eff)
-        {
-            BroadcastSync(new ShowEffect()
-            {
-                EffectType = EffectType.Throw,
-                Color = new ARGB(0xff9000ff),
-                TargetObjectId = Id,
-                Pos1 = target
-            }, p => this.DistSqr(p) < RadiusSqr);
+        //private void AETrap(RealmTime time, Item item, Position target, ActivateEffect eff)
+        //{
+        //    BroadcastSync(new ShowEffect()
+        //    {
+        //        EffectType = EffectType.Throw,
+        //        Color = new ARGB(0xff9000ff),
+        //        TargetObjectId = Id,
+        //        Pos1 = target
+        //    }, p => this.DistSqr(p) < RadiusSqr);
 
-            Owner.Timers.Add(new WorldTimer(1500, (world, t) =>
-            {
-                var trap = new Trap(
-                    this,
-                    eff.Radius,
-                    eff.TotalDamage,
-                    eff.ConditionEffect ?? ConditionEffectIndex.Slowed,
-                    eff.EffectDuration);
-                trap.Move(target.X, target.Y);
-                world.EnterWorld(trap);
-            }));
-        }
+        //    Owner.Timers.Add(new WorldTimer(1500, (world, t) =>
+        //    {
+        //        var trap = new Trap(
+        //            this,
+        //            eff.Radius,
+        //            eff.TotalDamage,
+        //            eff.ConditionEffect ?? ConditionEffectIndex.Slowed,
+        //            eff.EffectDuration);
+        //        trap.Move(target.X, target.Y);
+        //        world.EnterWorld(trap);
+        //    }));
+        //}
 
-        private void AEVampireBlast(RealmTime time, Item item, Position target, ActivateEffect eff)
-        {
-            var pkts = new List<Packet>
-            {
-                new ShowEffect()
-                {
-                    EffectType = EffectType.Trail,
-                    TargetObjectId = Id,
-                    Pos1 = target,
-                    Color = new ARGB(0xFFFF0000)
-                },
-                new ShowEffect
-                {
-                    EffectType = EffectType.Diffuse,
-                    Color = new ARGB(0xFFFF0000),
-                    TargetObjectId = Id,
-                    Pos1 = target,
-                    Pos2 = new Position { X = target.X + eff.Radius, Y = target.Y }
-                }
-            };
+        //private void AEVampireBlast(RealmTime time, Item item, Position target, ActivateEffect eff)
+        //{
+        //    var pkts = new List<Packet>
+        //    {
+        //        new ShowEffect()
+        //        {
+        //            EffectType = EffectType.Trail,
+        //            TargetObjectId = Id,
+        //            Pos1 = target,
+        //            Color = new ARGB(0xFFFF0000)
+        //        },
+        //        new ShowEffect
+        //        {
+        //            EffectType = EffectType.Diffuse,
+        //            Color = new ARGB(0xFFFF0000),
+        //            TargetObjectId = Id,
+        //            Pos1 = target,
+        //            Pos2 = new Position { X = target.X + eff.Radius, Y = target.Y }
+        //        }
+        //    };
 
-            var totalDmg = 0;
-            var enemies = new List<Enemy>();
-            Owner.AOE(target, eff.Radius, false, enemy =>
-            {
-                enemies.Add(enemy as Enemy);
-                totalDmg += (enemy as Enemy).Damage(this, time, eff.TotalDamage, false);
-            });
+        //    var totalDmg = 0;
+        //    var enemies = new List<Enemy>();
+        //    Owner.AOE(target, eff.Radius, false, enemy =>
+        //    {
+        //        enemies.Add(enemy as Enemy);
+        //        totalDmg += (enemy as Enemy).Damage(this, time, eff.TotalDamage, false);
+        //    });
 
-            var players = new List<Player>();
-            this.AOE(eff.Radius, true, player =>
-            {
-                if (!player.HasConditionEffect(ConditionEffects.Sick))
-                {
-                    players.Add(player as Player);
-                    ActivateHealHp(player as Player, totalDmg, pkts);
-                }
-            });
+        //    var players = new List<Player>();
+        //    this.AOE(eff.Radius, true, player =>
+        //    {
+        //        if (!player.HasConditionEffect(ConditionEffects.Sick))
+        //        {
+        //            players.Add(player as Player);
+        //            ActivateHealHp(player as Player, totalDmg, pkts);
+        //        }
+        //    });
 
-            if (enemies.Count > 0)
-            {
-                var rand = new Random();
-                for (var i = 0; i < 5; i++)
-                {
-                    var a = enemies[rand.Next(0, enemies.Count)];
-                    var b = players[rand.Next(0, players.Count)];
-                    pkts.Add(new ShowEffect()
-                    {
-                        EffectType = EffectType.Flow,
-                        TargetObjectId = b.Id,
-                        Pos1 = new Position() { X = a.X, Y = a.Y },
-                        Color = new ARGB(0xffffffff)
-                    });
-                }
-            }
+        //    if (enemies.Count > 0)
+        //    {
+        //        var rand = new Random();
+        //        for (var i = 0; i < 5; i++)
+        //        {
+        //            var a = enemies[rand.Next(0, enemies.Count)];
+        //            var b = players[rand.Next(0, players.Count)];
+        //            pkts.Add(new ShowEffect()
+        //            {
+        //                EffectType = EffectType.Flow,
+        //                TargetObjectId = b.Id,
+        //                Pos1 = new Position() { X = a.X, Y = a.Y },
+        //                Color = new ARGB(0xffffffff)
+        //            });
+        //        }
+        //    }
             
-            BroadcastSync(pkts, p => this.DistSqr(p) < RadiusSqr);
-        }
+        //    BroadcastSync(pkts, p => this.DistSqr(p) < RadiusSqr);
+        //}
 
         private void AETeleport(RealmTime time, Item item, Position target, ActivateEffect eff)
         {

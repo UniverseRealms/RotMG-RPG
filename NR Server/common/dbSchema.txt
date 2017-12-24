@@ -59,7 +59,6 @@ account.(accId)
   emotes (string)
   lastSeen (int)
   rankManager (int)
-  discordId (string)
   privateMessages (string)
 
 classStats.(accId)
@@ -95,17 +94,6 @@ char.(accId).(id)
 alive.(accId) [set] => list of all living characters for the account
 // notes: character ids (an int) are stored as a byte array (4 bytes)
 
-dead.(accId) [List] => list all dead characters (their character id) starting with the most recent death
-// notes: character id are stored as an array of bytes (4 bytes in this case for int)
-
-death.(accId).(chrId)
-  objType (ushort)
-  level (int)
-  totalFame (int)
-  killer (string)
-  firstBorn (bool)
-  deathTime (DateTime)
-
 news
   date => (json object)
     Icon (string)
@@ -115,17 +103,6 @@ news
 
 vault.(accId)
   vault.(chestId) => items (ushort[20])
-
-legend
-  (accId) => ""
-legends:(legendBoard):byFame [SortedSet]
-  (accId)(chrId) => totalFame
-legends:(legendBoard):byTimeOfDeath [SortedSet]
-  (accId)(chrId) => timeOfDeath
-legends:updateTime => last time legend sets were cleaned/updated
-// notes: Field key for the sorted sets is stored as a byte array
-   first four bytes accId, next four chrId. "legend" contains
-   accountId entries that should be glowing.
 
 guilds
   name => guildId (int)
@@ -145,17 +122,6 @@ ips
     Banned (bool)
     Notes (string)
 
-pet.(accId).(petId)
-  objType (ushort)
-  rarity (ushort)
-  maxLevel (int)
-  A(ability#)Type (int)
-  A(ability#)Level (int)
-  A(ability#)Power (int)
-// notes: pets right now have 3 abilities. So there will be A1, A2, A3 for each Type, Level, Power.
-// The world server is programmed to allow more than 3 abilities so there could be a case where the
-// would be an A4, A5 and such in the future.
-
 market
   (marketId) => marketId(4)|itemId(2)|price(4)|insertTime(4)|accountId(4) (byte[18])
 // notes: field value is a byte array. first 4 bytes: the market id, next 2 bytes: item id, and so forth
@@ -174,8 +140,3 @@ package.(pkgId)
   (accId) => amount account purchased (int)
 
 mutes:(ip) => ""
-
-discordRank
-	discordId => rank
-discordAccount.(discordId)
-   (accId) => 0

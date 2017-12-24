@@ -39,11 +39,8 @@ namespace wServer.realm.worlds
         public const int Test = -6;
         public const int Tinker = -7;
         public const int GuildHall = -8;
-        public const int Arena = -9;
         public const int ClothBazaar = -10;
         public const int FreeItems = -11;
-        public const int ArenaSolo = -13;
-        public const int DeathArena = -14;
         public const int MarketPlace = -15;
 
         private RealmManager _manager;

@@ -35,7 +35,6 @@ import kabam.rotmg.fortune.FortuneConfig;
 import kabam.rotmg.friends.FriendConfig;
 import kabam.rotmg.game.GameConfig;
 import kabam.rotmg.language.LanguageConfig;
-import kabam.rotmg.legends.LegendsConfig;
 import kabam.rotmg.maploading.MapLoadingConfig;
 import kabam.rotmg.minimap.MiniMapConfig;
 import kabam.rotmg.mysterybox.MysteryBoxConfig;
@@ -136,7 +135,6 @@ public class WebMain extends Sprite {
                 .configure(EditorConfig)
                 .configure(UIConfig)
                 .configure(MiniMapConfig)
-                .configure(LegendsConfig)
                 .configure(NewsConfig)
                 .configure(FameConfig)
                 .configure(TooltipsConfig)

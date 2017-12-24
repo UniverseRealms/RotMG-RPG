@@ -46,10 +46,6 @@ namespace wServer.realm.setpieces
             SetPiece(new TempleB(), 10, 20, WmapTerrain.MidForest, WmapTerrain.MidPlains),
             SetPiece(new Oasis(), 0, 5, WmapTerrain.LowSand, WmapTerrain.MidSand),
             SetPiece(new Pyre(), 0, 5, WmapTerrain.MidSand, WmapTerrain.HighSand),
-            SetPiece(new LavaFissure(), 3, 5, WmapTerrain.Mountains),
-            SetPiece(new LuckyDjinn(), 1, 1, WmapTerrain.Mountains),
-            SetPiece(new LuckyEnt(), 1, 1, WmapTerrain.Mountains),
-            SetPiece(new Crystal(), 1, 1, WmapTerrain.Mountains),
             SetPiece(new KageKami(), 2, 3, WmapTerrain.HighForest, WmapTerrain.HighPlains)
         };
 

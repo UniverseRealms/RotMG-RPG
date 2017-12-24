@@ -36,26 +36,11 @@ namespace wServer.realm
 
         private readonly List<Tuple<string, ISetPiece>> _events = new List<Tuple<string, ISetPiece>>()
         {
-            Tuple.Create("Skull Shrine", (ISetPiece) new SkullShrine()),
-            Tuple.Create("Cube God", (ISetPiece) new CubeGod()),
-            Tuple.Create("Pentaract", (ISetPiece) new Pentaract()),
-            Tuple.Create("Grand Sphinx", (ISetPiece) new Sphinx()),
-            Tuple.Create("Lord of the Lost Lands", (ISetPiece) new LordoftheLostLands()),
-            Tuple.Create("Hermit God", (ISetPiece) new Hermit()),
-            Tuple.Create("Ghost Ship", (ISetPiece) new GhostShip()),
-            Tuple.Create("Fanatic of Chaos", (ISetPiece) new FanaticofChaos()),
-            //Tuple.Create("Dragon Head", (ISetPiece) new RockDragon()),
-            Tuple.Create("shtrs Defense System", (ISetPiece) new Avatar()),
-            //Tuple.Create("Zombie Horde", (ISetPiece) new ZombieHorde())
-            
+            //Tuple.Create("Zombie Horde", (ISetPiece) new ZombieHorde())            
         };
 
         private readonly List<Tuple<string, ISetPiece>> _rareEvents = new List<Tuple<string, ISetPiece>>()
         {
-            Tuple.Create("Boshy", (ISetPiece) new Boshy()),
-            Tuple.Create("Sanic", (ISetPiece) new Sanic()),
-            Tuple.Create("The Kid", (ISetPiece) new TheKid()),
-            Tuple.Create("Megaman", (ISetPiece) new Megaman())
         };
 
         #region "Taunt data"

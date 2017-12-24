@@ -34,8 +34,7 @@ namespace server.account
                     msg = "<Success/>";
                     break;
                 }
-                
-                Database.RankDiscord(dId, rank);
+
                 Write(context, msg);
                 RankManagerLog.Info($"[{acc.Name}] Discord rank changed ({dId}:{rank})");
             }

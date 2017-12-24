@@ -105,7 +105,6 @@ namespace server
         {
             {"/char/list", new @char.list()},
             {"/char/delete", new @char.delete()},
-            {"/char/fame", new @char.fame()},
             {"/account/register", new account.register()},
             {"/account/verify", new account.verify()},
             {"/account/forgotPassword", new account.forgotPassword()},
@@ -137,8 +136,6 @@ namespace server
             {"/privateMessage/list", new privateMessage.list()},
             {"/privateMessage/delete", new privateMessage.delete()},
             {"/account/rank", new account.rank()},
-            {"/account/registerDiscord", new account.registerDiscord()},
-            {"/account/unregisterDiscord", new account.unregisterDiscord()},
             {"/dailyLogin/fetchCalendar", new dailyLogin.fetchCalendar()},
             {"/inGameNews/getNews", new inGameNews.getNews()},
             {"/friends/getList", new friends.getList()},

@@ -23,7 +23,6 @@ import kabam.rotmg.core.signals.SetScreenWithValidDataSignal;
 import kabam.rotmg.core.view.Layers;
 import kabam.rotmg.dialogs.control.OpenDialogSignal;
 import kabam.rotmg.editor.view.TextureView;
-import kabam.rotmg.legends.view.LegendsView;
 import kabam.rotmg.ui.model.EnvironmentData;
 import kabam.rotmg.ui.signals.EnterGameSignal;
 
@@ -66,7 +65,6 @@ public class TitleMediator extends Mediator {
         this.view.playClicked.add(this.handleIntentionToPlay);
         this.view.serversClicked.add(this.showServersScreen);
         this.view.accountClicked.add(this.handleIntentionToReviewAccount);
-        this.view.legendsClicked.add(this.showLegendsScreen);
         this.view.supportClicked.add(this.openSupportPage);
         this.view.textureEditorClicked.add(this.showTextureEditor);
         if (this.playerModel.isNewToEditing()) {
@@ -135,7 +133,6 @@ public class TitleMediator extends Mediator {
         this.view.playClicked.remove(this.handleIntentionToPlay);
         this.view.serversClicked.remove(this.showServersScreen);
         this.view.accountClicked.remove(this.handleIntentionToReviewAccount);
-        this.view.legendsClicked.remove(this.showLegendsScreen);
         this.view.supportClicked.remove(this.openSupportPage);
         this.view.optionalButtonsAdded.remove(this.onOptionalButtonsAdded);
         ((this.view.editorClicked) && (this.view.editorClicked.remove(this.showMapEditor)));
@@ -157,10 +154,6 @@ public class TitleMediator extends Mediator {
 
     private function handleIntentionToReviewAccount():void {
         this.openAccountInfo.dispatch(false);
-    }
-
-    private function showLegendsScreen():void {
-        this.setScreen.dispatch(new LegendsView());
     }
 
     private function showMapEditor():void {

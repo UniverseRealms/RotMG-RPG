@@ -1067,53 +1067,7 @@ namespace common
             _db.SetRemoveAsync("alive." + acc.AccountId, buff);
             _db.ListRemoveAsync("dead." + acc.AccountId, buff);
         }
-
-        public void Death(XmlData dat, DbAccount acc, DbChar character, FameStats stats, string killer)
-        {
-            character.Dead = true;
-            var classStats = new DbClassStats(acc);
-
-            // calculate total fame given bonuses
-            bool firstBorn;
-            var finalFame = stats.CalculateTotal(dat, character,
-                classStats, out firstBorn);
-
-            // save character
-            character.FinalFame = finalFame;
-            SaveCharacter(acc, character, classStats, acc.LockToken != null);
-
-            var death = new DbDeath(acc, character.CharId)
-            {
-                ObjectType = character.ObjectType,
-                Level = character.Level,
-                TotalFame = finalFame,
-                Killer = killer,
-                FirstBorn = firstBorn,
-                DeathTime = DateTime.UtcNow
-            };
-            death.FlushAsync();
-
-            var idBuff = BitConverter.GetBytes(character.CharId);
-            _db.SetRemoveAsync(
-                "alive." + acc.AccountId, idBuff, CommandFlags.FireAndForget);
-            _db.ListLeftPushAsync(
-                "dead." + acc.AccountId, idBuff, When.Always, CommandFlags.FireAndForget);
-
-            UpdateFame(acc, finalFame);
-
-            var guild = new DbGuild(acc);
-            if (!guild.IsNull)
-            {
-                UpdateGuildFame(guild, finalFame);
-                UpdatePlayerGuildFame(acc, finalFame);
-            }
-
-            if (!acc.Admin)
-            {
-                DbLegend.Insert(_db, acc.AccountId, character.CharId, finalFame);
-            }
-        }
-
+        
         public void ResetFame()
         {
             // this function should only be used when one wants to 
@@ -1216,15 +1170,7 @@ namespace common
 
         public void WipeAccount(DbAccount acc, XmlData dat, string killer)
         {
-            // kill all characters on account
             var chars = GetAliveCharacters(acc);
-            foreach (var @char in chars)
-            {
-                var c = new DbChar(acc, @char);
-                var f = FameStats.Read(c.FameStats);
-
-                Death(dat, acc, c, f, killer);
-            }
             
             var accountSettings = _resources.Settings.Accounts;
             
@@ -1400,20 +1346,6 @@ namespace common
             return int.Parse(time);
         }
 
-        public DbChar[] GetLegendsBoard(string timeSpan)
-        {
-            return DbLegend
-                .Get(_db, timeSpan)
-                .Select(e => LoadCharacter(e.AccId, e.ChrId))
-                .Where(e => e != null)
-                .ToArray();
-        }
-
-        public void CleanLegends()
-        {
-            DbLegend.Clean(_db);
-        }
-
         public Task<bool> IsLegend(int accId)
         {
             return _db.HashExistsAsync("legend", accId);
@@ -1435,27 +1367,6 @@ namespace common
             });
             _db.KeyExpireAsync(key, TimeSpan.FromSeconds(45), CommandFlags.FireAndForget);
             return task;
-        }
-
-        public void RegisterDiscord(string discordId, int accId)
-        {
-            _db.HashSetAsync($"discordAccount.{discordId}", accId, 0, When.Always, CommandFlags.FireAndForget);
-            _db.HashSetAsync($"account.{accId}", "discordId", discordId, When.Always, CommandFlags.FireAndForget);
-        }
-
-        public bool UnregisterDiscord(string discordId, int accId)
-        {
-            if (!_db.HashExists($"discordAccount.{discordId}", accId))
-                return false;
-
-            _db.HashDeleteAsync($"discordAccount.{discordId}", accId, CommandFlags.FireAndForget);
-            _db.HashDeleteAsync($"account.{accId}", "discordId", CommandFlags.FireAndForget);
-            return true;
-        }
-
-        public void RankDiscord(string discordId, int rank)
-        {
-            _db.HashSetAsync("discordRank", discordId, rank, When.Always, CommandFlags.FireAndForget);
         }
     }
 }

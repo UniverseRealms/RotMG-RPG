@@ -85,11 +85,6 @@ namespace wServer.realm.commands
             }
 
             var owner = player.Owner;
-            if (owner != null && (owner is Arena || owner is ArenaSolo || owner is DeathArena))
-            {
-                player.SendInfo("Can't pause in arena.");
-                return false;
-            }
 
             if (player.Owner.EnemiesCollision.HitTest(player.X, player.Y, 8).OfType<Enemy>().Any())
             {
@@ -707,40 +702,6 @@ namespace wServer.realm.commands
         }
     }
 
-    class ArenaCommand : Command
-    {
-        public ArenaCommand() : base("arena") { }
-
-        protected override bool Process(Player player, RealmTime time, string args)
-        {
-            player.Client.Reconnect(new Reconnect()
-            {
-                Host = "",
-                Port = 2050,
-                GameId = World.Arena,
-                Name = "Arena"
-            });
-            return true;
-        }
-    }
-
-    class DeathArenaCommand : Command
-    {
-        public DeathArenaCommand() : base("oa") { }
-
-        protected override bool Process(Player player, RealmTime time, string args)
-        {
-            player.Client.Reconnect(new Reconnect()
-            {
-                Host = "",
-                Port = 2050,
-                GameId = World.DeathArena,
-                Name = "Oryx's Arena"
-            });
-            return true;
-        }
-    }
-
     class RealmCommand : Command
     {
         public RealmCommand() : base("realm") { }
@@ -804,23 +765,6 @@ namespace wServer.realm.commands
                 Port = 2050,
                 GameId = -5,
                 Name = "Vault"
-            });
-            return true;
-        }
-    }
-
-    class SoloArenaCommand : Command
-    {
-        public SoloArenaCommand() : base("sa") { }
-
-        protected override bool Process(Player player, RealmTime time, string args)
-        {
-            player.Client.Reconnect(new Reconnect()
-            {
-                Host = "",
-                Port = 2050,
-                GameId = World.ArenaSolo,
-                Name = "Arena Solo"
             });
             return true;
         }
@@ -1494,12 +1438,6 @@ namespace wServer.realm.commands
             }
 
             var owner = player.Owner;
-            if (!player.Client.Account.Admin && owner != null &&
-                (owner is Arena || owner is ArenaSolo || owner is DeathArena))
-            {
-                player.SendInfo("Can't spectate in Arenas. (Temporary solution till we get spectate working across maps.)");
-                return false;
-            }
 
             var target = player.Owner.Players.Values
                 .SingleOrDefault(p => p.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && p.CanBeSeenBy(player));

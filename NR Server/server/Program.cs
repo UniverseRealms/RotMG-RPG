@@ -24,7 +24,6 @@ namespace server
         internal static ISManager ISManager;
         internal static ChatManager ChatManager;
         internal static ISControl ISControl;
-        internal static LegendSweeper LegendSweeper;
 
         static void Main(string[] args)
         {
@@ -58,8 +57,6 @@ namespace server
                 ISManager.Run();
                 ChatManager = new ChatManager(ISManager);
                 ISControl = new ISControl(ISManager);
-                LegendSweeper = new LegendSweeper(Database);
-                LegendSweeper.Run();
                 
                 Console.CancelKeyPress += delegate
                 {

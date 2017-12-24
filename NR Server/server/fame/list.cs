@@ -16,8 +16,6 @@ namespace server.fame
                     int.Parse(query["charId"])
                 );
             }
-            var list = FameList.FromDb(Database, query["timespan"], character);
-            Write(context, list.ToXml().ToString());
         }
     }
 }

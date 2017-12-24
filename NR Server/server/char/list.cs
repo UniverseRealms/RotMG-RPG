@@ -44,7 +44,7 @@ namespace server.@char
                     if (accOverride != null)
                         acc = accOverride;
                 }
-                
+
                 var list = CharList.FromDb(Database, acc);
                 list.Servers = GetServerList();
                 WriteXml(context, list.ToXml().ToString());

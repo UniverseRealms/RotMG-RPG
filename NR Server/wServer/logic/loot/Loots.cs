@@ -80,7 +80,7 @@ namespace wServer.logic.loot
         public void Handle(Enemy enemy, RealmTime time)
         {
             // enemies that shouldn't drop loot
-            if (enemy.Spawned || enemy.Owner is Arena || enemy.Owner is ArenaSolo)
+            if (enemy.Spawned)
             {
                 return;
             }
