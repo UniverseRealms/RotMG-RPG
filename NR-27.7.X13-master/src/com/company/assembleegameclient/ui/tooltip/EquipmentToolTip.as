@@ -211,7 +211,7 @@ public class EquipmentToolTip extends ToolTip {
 
     private function MakeGlow(_arg1:Bitmap):void{
         var _local1:int = ObjectLibrary.getItemNameColor(objectType)
-        this.glowFilter = new GlowFilter(_local1, 1, 6, 6, 2, 1);
+        this.glowFilter = new GlowFilter(_local1, 1, 6, 6, 1, 1);
 
         _arg1.filters = [glowFilter];
     }

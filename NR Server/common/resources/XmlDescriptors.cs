@@ -483,6 +483,7 @@ namespace common.resources
         public bool Secret { get; private set; }
         public int Doses { get; private set; }
         public int FeedPower { get; private set; }
+        public int Rarity { get; private set; }
 
         public KeyValuePair<int, int>[] StatsBoost { get; private set; }
         public ActivateEffect[] ActivateEffects { get; private set; }
@@ -497,6 +498,19 @@ namespace common.resources
             ObjectId = elem.Attribute(XName.Get("id")).Value;
 
             SlotType = Utils.FromString(elem.Element("SlotType").Value);
+
+            if ((n = elem.Element("Rarity")) != null)
+            {
+                string rarity = elem.Element("Rarity").Value;
+
+                switch(rarity)
+                {
+                    case "Common": Rarity = 0; break;
+                    case "Uncommon": Rarity = 1; break;
+                    case "Rare": Rarity = 2; break;
+                    case "Legendary": Rarity = 3; break;
+                }
+            }
 
             if ((n = elem.Element("Tier")) != null)
                 try

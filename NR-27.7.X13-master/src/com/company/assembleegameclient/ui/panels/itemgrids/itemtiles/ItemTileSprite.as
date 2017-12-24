@@ -64,7 +64,7 @@ public class ItemTileSprite extends Sprite {
                 _local2.draw(_local4, DOSE_MATRIX);
             }
             var _local5:int = ObjectLibrary.getItemNameColor(_local1);
-            this.glowFilter = new GlowFilter(_local5, 1, 6, 6, 1.5, 1);
+            this.glowFilter = new GlowFilter(_local5, 1, 6, 6, 1, 1);
             this.itemBitmap.bitmapData = _local2;
             this.itemBitmap.x = (-(_local2.width) / 2);
             this.itemBitmap.y = (-(_local2.height) / 2);
