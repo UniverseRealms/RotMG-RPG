@@ -167,7 +167,5 @@ public class TitleMediator extends Mediator {
     private function attemptToCloseClient():void {
         dispatch(new Event("APP_CLOSE_EVENT"));
     }
-
-
 }
 }

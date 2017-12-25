@@ -30,7 +30,6 @@ public class CharacterRectList extends Sprite {
 
     public function CharacterRectList() {
         var _local5:SavedCharacter;
-        var _local6:BuyCharacterRect;
         var _local7:CharacterClass;
         var _local8:CharacterStats;
         var _local9:CurrentCharacterRect;
@@ -71,10 +70,6 @@ public class CharacterRectList extends Sprite {
                 _local10++;
             }
         }
-        _local6 = new BuyCharacterRect(this.model);
-        _local6.addEventListener(MouseEvent.MOUSE_DOWN, this.onBuyCharSlot);
-        _local6.y = _local3;
-        addChild(_local6);
     }
 
     private function getIcon(_arg1:SavedCharacter, _arg2:int = 100):DisplayObject {
@@ -87,11 +82,5 @@ public class CharacterRectList extends Sprite {
     private function onNewChar(_arg1:Event):void {
         this.newCharacter.dispatch();
     }
-
-    private function onBuyCharSlot(_arg1:Event):void {
-        this.buyCharacterSlot.dispatch(this.model.getCharSlotPrice());
-    }
-
-
 }
 }

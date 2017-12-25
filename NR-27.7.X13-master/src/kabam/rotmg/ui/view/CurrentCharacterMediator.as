@@ -54,8 +54,6 @@ public class CurrentCharacterMediator extends Mediator {
     override public function initialize():void {
         this.view.initialize(this.playerModel);
         this.view.close.add(this.onClose);
-        this.view.newCharacter.add(this.onNewCharacter);
-        this.view.showClasses.add(this.onNewCharacter);
         this.view.chooseName.add(this.onChooseName);
         this.view.playGame.add(this.onPlayGame);
         this.nameChanged.add(this.onNameChanged);
@@ -79,7 +77,6 @@ public class CurrentCharacterMediator extends Mediator {
         this.nameChanged.remove(this.onNameChanged);
         this.beginnersPackageAvailable.remove(this.onBeginner);
         this.view.close.remove(this.onClose);
-        this.view.newCharacter.remove(this.onNewCharacter);
         this.view.chooseName.remove(this.onChooseName);
         this.view.showClasses.remove(this.onNewCharacter);
         this.view.playGame.remove(this.onPlayGame);

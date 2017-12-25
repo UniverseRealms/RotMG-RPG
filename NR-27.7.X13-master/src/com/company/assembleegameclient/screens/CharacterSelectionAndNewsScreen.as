@@ -28,18 +28,14 @@ import org.osflash.signals.Signal;
 
 public class CharacterSelectionAndNewsScreen extends Sprite {
 
-    private static const NEWS_X:int = 475;
     private static const TAB_UNSELECTED:uint = 0xB3B3B3;
     private static const TAB_SELECTED:uint = 0xFFFFFF;
 
-    private const SCROLLBAR_REQUIREMENT_HEIGHT:Number = 400;
     private const CHARACTER_LIST_Y_POS:int = 108;
-    private const CHARACTER_LIST_X_POS:int = 18;
     private const DROP_SHADOW:DropShadowFilter = new DropShadowFilter(0, 0, 0, 1, 8, 8);
 
     public var close:Signal;
     public var showClasses:Signal;
-    public var newCharacter:Signal;
     public var chooseName:Signal;
     public var playGame:Signal;
     public var beginnersPackageButton:BeginnersPackageButton;
@@ -49,22 +45,16 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
     private var nameChooseLink_:DeprecatedClickableText;
     private var creditDisplay:CreditDisplay;
     private var openCharactersText:TextFieldDisplayConcrete;
-    private var openGraveyardText:TextFieldDisplayConcrete;
-    private var newsText:TextFieldDisplayConcrete;
     private var characterList:CharacterList;
     private var characterListType:int = 1;
     private var characterListHeight:Number;
-    private var lines:Shape;
-    private var scrollBar:Scrollbar;
     private var packageButton:PackageButton;
     private var playButton:TitleMenuOption;
     private var classesButton:TitleMenuOption;
     private var backButton:TitleMenuOption;
     private var menuOptionsBar:MenuOptionsBar;
-    private var BOUNDARY_LINE_ONE_Y:int = 106;
 
     public function CharacterSelectionAndNewsScreen() {
-        this.newCharacter = new Signal();
         this.chooseName = new Signal();
         this.playGame = new Signal();
         this.playButton = ButtonFactory.getPlayButton();
@@ -89,14 +79,10 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
     private function createDisplayAssets(_arg1:PlayerModel):void {
         this.createNameText();
         this.createCreditDisplay();
-        this.createNewsText();
-        this.createNews();
-        this.createBoundaryLines();
         this.createOpenCharactersText();
         var _local2:Graveyard = new Graveyard(_arg1);
         if (_local2.hasCharacters()) {
             this.openCharactersText.setColor(TAB_SELECTED);
-            this.createOpenGraveyardText();
         }
         this.createCharacterListChar();
         this.makeMenuOptionsBar();
@@ -114,54 +100,12 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
         addChild(this.menuOptionsBar);
     }
 
-    private function createNews():void {
-        var _local1:NewsView;
-        _local1 = new NewsView();
-        _local1.x = NEWS_X;
-        _local1.y = 112;
-        addChild(_local1);
-    }
-
-    private function createScrollbar():void {
-        this.scrollBar = new Scrollbar(16, 399);
-        this.scrollBar.x = 443;
-        this.scrollBar.y = 113;
-        this.scrollBar.setIndicatorSize(399, this.characterList.height);
-        this.scrollBar.addEventListener(Event.CHANGE, this.onScrollBarChange);
-        addChild(this.scrollBar);
-    }
-
-    private function createNewsText():void {
-        this.newsText = new TextFieldDisplayConcrete().setSize(18).setColor(TAB_UNSELECTED);
-        this.newsText.setBold(true);
-        this.newsText.setStringBuilder(new LineBuilder().setParams(TextKey.CHARACTER_SELECTION_NEWS));
-        this.newsText.filters = [this.DROP_SHADOW];
-        this.newsText.x = NEWS_X;
-        this.newsText.y = 79;
-        addChild(this.newsText);
-    }
-
     private function createCharacterListChar():void {
         this.characterListType = CharacterList.TYPE_CHAR_SELECT;
         this.characterList = new CharacterList(this.model, CharacterList.TYPE_CHAR_SELECT);
-        this.characterList.x = this.CHARACTER_LIST_X_POS;
+        this.characterList.x = (this.stage.width/2) - (this.characterList.width/2);
         this.characterList.y = this.CHARACTER_LIST_Y_POS;
         this.characterListHeight = this.characterList.height;
-        if (this.characterListHeight > this.SCROLLBAR_REQUIREMENT_HEIGHT) {
-            this.createScrollbar();
-        }
-        addChild(this.characterList);
-    }
-
-    private function createCharacterListGrave():void {
-        this.characterListType = CharacterList.TYPE_GRAVE_SELECT;
-        this.characterList = new CharacterList(this.model, CharacterList.TYPE_GRAVE_SELECT);
-        this.characterList.x = this.CHARACTER_LIST_X_POS;
-        this.characterList.y = this.CHARACTER_LIST_Y_POS;
-        this.characterListHeight = this.characterList.height;
-        if (this.characterListHeight > this.SCROLLBAR_REQUIREMENT_HEIGHT) {
-            this.createScrollbar();
-        }
         addChild(this.characterList);
     }
 
@@ -170,10 +114,6 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
             removeChild(this.characterList);
             this.characterList = null;
         }
-        if (this.scrollBar != null) {
-            removeChild(this.scrollBar);
-            this.scrollBar = null;
-        }
     }
 
     private function createOpenCharactersText():void {
@@ -181,7 +121,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
         this.openCharactersText.setBold(true);
         this.openCharactersText.setStringBuilder(new LineBuilder().setParams(TextKey.CHARACTER_SELECTION_CHARACTERS));
         this.openCharactersText.filters = [this.DROP_SHADOW];
-        this.openCharactersText.x = this.CHARACTER_LIST_X_POS;
+        this.openCharactersText.x = this.stage.width/2 - 40;
         this.openCharactersText.y = 79;
         this.openCharactersText.addEventListener(MouseEvent.CLICK, this.onOpenCharacters);
         addChild(this.openCharactersText);
@@ -191,28 +131,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
         if (this.characterListType != CharacterList.TYPE_CHAR_SELECT) {
             this.removeCharacterList();
             this.openCharactersText.setColor(TAB_SELECTED);
-            this.openGraveyardText.setColor(TAB_UNSELECTED);
             this.createCharacterListChar();
-        }
-    }
-
-    private function createOpenGraveyardText():void {
-        this.openGraveyardText = new TextFieldDisplayConcrete().setSize(18).setColor(TAB_UNSELECTED);
-        this.openGraveyardText.setBold(true);
-        this.openGraveyardText.setStringBuilder(new LineBuilder().setParams(TextKey.CHARACTER_SELECTION_GRAVEYARD));
-        this.openGraveyardText.filters = [this.DROP_SHADOW];
-        this.openGraveyardText.x = (this.CHARACTER_LIST_X_POS + 150);
-        this.openGraveyardText.y = 79;
-        this.openGraveyardText.addEventListener(MouseEvent.CLICK, this.onOpenGraveyard);
-        addChild(this.openGraveyardText);
-    }
-
-    private function onOpenGraveyard(_arg1:MouseEvent):void {
-        if (this.characterListType != CharacterList.TYPE_GRAVE_SELECT) {
-            this.removeCharacterList();
-            this.openCharactersText.setColor(TAB_UNSELECTED);
-            this.openGraveyardText.setColor(TAB_SELECTED);
-            this.createCharacterListGrave();
         }
     }
 
@@ -251,26 +170,8 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
         return (_local1);
     }
 
-    private function createBoundaryLines():void {
-        this.lines = new Shape();
-        this.lines.graphics.clear();
-        this.lines.graphics.lineStyle(2, 0x545454);
-        this.lines.graphics.moveTo(0, this.BOUNDARY_LINE_ONE_Y);
-        this.lines.graphics.lineTo(this.getReferenceRectangle().width, this.BOUNDARY_LINE_ONE_Y);
-        this.lines.graphics.moveTo(466, 107);
-        this.lines.graphics.lineTo(466, 526);
-        this.lines.graphics.lineStyle();
-        addChild(this.lines);
-    }
-
     private function onChooseName(_arg1:MouseEvent):void {
         this.chooseName.dispatch();
-    }
-
-    private function onScrollBarChange(_arg1:Event):void {
-        if (this.characterList != null) {
-            this.characterList.setPos((-(this.scrollBar.pos()) * (this.characterListHeight - 400)));
-        }
     }
 
     public function showBeginnersOfferButton():void {
@@ -297,12 +198,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
     }
 
     private function onPlayClick():void {
-        if (this.model.getCharacterCount() == 0) {
-            this.newCharacter.dispatch();
-        }
-        else {
-            this.playGame.dispatch();
-        }
+        this.playGame.dispatch();
     }
 
     public function setName(_arg1:String):void {
@@ -313,7 +209,5 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
             this.nameChooseLink_ = null;
         }
     }
-
-
 }
 }

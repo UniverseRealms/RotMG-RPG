@@ -12,8 +12,8 @@ import kabam.rotmg.text.view.stringBuilder.StringBuilder;
 
 public class CharacterRect extends Sprite {
 
-    public static const WIDTH:int = 419;
-    public static const HEIGHT:int = 59;
+    public static const WIDTH:int = 350;
+    public static const HEIGHT:int = 95;
 
     public var color:uint;
     public var overColor:uint;
@@ -62,6 +62,7 @@ public class CharacterRect extends Sprite {
 
     private function drawBox(_arg1:Boolean):void {
         this.box.graphics.clear();
+        this.box.graphics.lineStyle(2, 0xFF00FF);
         this.box.graphics.beginFill(((_arg1) ? this.overColor : this.color));
         this.box.graphics.drawRect(0, 0, WIDTH, HEIGHT);
         this.box.graphics.endFill();
