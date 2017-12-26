@@ -17,7 +17,6 @@ import org.osflash.signals.Signal;
 public class TitleMenuOption extends Sprite {
 
     protected static const OVER_COLOR_TRANSFORM:ColorTransform = new ColorTransform(1, (220 / 0xFF), (133 / 0xFF));
-    private static const DROP_SHADOW_FILTER:DropShadowFilter = new DropShadowFilter(0, 0, 0, 0.5, 12, 12);
 
     public const clicked:Signal = new Signal();
     public const textField:TextFieldDisplayConcrete = makeTextFieldDisplayConcrete();
@@ -29,13 +28,13 @@ public class TitleMenuOption extends Sprite {
     private var originalWidth:Number;
     private var originalHeight:Number;
     private var active:Boolean;
-    private var color:uint = 0xFFFFFF;
+    private var color:uint = 0xBFBFBF;
     private var hoverColor:uint;
 
     public function TitleMenuOption(_arg1:String, _arg2:int, _arg3:Boolean) {
         this.size = _arg2;
         this.isPulse = _arg3;
-        this.textField.setSize(_arg2).setColor(0xFFFFFF).setBold(true);
+        this.textField.setSize(_arg2).setColor(0xBFBFBF).setBold(false);
         this.setTextKey(_arg1);
         this.originalWidth = width;
         this.originalHeight = height;
@@ -79,7 +78,6 @@ public class TitleMenuOption extends Sprite {
     private function makeTextFieldDisplayConcrete():TextFieldDisplayConcrete {
         var _local1:TextFieldDisplayConcrete;
         _local1 = new TextFieldDisplayConcrete();
-        _local1.filters = [DROP_SHADOW_FILTER];
         addChild(_local1);
         return (_local1);
     }

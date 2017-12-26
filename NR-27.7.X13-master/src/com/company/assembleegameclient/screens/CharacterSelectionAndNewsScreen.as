@@ -53,6 +53,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
     private var classesButton:TitleMenuOption;
     private var backButton:TitleMenuOption;
     private var menuOptionsBar:MenuOptionsBar;
+    private var lines:Shape;
 
     public function CharacterSelectionAndNewsScreen() {
         this.chooseName = new Signal();
@@ -79,6 +80,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
     private function createDisplayAssets(_arg1:PlayerModel):void {
         this.createNameText();
         this.createCreditDisplay();
+        this.createBoundaryLines();
         this.createOpenCharactersText();
         var _local2:Graveyard = new Graveyard(_arg1);
         if (_local2.hasCharacters()) {
@@ -121,7 +123,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
         this.openCharactersText.setBold(true);
         this.openCharactersText.setStringBuilder(new LineBuilder().setParams(TextKey.CHARACTER_SELECTION_CHARACTERS));
         this.openCharactersText.filters = [this.DROP_SHADOW];
-        this.openCharactersText.x = this.stage.width/2 - 40;
+        this.openCharactersText.x = this.stage.width/2 - 42.5;
         this.openCharactersText.y = 79;
         this.openCharactersText.addEventListener(MouseEvent.CLICK, this.onOpenCharacters);
         addChild(this.openCharactersText);
@@ -172,6 +174,16 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
 
     private function onChooseName(_arg1:MouseEvent):void {
         this.chooseName.dispatch();
+    }
+
+    private function createBoundaryLines():void {
+        this.lines = new Shape();
+        this.lines.graphics.clear();
+        this.lines.graphics.lineStyle(2, 0xBFBFBF);
+        this.lines.graphics.moveTo(0, 104);
+        this.lines.graphics.lineTo(800, 104);
+        this.lines.graphics.lineStyle();
+        addChild(this.lines);
     }
 
     public function showBeginnersOfferButton():void {

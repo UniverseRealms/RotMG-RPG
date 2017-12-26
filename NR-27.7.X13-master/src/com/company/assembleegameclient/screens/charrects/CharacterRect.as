@@ -62,7 +62,7 @@ public class CharacterRect extends Sprite {
 
     private function drawBox(_arg1:Boolean):void {
         this.box.graphics.clear();
-        this.box.graphics.lineStyle(2, 0xFF00FF);
+        this.box.graphics.lineStyle(2, 0xBFBFBF);
         this.box.graphics.beginFill(((_arg1) ? this.overColor : this.color));
         this.box.graphics.drawRect(0, 0, WIDTH, HEIGHT);
         this.box.graphics.endFill();

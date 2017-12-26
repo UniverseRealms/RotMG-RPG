@@ -16,9 +16,8 @@ import kabam.rotmg.text.view.TextFieldDisplayConcrete;
 import kabam.rotmg.text.view.stringBuilder.LineBuilder;
 import kabam.rotmg.text.view.stringBuilder.StaticStringBuilder;
 import kabam.rotmg.ui.model.EnvironmentData;
-import kabam.rotmg.ui.view.components.DarkLayer;
-import kabam.rotmg.ui.view.components.MapBackground;
 import kabam.rotmg.ui.view.components.MenuOptionsBar;
+import kabam.rotmg.ui.view.components.TitleMain;
 
 import org.osflash.signals.Signal;
 import org.osflash.signals.natives.NativeMappedSignal;
@@ -41,19 +40,15 @@ public class TitleView extends Sprite {
     public var serversClicked:Signal;
     public var accountClicked:Signal;
     public var supportClicked:Signal;
-    public var kabamTransferClicked:Signal;
     public var editorClicked:Signal;
     public var textureEditorClicked:Signal;
     public var quitClicked:Signal;
     public var optionalButtonsAdded:Signal;
-    private var migrateButton:TitleMenuOption;
 
     public function TitleView() {
         this.menuOptionsBar = this.makeMenuOptionsBar();
         this.optionalButtonsAdded = new Signal();
         super();
-        addChild(new MapBackground());
-        addChild(new DarkLayer());
         addChild(new TitleScreenGraphic());
         addChild(this.menuOptionsBar);
         addChild(new AccountScreen());
@@ -78,11 +73,12 @@ public class TitleView extends Sprite {
         this.supportClicked = _local5.clicked;
         this.textureEditorClicked = _local6.clicked;
         var _local7:MenuOptionsBar = new MenuOptionsBar();
-        _local7.addButton(_local1, MenuOptionsBar.CENTER);
-        _local7.addButton(_local2, MenuOptionsBar.LEFT);
-        _local7.addButton(_local5, MenuOptionsBar.LEFT);
-        _local7.addButton(_local3, MenuOptionsBar.RIGHT);
-        _local7.addButton(_local6, MenuOptionsBar.RIGHT);
+        _local7.addMain(new TitleMain(), 130);
+        _local7.addTitle(_local1, 250);
+        _local7.addTitle(_local2, 300);
+        _local7.addTitle(_local3, 350);
+        _local7.addTitle(_local5, 400);
+        _local7.addTitle(_local6, 450);
         return (_local7);
     }
 
@@ -132,19 +128,8 @@ public class TitleView extends Sprite {
 
     private function createEditorButton():void {
         var _local1:TitleMenuOption = ButtonFactory.getEditorButton();
-        this.menuOptionsBar.addButton(_local1, MenuOptionsBar.RIGHT);
+        this.menuOptionsBar.addTitle(_local1, 500);
         this.editorClicked = _local1.clicked;
     }
-
-    private function makeMigrateButton():void {
-        this.migrateButton = new TitleMenuOption("Want to migrate your Kabam.com account?", 16, false);
-        this.migrateButton.setAutoSize(TextFieldAutoSize.CENTER);
-        this.kabamTransferClicked = new NativeMappedSignal(this.migrateButton, MouseEvent.CLICK);
-        this.migrateButton.setTextKey("Want to migrate your Kabam.com account?");
-        this.migrateButton.x = 400;
-        this.migrateButton.y = 500;
-    }
-
-
 }
 }

@@ -31,19 +31,19 @@ public class ButtonFactory {
 
 
     public static function getPlayButton():TitleMenuOption {
-        return ((playButton = ((playButton) || (makeButton(ScreenTypes.PLAY, BUTTON_SIZE_LARGE, CENTER, true)))));
+        return ((playButton = ((playButton) || (makeButton(ScreenTypes.PLAY, BUTTON_SIZE_LARGE, CENTER)))));
     }
 
     public static function getTextureEditorButton():TitleMenuOption {
-        return ((textureEditorButton = ((textureEditorButton) || (makeButton(ScreenTypes.TEXTURE_EDITOR, BUTTON_SIZE_SMALL, LEFT)))));
+        return ((textureEditorButton = ((textureEditorButton) || (makeButton(ScreenTypes.TEXTURE_EDITOR, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getClassesButton():TitleMenuOption {
-        return ((classesButton = ((classesButton) || (makeButton(TextKey.SCREENS_CLASSES, BUTTON_SIZE_SMALL, LEFT)))));
+        return ((classesButton = ((classesButton) || (makeButton(TextKey.SCREENS_CLASSES, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getMainButton():TitleMenuOption {
-        return ((mainButton = ((mainButton) || (makeButton(TextKey.SCREENS_MAIN, BUTTON_SIZE_SMALL, RIGHT)))));
+        return ((mainButton = ((mainButton) || (makeButton(TextKey.SCREENS_MAIN, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getDoneButton():TitleMenuOption {
@@ -51,35 +51,35 @@ public class ButtonFactory {
     }
 
     public static function getAccountButton():TitleMenuOption {
-        return ((accountButton = ((accountButton) || (makeButton(ScreenTypes.ACCOUNT, BUTTON_SIZE_SMALL, LEFT)))));
+        return ((accountButton = ((accountButton) || (makeButton(ScreenTypes.ACCOUNT, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getLegendsButton():TitleMenuOption {
-        return ((legendsButton = ((legendsButton) || (makeButton(ScreenTypes.LEGENDS, BUTTON_SIZE_SMALL, LEFT)))));
+        return ((legendsButton = ((legendsButton) || (makeButton(ScreenTypes.LEGENDS, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getServersButton():TitleMenuOption {
-        return ((serversButton = ((serversButton) || (makeButton(ScreenTypes.SERVERS, BUTTON_SIZE_SMALL, RIGHT)))));
+        return ((serversButton = ((serversButton) || (makeButton(ScreenTypes.SERVERS, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getLanguagesButton():TitleMenuOption {
-        return ((languagesButton = ((languagesButton) || (makeButton(ScreenTypes.LANGUAGES, BUTTON_SIZE_SMALL, RIGHT)))));
+        return ((languagesButton = ((languagesButton) || (makeButton(ScreenTypes.LANGUAGES, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getSupportButton():TitleMenuOption {
-        return ((supportButton = ((supportButton) || (makeButton(ScreenTypes.SUPPORT, BUTTON_SIZE_SMALL, RIGHT)))));
+        return ((supportButton = ((supportButton) || (makeButton(ScreenTypes.SUPPORT, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getEditorButton():TitleMenuOption {
-        return ((editorButton = ((editorButton) || (makeButton(ScreenTypes.EDITOR, BUTTON_SIZE_SMALL, RIGHT)))));
+        return ((editorButton = ((editorButton) || (makeButton(ScreenTypes.EDITOR, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getQuitButton():TitleMenuOption {
-        return ((quitButton = ((quitButton) || (makeButton(ScreenTypes.QUIT, BUTTON_SIZE_SMALL, LEFT)))));
+        return ((quitButton = ((quitButton) || (makeButton(ScreenTypes.QUIT, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     public static function getTransferButton():TitleMenuOption {
-        return ((transferAccountButton = ((transferAccountButton) || (makeButton(ScreenTypes.TRANSFER_ACCOUNT, BUTTON_SIZE_SMALL, RIGHT)))));
+        return ((transferAccountButton = ((transferAccountButton) || (makeButton(ScreenTypes.TRANSFER_ACCOUNT, BUTTON_SIZE_SMALL, CENTER)))));
     }
 
     private static function makeButton(_arg1:String, _arg2:int, _arg3:String, _arg4:Boolean = false):TitleMenuOption {
@@ -88,7 +88,5 @@ public class ButtonFactory {
         _local5.setVerticalAlign(TextFieldDisplayConcrete.MIDDLE);
         return (_local5);
     }
-
-
 }
 }
