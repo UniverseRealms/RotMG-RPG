@@ -10,7 +10,7 @@ public class IncrementStat extends OutgoingMessage {
     }
 
     override public function writeToOutput(_arg1:IDataOutput):void {
-        _arg1.writeByte(this.statType);
+        _arg1.writeInt(this.statType);
     }
 
     override public function toString():String {

@@ -6,7 +6,7 @@ namespace wServer.networking.packets.incoming
     {
         public int StatType { get; set; }
 
-        public override PacketId ID => PacketId.INCREMENTSTAT;
+        public override PacketId ID => PacketId.STATINCREMENT;
         public override Packet CreateInstance() { return new IncrementStat(); }
 
         protected override void Read(NReader rdr)

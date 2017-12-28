@@ -1,29 +1,39 @@
 ﻿using wServer.realm.entities;
 using wServer.networking.packets;
 using wServer.networking.packets.incoming;
+using System.Collections.Generic;
 
 namespace wServer.networking.handlers
 {
     class IncrementStatHandler: PacketHandlerBase<IncrementStat>
     {
-        public override PacketId ID => PacketId.INCREMENTSTAT;
+        public override PacketId ID => PacketId.STATINCREMENT;
+
+        Dictionary<int, int> statdic = new Dictionary<int, int>
+        {
+            { 0,5 }, { 1,5 }, { 2,1 }, { 3,1 }, { 4,1 },
+            { 5,1 }, { 6,1 }, { 7,1 }, { 8,1 }
+        };
 
         protected override void HandlePacket(Client client, IncrementStat packet)
         {
-            switch(packet.StatType)
+            if (client.Player.StatPoint < 1)
             {
-                case 0:
-                    IncreaseStat(client.Player, packet.StatType, 5);
-                    break;
-                default:
-                    client.Player.SendInfo("Error!");
-                    break;
+                client.Player.SendInfo("Not enough points!");
+                return;
             }
+
+            if (statdic.ContainsKey(packet.StatType))
+                IncreaseStat(client.Player, packet.StatType, statdic[packet.StatType]);
+            else
+                client.Player.SendInfo("Could not indicate stat!");
+
+            client.Player.SendInfo(packet.StatType.ToString());//to make sure it returns correct value
         }
 
         private void IncreaseStat(Player player, int stat, int amount)
         {
-            player.Client.Character.Stats[stat] += amount;
+            player.Stats.Base[stat] += amount;
             player.StatPoint -= 1;
             player.Client.Character.FlushAsync();
             player.SendInfo("Success!");
