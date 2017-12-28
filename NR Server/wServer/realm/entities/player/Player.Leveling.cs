@@ -280,17 +280,9 @@ namespace wServer.realm.entities
             if (Experience - GetLevelExp(Level) >= ExperienceGoal)
             {
                 Level++;
+                StatPoint++;
                 ExperienceGoal = GetExpGoal(Level);
-                var statInfo = Manager.Resources.GameData.Classes[ObjectType].Stats;
-                var rand = new Random();
-                for (var i = 0; i < statInfo.Length; i++)
-                {
-                    var min = statInfo[i].MinIncrease;
-                    var max = statInfo[i].MaxIncrease + 1;
-                    Stats.Base[i] += rand.Next(min, max);
-                    if (Stats.Base[i] > statInfo[i].MaxValue)
-                        Stats.Base[i] = statInfo[i].MaxValue;
-                }
+
                 HP = Stats[0];
                 MP = Stats[1];
 

@@ -116,6 +116,8 @@ public class GameServerConnection {
     public static const SWITCH_MUSIC = 106;
     public static const CLAIM_LOGIN_REWARD_MSG:int = 153;
     public static const LOGIN_REWARD_MSG:int = 154;
+    public static const STATINCREMENT:int = 156;
+
     
     public static var instance:GameServerConnection;
 
@@ -136,6 +138,9 @@ public class GameServerConnection {
 
 
     public function chooseName(_arg1:String):void {
+    }
+
+    public function incrementStat(_arg1:int):void {
     }
 
     public function createGuild(_arg1:String):void {

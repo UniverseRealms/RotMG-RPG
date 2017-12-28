@@ -1,12 +1,18 @@
 ﻿package kabam.rotmg.ui.view {
+import com.company.assembleegameclient.game.AGameSprite;
 import com.company.assembleegameclient.objects.Player;
 import com.company.assembleegameclient.ui.ExperienceBoostTimerPopup;
 import com.company.assembleegameclient.ui.StatusBar;
 
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.events.MouseEvent;
 
 import kabam.rotmg.text.model.TextKey;
+import kabam.rotmg.text.view.TextFieldDisplayConcrete;
+import kabam.rotmg.text.view.stringBuilder.StaticStringBuilder;
+
+import org.osflash.signals.Signal;
 
 public class StatMetersView extends Sprite {
 
@@ -16,21 +22,41 @@ public class StatMetersView extends Sprite {
     private var areTempXpListenersAdded:Boolean;
     private var curXPBoost:int;
     private var expTimer:ExperienceBoostTimerPopup;
+    private var statPoint:TextFieldDisplayConcrete;
+    public var statIncrement:TextFieldDisplayConcrete;
+    public const incrementSignal:Signal = new Signal(String);
 
     public function StatMetersView() {
         this.expBar_ = new StatusBar(176, 16, 5931045, 0x545454, TextKey.EXP_BAR_LEVEL);
         this.hpBar_ = new StatusBar(176, 16, 14693428, 0x545454, TextKey.STATUS_BAR_HEALTH_POINTS);
         this.mpBar_ = new StatusBar(176, 16, 6325472, 0x545454, TextKey.STATUS_BAR_MANA_POINTS);
+        this.statPoint = new TextFieldDisplayConcrete().setColor(0xFFFFFF).setSize(12);
+        this.statPoint.x =  50;
         this.hpBar_.y = 24;
         this.mpBar_.y = 48;
         this.expBar_.visible = true;
         addChild(this.expBar_);
         addChild(this.hpBar_);
         addChild(this.mpBar_);
+        addChild(this.statPoint);
+        drawStatIncrement();
+    }
+
+    private function drawStatIncrement():void {
+        this.statIncrement = new TextFieldDisplayConcrete().setColor(0xFFFFFF).setSize(12);
+        this.statIncrement.setStringBuilder(new StaticStringBuilder("+"));
+        this.statIncrement.x = 100;
+        this.statIncrement.addEventListener(MouseEvent.CLICK, onIncrement);
+        addChild(this.statIncrement);
+    }
+
+    private function onIncrement(_arg1:MouseEvent):void {
+        this.incrementSignal.dispatch("Hp");
     }
 
     public function update(_arg1:Player):void {
         this.expBar_.setLabelText(TextKey.EXP_BAR_LEVEL, {"level": _arg1.level_});
+        this.statPoint.setStringBuilder(new StaticStringBuilder("Point:" + _arg1.statpoint_));
 
         if (this.expTimer) {
             this.expTimer.update(_arg1.xpTimer);

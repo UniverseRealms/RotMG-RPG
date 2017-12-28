@@ -94,6 +94,7 @@ public class GameObject extends BasicObject {
     public var hp_:int = 200;
     public var size_:int = 100;
     public var level_:int = -1;
+    public var statpoint_:int = 0;
     public var defense_:int = 0;
     public var slotTypes_:Vector.<int> = null;
     public var equipment_:Vector.<int> = null;

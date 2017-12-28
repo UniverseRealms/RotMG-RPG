@@ -503,12 +503,6 @@ namespace common
             set { SetValue<bool>("rankManager", value); }
         }
 
-        public string DiscordId
-        {
-            get { return GetValue<string>("discordId"); }
-            set { SetValue<string>("discordId", value); }
-        }
-
         public int Rank
         {
             get { return LegacyRank; }
@@ -628,6 +622,12 @@ namespace common
         {
             get { return GetValue<int>("level"); }
             set { SetValue<int>("level", value); }
+        }
+
+        public int StatPoint
+        {
+            get { return GetValue<int>("statpoint"); }
+            set { SetValue<int>("statpoint", value); }
         }
 
         public int Experience

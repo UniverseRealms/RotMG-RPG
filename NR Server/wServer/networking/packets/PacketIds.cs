@@ -96,6 +96,7 @@ namespace wServer.networking.packets
         SET_FOCUS = 108,
         SWITCH_MUSIC = 106,
         CLAIM_LOGIN_REWARD_MSG = 153,
-        LOGIN_REWARD_MSG = 154
+        LOGIN_REWARD_MSG = 154,
+        INCREMENTSTAT = 156,
     }
 }

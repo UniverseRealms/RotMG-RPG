@@ -57,6 +57,13 @@ namespace wServer.realm.entities
             set { _level.SetValue(value); }
         }
 
+        private readonly SV<int> _statpoint;
+        public int StatPoint
+        {
+            get { return _statpoint.GetValue(); }
+            set { _statpoint.SetValue(value);  }
+        }
+
         private readonly SV<int> _currentFame;
         public int CurrentFame
         {
@@ -220,6 +227,7 @@ namespace wServer.realm.entities
                 case StatsType.Experience: Experience = (int)val; break;
                 case StatsType.ExperienceGoal: ExperienceGoal = (int)val; break;
                 case StatsType.Level: Level = (int)val; break;
+                case StatsType.StatPoint: StatPoint = (int)val; break;
                 case StatsType.Fame: Fame = (int)val; break;
                 case StatsType.CurrentFame: CurrentFame = (int)val; break;
                 case StatsType.FameGoal: FameGoal = (int)val; break;
@@ -283,6 +291,7 @@ namespace wServer.realm.entities
             stats[StatsType.Experience] = Experience - GetLevelExp(Level);
             stats[StatsType.ExperienceGoal] = ExperienceGoal;
             stats[StatsType.Level] = Level;
+            stats[StatsType.StatPoint] = StatPoint;
             stats[StatsType.CurrentFame] = CurrentFame;
             stats[StatsType.Fame] = Fame;
             stats[StatsType.FameGoal] = FameGoal;
@@ -356,6 +365,7 @@ namespace wServer.realm.entities
         {
             var chr = _client.Character;
             chr.Level = Level;
+            chr.StatPoint = StatPoint;
             chr.Experience = Experience;
             chr.Fame = Fame;
             chr.HP = Math.Max(1, HP);
@@ -391,6 +401,7 @@ namespace wServer.realm.entities
             _experience = new SV<int>(this, StatsType.Experience, client.Character.Experience, true);
             _experienceGoal = new SV<int>(this, StatsType.ExperienceGoal, 0, true);
             _level = new SV<int>(this, StatsType.Level, client.Character.Level);
+            _statpoint = new SV<int>(this, StatsType.StatPoint, client.Character.StatPoint);
             _currentFame = new SV<int>(this, StatsType.CurrentFame, client.Account.Fame, true);
             _fame = new SV<int>(this, StatsType.Fame, client.Character.Fame, true);
             _fameGoal = new SV<int>(this, StatsType.FameGoal, 0, true);

@@ -1900,6 +1900,36 @@ namespace wServer.realm.commands
         }
     }
 
+    class StatCommand : Command
+    {
+        public StatCommand() : base("stat", permLevel: 80, alias: "st") { }
+
+        protected override bool Process(Player player, RealmTime time, string args)
+        {
+            if (args == null)
+            {
+                player.SendInfo("/stat <amount>");
+                return false;
+            }
+            int amount = Convert.ToInt32(args);
+
+            player.StatPoint = player.Client.Character.StatPoint += amount;
+            player.Client.Account.FlushAsync();
+            return true;
+        }
+    }
+
+    class DisplayStatCommand : Command
+    {
+        public DisplayStatCommand() : base("displaystat", permLevel: 80, alias:"dstat") { }
+
+        protected override bool Process(Player player, RealmTime time, string args)
+        {
+            player.SendInfo(player.StatPoint.ToString());
+            return true;
+        }
+    }
+
     class LevelUpCommand : Command
     {
         public LevelUpCommand() : base("lvlup", permLevel: 80, alias: "lup") { }

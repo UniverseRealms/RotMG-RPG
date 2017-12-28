@@ -366,6 +366,7 @@ namespace server
         public int CharacterId { get; private set; }
         public ushort ObjectType { get; private set; }
         public int Level { get; private set; }
+        public int StatPoint { get; set; }
         public int Exp { get; private set; }
         public int CurrentFame { get; private set; }
         public ushort[] Equipment { get; private set; }
@@ -395,6 +396,7 @@ namespace server
                 CharacterId = character.CharId,
                 ObjectType = character.ObjectType,
                 Level = character.Level,
+                StatPoint = character.StatPoint,
                 Exp = character.Experience,
                 CurrentFame = character.Fame,
                 Equipment = character.Items,
@@ -426,6 +428,7 @@ namespace server
                     new XAttribute("id", CharacterId),
                     new XElement("ObjectType", ObjectType),
                     new XElement("Level", Level),
+                    new XElement("StatPoint", StatPoint),
                     new XElement("Exp", Exp),
                     new XElement("CurrentFame", CurrentFame),
                     new XElement("Equipment", Equipment.Select(x => (short)x).ToArray().ToCommaSepString()),

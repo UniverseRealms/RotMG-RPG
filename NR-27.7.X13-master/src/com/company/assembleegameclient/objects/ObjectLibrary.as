@@ -384,6 +384,8 @@ public class ObjectLibrary {
                     return ((_arg2.maxMP_ >= _local3));
                 case StatData.LEVEL_STAT:
                     return ((_arg2.level_ >= _local3));
+                case StatData.STAT_POINT_STAT:
+                    return ((_arg2.statpoint_ >= _local3));
                 case StatData.ATTACK_STAT:
                     return ((_arg2.attack_ >= _local3));
                 case StatData.DEFENSE_STAT:

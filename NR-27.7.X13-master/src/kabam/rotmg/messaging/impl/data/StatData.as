@@ -84,9 +84,10 @@ public class StatData {
     public static const BACKPACK_7_STAT:int = 78;
     public static const HASBACKPACK_STAT:int = 79;
     public static const TEXTURE_STAT:int = 80;
+    public static const STAT_POINT_STAT:int = 81;
     public static const NEW_CON_STAT:int = 96;
     public static const FORTUNE_TOKEN_STAT:int = 97;
-    
+
     // unimplemented
     public static const DAMAGE_MIN:int = 98;
     public static const DAMAGE_MAX:int = 99;
@@ -118,6 +119,8 @@ public class StatData {
                 return (TextKey.STAT_DATA_XP);
             case LEVEL_STAT:
                 return (TextKey.STAT_DATA_LEVEL);
+            case STAT_POINT_STAT:
+                return (TextKey.STAT_DATA_STATPOINT);
             case ATTACK_STAT:
                 return (TextKey.STAT_MODEL_ATTACK_LONG);
             case DEFENSE_STAT:

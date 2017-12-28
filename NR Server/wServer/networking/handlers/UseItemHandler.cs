@@ -2,6 +2,8 @@
 using wServer.realm.entities;
 using wServer.networking.packets;
 using wServer.networking.packets.incoming;
+using common.resources;
+using System;
 
 namespace wServer.networking.handlers
 {
@@ -18,7 +20,7 @@ namespace wServer.networking.handlers
         {
             if (player?.Owner == null)
                 return;
-
+ 
             player.UseItem(time, packet.SlotObject.ObjectId, packet.SlotObject.SlotId, packet.ItemUsePos);
         }
     }

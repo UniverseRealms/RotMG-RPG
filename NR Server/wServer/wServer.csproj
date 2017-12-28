@@ -98,11 +98,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="networking\handlers\IncrementStatHandler.cs" />
     <Compile Include="networking\packets\incoming\ClaimDailyRewardMessage.cs" />
     <Compile Include="networking\packets\incoming\GoToQuestRoom.cs" />
+    <Compile Include="networking\packets\incoming\IncrementStat.cs" />
     <Compile Include="networking\packets\incoming\KeyInfoRequest.cs" />
     <Compile Include="networking\packets\outgoing\ClaimDailyRewardResponse.cs" />
     <Compile Include="networking\packets\outgoing\KeyInfoResponse.cs" />
+    <Compile Include="realm\entities\player\Player.CheckInventory.cs" />
     <Compile Include="realm\ISControl.cs" />
     <Compile Include="logic\behaviors\AnnounceOnDeath.cs" />
     <Compile Include="logic\behaviors\ChangeMusic.cs" />

@@ -172,6 +172,7 @@ import kabam.rotmg.messaging.impl.outgoing.GroundDamage;
 import kabam.rotmg.messaging.impl.outgoing.GuildInvite;
 import kabam.rotmg.messaging.impl.outgoing.GuildRemove;
 import kabam.rotmg.messaging.impl.outgoing.Hello;
+import kabam.rotmg.messaging.impl.outgoing.IncrementStat;
 import kabam.rotmg.messaging.impl.outgoing.InvDrop;
 import kabam.rotmg.messaging.impl.outgoing.InvSwap;
 import kabam.rotmg.messaging.impl.outgoing.JoinGuild;
@@ -439,6 +440,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         _local1.map(SERVER_FULL).toMessage(ServerFull).toMethod(this.HandleServerFull);
         _local1.map(QUEUE_PING).toMessage(QueuePing).toMethod(this.HandleQueuePing);
         _local1.map(SWITCH_MUSIC).toMessage(SwitchMusic).toMethod(this.onSwitchMusic);
+        _local1.map(STATINCREMENT).toMessage(IncrementStat);
     }
 
     private function onSwitchMusic(sm:SwitchMusic):void {
@@ -902,6 +904,12 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         var _local2:ChooseName = (this.messages.require(CHOOSENAME) as ChooseName);
         _local2.name_ = _arg1;
         serverConnection.queueMessage(_local2);
+    }
+
+    override public function incrementStat(_arg1:int):void {
+        var _local1:IncrementStat = (this.messages.require(CHOOSENAME) as IncrementStat);
+        _local1.statType = _arg1;
+        serverConnection.queueMessage(_local1);
     }
 
     override public function createGuild(_arg1:String):void {
@@ -1444,6 +1452,9 @@ public class GameServerConnectionConcrete extends GameServerConnection {
                     break;
                 case StatData.LEVEL_STAT:
                     _arg1.level_ = _local8;
+                    break;
+                case StatData.STAT_POINT_STAT:
+                    _arg1.statpoint_ = _local8;
                     break;
                 case StatData.ATTACK_STAT:
                     _local4.attack_ = _local8;

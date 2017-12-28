@@ -492,6 +492,7 @@ public class TextKey {
     public static const STAT_DATA_MAXMP:String = "StatData.MaxMP";
     public static const STAT_DATA_XP:String = "StatData.XP";
     public static const STAT_DATA_LEVEL:String = "StatData.Level";
+    public static const STAT_DATA_STATPOINT:String = "StatData.StatPoint";
     public static const STAT_DATA_UNKNOWN_STAT:String = "StatData.UnknownStat";
     public static const INCREMENT_STAT:String = "EquipmentToolTip.incrementStat";
     public static const CHOOSENAMEREGISTERDIALOG_TEXT:String = "ChooseNameRegisterDialog.text";

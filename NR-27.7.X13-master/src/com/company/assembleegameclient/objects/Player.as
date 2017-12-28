@@ -171,6 +171,7 @@ public class Player extends Character {
         var _local5:Player = new Player(_local4);
         _local5.name_ = _arg1;
         _local5.level_ = int(_arg2.Level);
+        _local5.statpoint_ = int(_arg2.StatPoint);
         _local5.exp_ = int(_arg2.Exp);
         _local5.equipment_ = ConversionUtil.toIntVector(_arg2.Equipment);
         _local5.lockedSlot = new Vector.<int>(_local5.equipment_.length);

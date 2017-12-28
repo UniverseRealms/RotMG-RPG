@@ -158,13 +158,6 @@ namespace common
             var aKey = $"lock:{acc.AccountId}";
             tran.AddCondition(Condition.KeyNotExists(aKey));
             tran.StringSetAsync(aKey, lockToken, TimeSpan.FromSeconds(_lockTTL));
-
-            if (acc.DiscordId != null)
-            {
-                var dKey = $"dLock:{acc.DiscordId}";
-                tran.AddCondition(Condition.KeyNotExists(dKey));
-                tran.StringSetAsync(dKey, lockToken, TimeSpan.FromSeconds(_lockTTL));
-            }
             
             var committed = tran.Execute();
 
@@ -184,13 +177,7 @@ namespace common
             var aKey = $"lock:{acc.AccountId}";
             tran.AddCondition(Condition.StringEqual(aKey, acc.LockToken));
             tran.KeyExpireAsync(aKey, TimeSpan.FromSeconds(_lockTTL));
-
-            if (acc.DiscordId != null)
-            {
-                var dKey = $"dLock:{acc.DiscordId}";
-                tran.AddCondition(Condition.StringEqual(dKey, acc.LockToken));
-                tran.KeyExpireAsync(dKey, TimeSpan.FromSeconds(_lockTTL));
-            }
+            
             return tran.Execute();
         }
 
@@ -202,13 +189,6 @@ namespace common
             tran.AddCondition(Condition.StringEqual(aKey, acc.LockToken));
             tran.KeyDeleteAsync(aKey);
             
-            if (acc.DiscordId != null)
-            {
-                var dKey = $"dLock:{acc.DiscordId}";
-                tran.AddCondition(Condition.StringEqual(dKey, acc.LockToken));
-                tran.KeyDeleteAsync(dKey);
-            }
-
             tran.ExecuteAsync(CommandFlags.FireAndForget);
         }
 
@@ -362,7 +342,7 @@ namespace common
                 GuildId = 0,
                 GuildRank = 0,
                 VaultCount = newAccounts.VaultCount,
-                MaxCharSlot = newAccounts.MaxCharSlot,
+                MaxCharSlot = 4,
                 RegTime = DateTime.Now,
                 Guest = isGuest,
                 Fame = newAccounts.Fame,
@@ -985,6 +965,7 @@ namespace common
             {
                 ObjectType = type,
                 Level = newCharacters.Level,
+                StatPoint = newCharacters.StatPoint,
                 Experience = 0,
                 Fame = 0,
                 Items = InitInventory(playerDesc.Equipment),

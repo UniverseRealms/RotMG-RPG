@@ -90,6 +90,7 @@ namespace common.resources
     {
         public bool Maxed { get; private set; }
         public int Level { get; private set; }
+        public int StatPoint { get; private set; }
 
         public NewCharacters(XElement e)
         {
@@ -97,6 +98,7 @@ namespace common.resources
 
             Maxed = GetBoolValue("Maxed");
             Level = GetIntValue("Level");
+            StatPoint = GetIntValue("StatPoint");
         }
     }
 

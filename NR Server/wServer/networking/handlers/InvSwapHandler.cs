@@ -106,7 +106,6 @@ namespace wServer.networking.handlers
                 queue.Enqueue(() => DropInSoulboundBag(player, itemA));
                 conBTrans[slotB] = null;
             }
-
             // swap items
             if (Inventory.Execute(conATrans, conBTrans))
             {
@@ -125,7 +124,6 @@ namespace wServer.networking.handlers
                     player.Client.SendPacket(new InvResult() { Result = 0 });
                     return;
                 }
-
                 // if execute failed, undo inventory changes
                 if (!Inventory.Revert(conATrans, conBTrans))
                     Log.Warn($"Failed to revert changes. {player.Name} has an extra {itemA?.ObjectId} or {itemB?.ObjectId}");
