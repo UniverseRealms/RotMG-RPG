@@ -8,7 +8,7 @@
   
 -Stale(SwyftLoe) 
   
--Kierze(Kierze) 
+-(Retired)Kierze(Kierze) 
 
 ### Original Source Credit:
 
