@@ -1,4 +1,6 @@
 ﻿package kabam.rotmg.text.view {
+import flash.display.Bitmap;
+import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.text.TextField;
 import flash.text.TextFormat;
@@ -97,6 +99,10 @@ public class TextFieldDisplayConcrete extends Sprite implements TextFieldDisplay
         this.horizontalAlign = _arg1;
         this.setPropertiesIfHasTextField();
         return (this);
+    }
+
+    public function getWidth():int {
+        return this.width;
     }
 
     public function setAutoSize(_arg1:String):TextFieldDisplayConcrete {
@@ -322,7 +328,5 @@ public class TextFieldDisplayConcrete extends Sprite implements TextFieldDisplay
     public function getTextFormat(_arg1:int = -1, _arg2:int = -1):TextFormat {
         return (this.textField.getTextFormat(_arg1, _arg2));
     }
-
-
 }
 }

@@ -128,13 +128,13 @@ class Square extends Shape {
     public var start:Point;
     public var end:Point;
     /*private*/
-    var lifespan:uint;
+    private var lifespan:uint;
     /*private*/
-    var moveX:Number;
+    private var moveX:Number;
     /*private*/
-    var moveY:Number;
+    private var moveY:Number;
     /*private*/
-    var angle:Number;
+    private var angle:Number;
     public var complete:Signal;
 
     public function Square(_arg1:Point, _arg2:Point, _arg3:uint) {
@@ -151,7 +151,7 @@ class Square extends Shape {
     }
 
     /*private*/
-    function position():void {
+    private function position():void {
         this.x = this.start.x;
         this.y = this.start.y;
     }

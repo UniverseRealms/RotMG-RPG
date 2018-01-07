@@ -807,7 +807,7 @@ public class Player extends Character {
 
         if (hp_ < maxHP_ * 0.2) {
             var intensity:Number = int(Math.abs(Math.sin(currentTime / 200)) * 10) / 10;
-            var ct = lowHealthCT[intensity];
+            var ct:ColorTransform = lowHealthCT[intensity];
             if (ct == null) {
                 ct = new ColorTransform(1, 1, 1, 1,
                         intensity * LOW_HEALTH_CT_OFFSET,

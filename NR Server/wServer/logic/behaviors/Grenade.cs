@@ -20,7 +20,7 @@ namespace wServer.logic.behaviors
         Cooldown coolDown;
         ConditionEffectIndex effect;
         int effectDuration;
-        new uint color;
+        uint color;
 
         public Grenade(double radius, int damage, double range = 5,
             double? fixedAngle = null, Cooldown coolDown = new Cooldown(), ConditionEffectIndex effect = 0, int effectDuration = 0, uint color = 0xffff0000)

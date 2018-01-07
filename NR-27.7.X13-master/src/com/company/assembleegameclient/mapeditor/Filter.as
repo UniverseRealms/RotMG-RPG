@@ -19,7 +19,7 @@ public class Filter extends Sprite {
     private var _filterTypeDropdown:DropDown;
     private var _minInput:TextInputField;
     private var _maxInput:TextInputField;
-    private var _dungeonDropDown;
+    private var _dungeonDropDown:*;
     private var _searchPrompt:BaseSimpleText;
     private var _minPrompt:BaseSimpleText;
     private var _maxPrompt:BaseSimpleText;

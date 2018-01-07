@@ -62,7 +62,7 @@ class UnitTest {
 
 
     /*private*/
-    static function testCrossZ():Boolean {
+    public static function testCrossZ():Boolean {
         var _local1:Line3D = new Line3D(new Vector3D(0, 0, 0), new Vector3D(0, 100, 0));
         var _local2:Line3D = new Line3D(new Vector3D(10, 0, 10), new Vector3D(-10, 100, -100));
         if (_local1.crossZ(_local2) != Order.IN_FRONT) {

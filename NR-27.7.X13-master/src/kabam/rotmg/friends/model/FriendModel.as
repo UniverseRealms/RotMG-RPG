@@ -229,7 +229,7 @@ public class FriendModel {
         return (false);
     }
 
-    private function removeFromList(_arg1:Vector.<FriendVO>, _arg2:String) {
+    private function removeFromList(_arg1:Vector.<FriendVO>, _arg2:String):void {
         var _local3:FriendVO;
         var _local4:int;
         while (_local4 < _arg1.length) {

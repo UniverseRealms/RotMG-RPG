@@ -49,11 +49,11 @@ import flash.geom.Vector3D;
 class FountainSnowyParticle extends Particle {
 
     /*private*/
-    static const G:Number = -0.8;
+    private static const G:Number = -0.8;
     /*private*/
-    static const VI:Number = 2;
+    private static const VI:Number = 2;
     /*private*/
-    static const ZI:Number = 0.75;
+    private static const ZI:Number = 0.75;
 
     public var startTime_:int;
     protected var moveVec_:Vector3D;

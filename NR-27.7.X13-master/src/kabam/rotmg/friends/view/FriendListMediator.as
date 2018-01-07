@@ -52,7 +52,7 @@ public class FriendListMediator extends Mediator {
         this.view.tabSignal.removeAll();
     }
 
-    private function initView(_arg1:Boolean = false) {
+    private function initView(_arg1:Boolean = false):void {
         if (_arg1) {
             this.view.init(this.model.getAllFriends(), this.model.getAllInvitations(), this.model.getCurrentServerName());
         }

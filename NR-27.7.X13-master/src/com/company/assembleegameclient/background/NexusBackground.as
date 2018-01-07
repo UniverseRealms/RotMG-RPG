@@ -41,7 +41,7 @@ public class NexusBackground extends Background {
         this.graphicsData_.push(this.bitmapFill_);
         this.path_.data.length = 0;
         var _local4:Rectangle = _arg1.clipRect_;
-        this.path_.data.push(_local4.left, _local4.top, _local4.right, _local4.top, _local4.right, _local4.bottom, _local4.left, _local4.bottom);
+        this.graphicsData_.push(_local4.left, _local4.top, _local4.right, _local4.top, _local4.right, _local4.bottom, _local4.left, _local4.bottom);
         this.graphicsData_.push(this.path_);
         this.graphicsData_.push(GraphicsUtil.END_FILL);
         this.drawIslands(_arg1, _arg2);
@@ -81,9 +81,9 @@ class Island {
     public var startTime_:int;
     public var bitmapData_:BitmapData;
     /*private*/
-    var bitmapFill_:GraphicsBitmapFill;
+    private var bitmapFill_:GraphicsBitmapFill;
     /*private*/
-    var path_:GraphicsPath;
+    private var path_:GraphicsPath;
 
     public function Island(_arg1:Number, _arg2:Number, _arg3:int):void {
         this.bitmapFill_ = new GraphicsBitmapFill(null, new Matrix(), true, false);
@@ -107,7 +107,7 @@ class Island {
         this.path_.data.length = 0;
         var _local8:Point = _local7.transformPoint(new Point(_local5, _local6));
         var _local9:Point = _local7.transformPoint(new Point((_local5 + this.bitmapData_.width), (_local6 + this.bitmapData_.height)));
-        this.path_.data.push(_local8.x, _local8.y, _local9.x, _local8.y, _local9.x, _local9.y, _local8.x, _local9.y);
+        _arg3.push(_local8.x, _local8.y, _local9.x, _local8.y, _local9.x, _local9.y, _local8.x, _local9.y);
         _arg3.push(this.path_);
         _arg3.push(GraphicsUtil.END_FILL);
     }

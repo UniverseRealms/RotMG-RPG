@@ -36,7 +36,7 @@ public class FriendActionCommand {
     }
 
     private function onComplete(_arg1:Boolean, _arg2:*):void {
-        if (this.vo.callback) {
+        if (this.vo.callback()) {
             this.vo.callback(_arg1, _arg2, this.vo.target);
         }
         else {

@@ -24,7 +24,7 @@ import kabam.rotmg.text.view.stringBuilder.LineBuilder;
 
 public class ClassToolTip extends ToolTip {
 
-    private static const unlockReqCT = new ColorTransform(0, 0, 0, 0.5, 0, 0, 0, 0);
+    private static const unlockReqCT:ColorTransform = new ColorTransform(0, 0, 0, 0.5, 0, 0, 0, 0);
 
     private var portrait_:Bitmap;
     private var nameText_:TextFieldDisplayConcrete;

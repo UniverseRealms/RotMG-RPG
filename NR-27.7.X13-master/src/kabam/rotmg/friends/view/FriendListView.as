@@ -39,8 +39,8 @@ public class FriendListView extends Sprite implements DialogCloser {
     private const closeButton:DialogCloseButton = PetsViewAssetFactory.returnCloseButton(TEXT_WIDTH);
 
     public var closeDialogSignal:Signal = new Signal();
-    public var actionSignal = new Signal(String, String);
-    public var tabSignal = new Signal(String);
+    public var actionSignal:Signal = new Signal(String, String);
+    public var tabSignal:Signal = new Signal(String);
     public var _tabView:FriendTabView;
     public var _w:int;
     public var _h:int;

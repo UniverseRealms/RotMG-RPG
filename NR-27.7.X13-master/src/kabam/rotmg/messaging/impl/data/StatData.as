@@ -91,12 +91,12 @@ public class StatData {
     // unimplemented
     public static const DAMAGE_MIN:int = 98;
     public static const DAMAGE_MAX:int = 99;
-    public static const DAMAGE_MIN_BONUS = 100;
-    public static const DAMAGE_MAX_BONUS = 101;
-    public static const LUCK_BONUS = 105;
-    public static const RANK = 103;
-    public static const ADMIN = 104;
-    public static const LUCK = 102;
+    public static const DAMAGE_MIN_BONUS:int = 100;
+    public static const DAMAGE_MAX_BONUS:int = 101;
+    public static const LUCK_BONUS:int = 105;
+    public static const RANK:int = 103;
+    public static const ADMIN:int = 104;
+    public static const LUCK:int = 102;
 
     public var statType_:uint = 0;
     public var statValue_:int;

@@ -16,7 +16,7 @@ public class ThrowEffect extends ParticleEffect {
     override public function runNormalRendering(_arg1:int, _arg2:int):Boolean {
         x_ = this.start_.x;
         y_ = this.start_.y;
-        var _local3 = 200;
+        var _local3:int = 200;
         var _local4:ThrowParticle = new ThrowParticle(_local3, this.color_, 1500, this.start_, this.end_);
         map_.addObj(_local4, x_, y_);
         return (false);

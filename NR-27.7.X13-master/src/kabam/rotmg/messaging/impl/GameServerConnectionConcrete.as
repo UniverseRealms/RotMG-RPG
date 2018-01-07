@@ -869,7 +869,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
             converted = ((((gs_.model.getConverted()) || ((this.player.credits_ > 100)))) || ((sObj.price_ > this.player.credits_)));
         }
         if (sObj.soldObjectName() == TextKey.VAULT_CHEST) {
-            this.openDialog.dispatch(new PurchaseConfirmationDialog(function () {
+            this.openDialog.dispatch(new PurchaseConfirmationDialog(function ():void {
                 buyConfirmation(sObj, converted, sellableObjectId, quantity);
             }));
         }
@@ -878,7 +878,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         }
     }
 
-    private function buyConfirmation(_arg1:SellableObject, _arg2:Boolean, _arg3:int, _arg4:int) {
+    private function buyConfirmation(_arg1:SellableObject, _arg2:Boolean, _arg3:int, _arg4:int):void {
         outstandingBuy_ = true;
         var _local5:Buy = (this.messages.require(BUY) as Buy);
         _local5.objectId_ = _arg3;
@@ -1048,7 +1048,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
     }
 
     private function onServerPlayerShoot(_arg1:ServerPlayerShoot):void {
-        var _local2 = (_arg1.ownerId_ == this.playerId_);
+        var _local2:Boolean = (_arg1.ownerId_ == this.playerId_);
         var _local3:GameObject = gs_.map.goDict_[_arg1.ownerId_];
         if ((((_local3 == null)) || (_local3.dead_))) {
             if (_local2) {
@@ -1149,7 +1149,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         var _local3:Object;
         var _local4:Object;
         gs_.hudView.tradeDone();
-        var _local2 = "";
+        var _local2:String = "";
         try {
             _local4 = JSON.parse(_arg1.description_);
             _local2 = _local4.key;
@@ -1283,7 +1283,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         if (_arg1 != null) {
             return (true);
         }
-        var _local2 = (_arg1.objectId_ == this.playerId_);
+        var _local2:Boolean = (_arg1.objectId_ == this.playerId_);
         if (((((!(_local2)) && (_arg1.props_.isPlayer_))) && (Parameters.data_.disableAllyParticles))) {
             return (false);
         }
@@ -1687,7 +1687,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         if (_local5 == null) {
             return;
         }
-        var _local6 = (_arg1.objectId_ == this.playerId_);
+        var _local6:Boolean = (_arg1.objectId_ == this.playerId_);
         if (((!((_arg2 == 0))) && (!(_local6)))) {
             _local5.onTickPos(_arg1.pos_.x_, _arg1.pos_.y_, _arg2, _arg3);
         }
@@ -1898,7 +1898,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
             this.aoeAck(gs_.lastUpdate_, this.player.x_, this.player.y_);
             return;
         }
-        var _local3 = (this.player.distTo(_arg1.pos_) < _arg1.radius_);
+        var _local3:Boolean = (this.player.distTo(_arg1.pos_) < _arg1.radius_);
         if (_local3) {
             _local4 = GameObject.damageWithDefense(_arg1.damage_, this.player.defense_, false, this.player.condition_);
             _local5 = null;
@@ -2089,7 +2089,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
     }
 
     private function handleJsonDialog(_arg1:Failure):void {
-        var errorMsg = JSON.parse(_arg1.errorDescription_);
+        var errorMsg:* = JSON.parse(_arg1.errorDescription_);
         var dlg:Dialog;
         
         // check for correct client version

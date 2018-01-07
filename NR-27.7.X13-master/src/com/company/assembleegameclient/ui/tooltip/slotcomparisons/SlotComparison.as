@@ -5,11 +5,11 @@ import kabam.rotmg.text.view.stringBuilder.AppendingLineBuilder;
 
 public class SlotComparison {
 
-    static const BETTER_COLOR:uint = 0xFF00;
-    static const WORSE_COLOR:uint = 0xFF0000;
-    static const NO_DIFF_COLOR:uint = 16777103;
-    static const LABEL_COLOR:uint = 0xB3B3B3;
-    static const UNTIERED_COLOR:uint = 9055202;
+    public static const BETTER_COLOR:uint = 0xFF00;
+    public static const WORSE_COLOR:uint = 0xFF0000;
+    public static const NO_DIFF_COLOR:uint = 16777103;
+    public static const LABEL_COLOR:uint = 0xB3B3B3;
+    public static const UNTIERED_COLOR:uint = 9055202;
 
     public var processedTags:Dictionary;
     public var processedActivateOnEquipTags:AppendingLineBuilder;

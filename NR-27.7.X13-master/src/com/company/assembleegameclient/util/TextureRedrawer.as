@@ -142,8 +142,8 @@ public class TextureRedrawer {
 
     private static function getTexture(op:int, bmp:BitmapData):BitmapData {
         var ret:BitmapData;
-        var type = (op >> 24) & 0xFF;
-        var value = op & 0xFFFFFF; // could mean color or sprite index
+        var type:int = (op >> 24) & 0xFF;
+        var value:int = op & 0xFFFFFF; // could mean color or sprite index
         switch (type) {
             case 0:
                 ret = bmp;

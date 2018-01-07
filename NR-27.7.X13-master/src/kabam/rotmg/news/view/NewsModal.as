@@ -96,7 +96,7 @@ public class NewsModal extends EmptyFrame {
     }
 
 
-    public function onCloseButtonClicked() {
+    public function onCloseButtonClicked():void {
         var _local1:FlushPopupStartupQueueSignal = StaticInjectorContext.getInjector().getInstance(FlushPopupStartupQueueSignal);
         closeButton.clicked.remove(this.onCloseButtonClicked);
         if (this.triggeredOnStartup) {
@@ -104,12 +104,12 @@ public class NewsModal extends EmptyFrame {
         }
     }
 
-    private function onAdded(_arg1:Event) {
+    private function onAdded(_arg1:Event):void {
         this.newsModel.markAsRead();
         this.refreshNewsButton();
     }
 
-    private function updateIndicator() {
+    private function updateIndicator():void {
         this.fontModel.apply(this.pageIndicator, 24, 0xFFFFFF, true);
         this.pageIndicator.text = ((this.currentPageNumber + " / ") + this.newsModel.numberOfNews);
         addChild(this.pageIndicator);

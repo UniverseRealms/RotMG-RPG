@@ -20,10 +20,9 @@ public class ImminentWaveCountdownClock extends Sprite {
     private const countdownText:StaticTextDisplay = makeCountdownText();
     private const waveTimer:Timer = new Timer(1000);
     private const waveStartContainer:Sprite = new Sprite();
-    private const waveAsset = makeWaveAsset();
+    private const waveAsset:* = makeWaveAsset();
     private const waveText:StaticTextDisplay = makeWaveText();
     private const waveNumberText:StaticTextDisplay = makeWaveNumberText();
-    private const startText:StaticTextDisplay = makeStartText();
     private const waveStartTimer:Timer = new Timer(1500, 1);
 
     private var WaveAsset:Class;
@@ -127,7 +126,7 @@ public class ImminentWaveCountdownClock extends Sprite {
         return (_local1);
     }
 
-    private function makeWaveAsset() {
+    private function makeWaveAsset():* {
         var _local1:* = new this.WaveAsset();
         this.waveStartContainer.addChild(_local1);
         return (_local1);

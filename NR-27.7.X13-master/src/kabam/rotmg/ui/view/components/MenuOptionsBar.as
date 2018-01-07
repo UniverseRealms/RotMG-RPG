@@ -70,7 +70,7 @@ public class MenuOptionsBar extends Sprite {
     }
 
 
-    private function positionX(_arg1:TitleMenuOption, _arg2:Bitmap)
+    private function positionX(_arg1:TitleMenuOption, _arg2:Bitmap):void
     {
         _arg1.x = (this.screenGraphic.width/2);
         _arg2.x = (this.screenGraphic.width/2) - (_arg2.width/2);

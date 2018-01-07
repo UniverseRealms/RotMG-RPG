@@ -85,7 +85,7 @@ public class ObjectLibrary {
         parseFromXML(_arg2, parseDungeonCallbak);
     }
 
-    private static function parseDungeonCallbak(_arg1:int, _arg2:XML) {
+    private static function parseDungeonCallbak(_arg1:int, _arg2:XML):void {
         if (((!((currentDungeon == ""))) && (!((dungeonsXMLLibrary_[currentDungeon] == null))))) {
             dungeonsXMLLibrary_[currentDungeon][_arg1] = _arg2;
             propsLibrary_[_arg1].belonedDungeon = currentDungeon;

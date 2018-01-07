@@ -473,17 +473,17 @@ public class Map extends AbstractMap {
             var fIndex:uint = this.getFilterIndex();
             var r3d:Render3D = StaticInjectorContext.getInjector().getInstance(Render3D);
             r3d.dispatch(this.graphicsData_, this.graphicsData3d_, width_, height_, camera, fIndex);
-            for (var i:int = 0; i < this.graphicsData_.length; i++) {
-                if (this.graphicsData_[i] is GraphicsBitmapFill && GraphicsFillExtra.isSoftwareDraw(GraphicsBitmapFill(this.graphicsData_[i]))) {
-                    this.graphicsDataStageSoftware_.push(this.graphicsData_[i]);
-                    this.graphicsDataStageSoftware_.push(this.graphicsData_[i + 1]);
-                    this.graphicsDataStageSoftware_.push(this.graphicsData_[i + 2]);
+            for (var g:int = 0; g < this.graphicsData_.length; g++) {
+                if (this.graphicsData_[g] is GraphicsBitmapFill && GraphicsFillExtra.isSoftwareDraw(GraphicsBitmapFill(this.graphicsData_[g]))) {
+                    this.graphicsDataStageSoftware_.push(this.graphicsData_[g]);
+                    this.graphicsDataStageSoftware_.push(this.graphicsData_[g + 1]);
+                    this.graphicsDataStageSoftware_.push(this.graphicsData_[g + 2]);
                 }
                 else {
-                    if (this.graphicsData_[i] is GraphicsSolidFill && GraphicsFillExtra.isSoftwareDrawSolid(GraphicsSolidFill(this.graphicsData_[i]))) {
-                        this.graphicsDataStageSoftware_.push(this.graphicsData_[i]);
-                        this.graphicsDataStageSoftware_.push(this.graphicsData_[i + 1]);
-                        this.graphicsDataStageSoftware_.push(this.graphicsData_[i + 2]);
+                    if (this.graphicsData_[g] is GraphicsSolidFill && GraphicsFillExtra.isSoftwareDrawSolid(GraphicsSolidFill(this.graphicsData_[g]))) {
+                        this.graphicsDataStageSoftware_.push(this.graphicsData_[g]);
+                        this.graphicsDataStageSoftware_.push(this.graphicsData_[g + 1]);
+                        this.graphicsDataStageSoftware_.push(this.graphicsData_[g + 2]);
                     }
                 }
             }

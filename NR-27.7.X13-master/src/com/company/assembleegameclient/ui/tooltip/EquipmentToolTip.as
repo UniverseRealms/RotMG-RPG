@@ -217,9 +217,9 @@ public class EquipmentToolTip extends ToolTip {
     }
 
     private function addTierText():void {
-        var _local1 = (this.isPet() == false);
-        var _local2 = (this.objectXML.hasOwnProperty("Consumable") == false);
-        var _local3 = (this.objectXML.hasOwnProperty("Treasure") == false);
+        var _local1:Boolean = (this.isPet() == false);
+        var _local2:Boolean = (this.objectXML.hasOwnProperty("Consumable") == false);
+        var _local3:Boolean = (this.objectXML.hasOwnProperty("Treasure") == false);
         var _local4:Boolean = this.objectXML.hasOwnProperty("Tier");
         if (((((_local1) && (_local2))) && (_local3))) {
             this.tierText = new TextFieldDisplayConcrete().setSize(16).setColor(0xFFFFFF).setTextWidth(30).setBold(true);
@@ -246,11 +246,11 @@ public class EquipmentToolTip extends ToolTip {
         return ((activateTags.length() >= 1));
     }
 
-    private function removeTitle() {
+    private function removeTitle():void {
         removeChild(this.titleText);
     }
 
-    private function removeDesc() {
+    private function removeDesc():void {
         removeChild(this.descText);
     }
 
@@ -931,7 +931,7 @@ public class EquipmentToolTip extends ToolTip {
         var _local5:Number;
         var _local6:int;
         var _local7:Number;
-        var _local3 = "-1";
+        var _local3:String = "-1";
         var _local4:Number = (this.player.wisdom_ + this.player.wisdomBoost_);
         if (_local4 < 30) {
             _local3 = _arg1;
@@ -984,8 +984,8 @@ class Effect {
         var _local4:String;
         var _local5:LineBuilder;
         var _local1:Object = {};
-        var _local2 = "";
-        var _local3 = "";
+        var _local2:String = "";
+        var _local3:String = "";
         if (this.replacementColor_) {
             _local2 = (('</font><font color="#' + this.replacementColor_.toString(16)) + '">');
             _local3 = (('</font><font color="#' + this.color_.toString(16)) + '">');

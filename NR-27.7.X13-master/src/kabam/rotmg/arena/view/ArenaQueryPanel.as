@@ -15,13 +15,13 @@ public class ArenaQueryPanel extends Panel {
     private const titleText:TextFieldDisplayConcrete = ArenaViewAssetFactory.returnTextfield(0xFFFFFF, 16, true);
 
     private var icon:Bitmap;
-    var infoButton:DeprecatedTextButton;
-    var enterButton:DeprecatedTextButton;
+    public var infoButton:DeprecatedTextButton;
+    public var enterButton:DeprecatedTextButton;
     private var title:String = "ArenaQueryPanel.title";
     private var infoButtonString:String = "Pets.caretakerPanelButtonInfo";
     private var upgradeYardButtonString:String = "ArenaQueryPanel.leaderboard";
     private var waiter:SignalWaiter;
-    var type:uint;
+    public var type:uint;
 
     public function ArenaQueryPanel(_arg1:GameSprite, _arg2:uint) {
         this.waiter = new SignalWaiter();

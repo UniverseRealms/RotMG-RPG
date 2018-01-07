@@ -22,7 +22,7 @@ import flash.ui.Keyboard;
 import flash.utils.ByteArray;
 import flash.utils.Dictionary;
 
-class MEMap extends Sprite {
+public class MEMap extends Sprite {
 
     public static const MAX_ALLOWED_SQUARES:int = 0x0200;
     public static const SQUARE_SIZE:int = 16;

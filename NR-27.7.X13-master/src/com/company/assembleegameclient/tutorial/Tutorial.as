@@ -136,7 +136,7 @@ public class Tutorial extends Sprite {
         }
     }
 
-    function doneAction(_arg1:String):void {
+    public function doneAction(_arg1:String):void {
         var _local3:Requirement;
         var _local4:Player;
         var _local5:Boolean;

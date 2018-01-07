@@ -85,7 +85,7 @@ public class LegacyBuyButton extends BuyButton {
         }
     }
 
-    public function setStringBuilder(_arg1:StringBuilder) {
+    public function setStringBuilder(_arg1:StringBuilder):void {
         this.text.setStringBuilder(_arg1);
         this.updateUI();
     }

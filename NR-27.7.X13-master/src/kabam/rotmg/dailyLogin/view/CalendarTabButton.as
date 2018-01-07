@@ -16,6 +16,8 @@ import kabam.rotmg.dailyLogin.config.CalendarSettings;
 import kabam.rotmg.text.view.TextFieldDisplayConcrete;
 import kabam.rotmg.text.view.stringBuilder.StaticStringBuilder;
 
+import starling.text.TextField;
+
 public class CalendarTabButton extends Sprite {
 
     public static const STATE_SELECTED:String = "selected";
@@ -31,9 +33,8 @@ public class CalendarTabButton extends Sprite {
     private var state_:String = "idle";
     private var tabNameTxt:TextFieldDisplayConcrete;
     private var background:Sprite;
-    private var tabName;
-    private var hintText;
-    private var hintTextField;
+    private var tabName:String;
+    private var hintText:String;
     private var tooltip:DailyCalendarInfoIcon;
 
     public function CalendarTabButton(_arg1:String, _arg2:String, _arg3:String, _arg4:String, _arg5:int) {

@@ -68,9 +68,9 @@ class Star {
     public var scale_:Number;
     public var bitmap_:BitmapData;
     /*private*/
-    var w_:Number;
+    private var w_:Number;
     /*private*/
-    var h_:Number;
+    private var h_:Number;
     protected var bitmapFill_:GraphicsBitmapFill;
     protected var path_:GraphicsPath;
 
@@ -98,7 +98,7 @@ class Star {
         this.path_.data.length = 0;
         var _local7:Number = (_local4 - (this.w_ / 2));
         var _local8:Number = (_local5 - (this.h_ / 2));
-        this.path_.data.push(_local7, _local8, (_local7 + this.w_), _local8, (_local7 + this.w_), (_local8 + this.h_), _local7, (_local8 + this.h_));
+        _arg1.push(_local7, _local8, (_local7 + this.w_), _local8, (_local7 + this.w_), (_local8 + this.h_), _local7, (_local8 + this.h_));
         _arg1.push(this.bitmapFill_);
         _arg1.push(this.path_);
         _arg1.push(END_FILL);

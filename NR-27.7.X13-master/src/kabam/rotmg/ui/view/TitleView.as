@@ -26,7 +26,7 @@ public class TitleView extends Sprite {
 
     public static const MIDDLE_OF_BOTTOM_BAND:Number = 589.45;
 
-    static var TitleScreenGraphic:Class = TitleView_TitleScreenGraphic;
+    public static var TitleScreenGraphic:Class = TitleView_TitleScreenGraphic;
     public static var queueEmailConfirmation:Boolean = false;
     public static var queuePasswordPrompt:Boolean = false;
     public static var queuePasswordPromptFull:Boolean = false;

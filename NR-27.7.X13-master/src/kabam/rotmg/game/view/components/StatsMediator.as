@@ -3,6 +3,12 @@ import com.company.assembleegameclient.objects.Player;
 
 import flash.events.MouseEvent;
 
+import kabam.lib.net.api.MessageProvider;
+
+import kabam.lib.net.impl.SocketServer;
+import kabam.rotmg.messaging.impl.GameServerConnection;
+import kabam.rotmg.messaging.impl.outgoing.IncrementStat;
+
 import kabam.rotmg.ui.signals.UpdateHUDSignal;
 import kabam.rotmg.ui.view.StatsDockedSignal;
 
@@ -18,34 +24,22 @@ public class StatsMediator extends Mediator {
     public var statsUndocked:StatsUndockedSignal;
     [Inject]
     public var statsDocked:StatsDockedSignal;
+    [Inject]
+    public var socketServer:SocketServer;
+    [Inject]
+    public var messages:MessageProvider;
 
 
     override public function initialize():void {
-        this.view.mouseDown.add(this.onStatsDrag);
-        this.updateHUD.add(this.onUpdateHUD);
-        this.statsDocked.add(this.onStatsDock);
+        updateHUD.add(onUpdate);
     }
 
     override public function destroy():void {
-        this.view.mouseDown.remove(this.onStatsDrag);
-        this.updateHUD.remove(this.onUpdateHUD);
     }
 
-    private function onUpdateHUD(_arg1:Player):void {
-        this.view.draw(_arg1);
+    private function onUpdate(_arg1:Player):void {
+        this.view.drawValues(_arg1);
+        this.view.initPoints(_arg1);
     }
-
-    private function onStatsDrag(_arg1:MouseEvent):void {
-        if (this.view.currentState == StatsView.STATE_DOCKED) {
-            this.view.undock();
-            this.statsUndocked.dispatch(this.view);
-        }
-    }
-
-    private function onStatsDock():void {
-        this.view.dock();
-    }
-
-
 }
 }

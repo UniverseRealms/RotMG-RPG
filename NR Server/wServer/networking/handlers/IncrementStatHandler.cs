@@ -27,12 +27,17 @@ namespace wServer.networking.handlers
                 IncreaseStat(client.Player, packet.StatType, statdic[packet.StatType]);
             else
                 client.Player.SendInfo("Could not indicate stat!");
-
-            client.Player.SendInfo(packet.StatType.ToString());//to make sure it returns correct value
         }
 
         private void IncreaseStat(Player player, int stat, int amount)
         {
+            var statinfo = player.Manager.Resources.GameData.Classes[player.ObjectType].Stats;
+
+            if (player.Stats.Base[stat] >= statinfo[stat].MaxValue)
+            {
+                player.SendError("Stat already maxed!");
+                return;
+            }
             player.Stats.Base[stat] += amount;
             player.StatPoint -= 1;
             player.Client.Character.FlushAsync();

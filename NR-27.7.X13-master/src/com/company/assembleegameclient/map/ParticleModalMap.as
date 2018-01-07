@@ -110,8 +110,6 @@ public class ParticleModalMap extends Map {
     }
 
     private function activateModeSnow(_arg1:Event):void {
-        var _local2 = 600;
-        var _local3 = 600;
         if (this.time != 0) {
             this.dt = (getTimer() - this.time);
         }

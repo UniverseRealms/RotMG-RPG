@@ -16,7 +16,5 @@ public class IncrementStat extends OutgoingMessage {
     override public function toString():String {
         return (formatToString("INCREMENTSTAT", "statType"));
     }
-
-
 }
 }

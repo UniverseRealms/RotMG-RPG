@@ -49,7 +49,7 @@ public class CharacterBox extends Sprite {
     private var lock_:Bitmap;
     private var saleText_:TextFieldDisplayConcrete;
     private var unlockedText_:TextFieldDisplayConcrete;
-    private var saleTag_;
+    private var saleTag_:*;
     public var buyButtonClicked_:NativeSignal;
     public var characterSelectClicked_:NativeSignal;
 

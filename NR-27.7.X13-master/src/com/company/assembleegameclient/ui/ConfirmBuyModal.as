@@ -94,14 +94,14 @@ public class ConfirmBuyModal extends Sprite {
     }
 
 
-    private function refreshNavDisable() {
+    private function refreshNavDisable():void {
         this.leftNavSprite.alpha = (((this.quantity_) == 1) ? 0.5 : 1);
         this.rightNavSprite.alpha = (((this.quantity_) == this.availableInventoryNumber) ? 0.5 : 1);
     }
 
     private function positionAndStuff():void {
-        var _local1 = -300;
-        var _local2 = -200;
+        var _local1:int = -300;
+        var _local2:int = -200;
         this.x = (_local1 + ((-1 * ConfirmBuyModal.WIDTH) * 0.5));
         this.y = (_local2 + ((-1 * ConfirmBuyModal.HEIGHT) * 0.5));
         this.buyButton.x = (this.buyButton.x + 35);
@@ -150,7 +150,7 @@ public class ConfirmBuyModal extends Sprite {
         return (_local2);
     }
 
-    private function onClick(_arg1:MouseEvent) {
+    private function onClick(_arg1:MouseEvent):void {
         switch (_arg1.currentTarget) {
             case this.rightNavSprite:
                 if (this.quantity_ < this.availableInventoryNumber) {
