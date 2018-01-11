@@ -950,6 +950,33 @@ namespace wServer.realm.commands
         }
     }
 
+    class CurrencyCommand : Command //gold and fame command
+    {
+        public CurrencyCommand() : base("currency", permLevel: 80, alias: "c") { }
+
+        protected override bool Process(Player player, RealmTime time, string args)
+        {
+            if (String.IsNullOrEmpty(args))
+            {
+                player.SendInfo("/currency <amount>");
+                return false;
+            }
+            AddCurrency(player, args);
+            return true;
+        }
+
+        private void AddCurrency(Player player, string args)
+        {
+            int val = Convert.ToInt32(args);
+
+            player.Client.Account.Credits += val;
+            player.Client.Account.Fame += val;
+
+            player.Client.Character.FlushAsync();
+            player.SendInfo("Success");
+        }
+    }
+
     class MaxCommand : Command
     {
         public MaxCommand() : base("max", permLevel: 80) { }

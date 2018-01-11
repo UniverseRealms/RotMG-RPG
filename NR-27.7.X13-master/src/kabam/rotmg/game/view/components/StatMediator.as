@@ -38,6 +38,7 @@ public class StatMediator extends Mediator {
     private function IncStat(_arg1:int):void{
         var _local1:IncrementStat = (this.messages.require(GameServerConnection.STATINCREMENT) as IncrementStat);
         _local1.statType  = _arg1;
+        _local1.reset = false;
         this.socketServer.queueMessage(_local1);
     }
 

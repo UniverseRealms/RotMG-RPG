@@ -31,10 +31,18 @@ public class StatsMediator extends Mediator {
 
 
     override public function initialize():void {
+        view.resetSignal.add(onReset);
         updateHUD.add(onUpdate);
     }
 
     override public function destroy():void {
+    }
+
+    private function onReset():void {
+        var _local1:IncrementStat = (this.messages.require(GameServerConnection.STATINCREMENT) as IncrementStat);
+        _local1.statType  = -1;
+        _local1.reset = true;
+        this.socketServer.queueMessage(_local1);
     }
 
     private function onUpdate(_arg1:Player):void {

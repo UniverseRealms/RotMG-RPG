@@ -68,7 +68,7 @@ public class StatView extends Sprite {
         });
 
         nameText.x = 2;
-        valText.x = 40;
+        valText.x = 37;
         addText.x = 70;
         addText.y = -2;
 
@@ -79,7 +79,7 @@ public class StatView extends Sprite {
 
     private function initStatType(_arg1:String):void {
         switch(_arg1.toLowerCase()){
-            case "atk": statType = 2; break;
+            case "att": statType = 2; break;
             case "def": statType = 3; break;
             case "spd": statType = 4; break;
             case "dex": statType = 5; break;

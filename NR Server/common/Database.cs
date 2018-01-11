@@ -342,7 +342,7 @@ namespace common
                 GuildId = 0,
                 GuildRank = 0,
                 VaultCount = newAccounts.VaultCount,
-                MaxCharSlot = 4,
+                MaxCharSlot = 1,
                 RegTime = DateTime.Now,
                 Guest = isGuest,
                 Fame = newAccounts.Fame,
