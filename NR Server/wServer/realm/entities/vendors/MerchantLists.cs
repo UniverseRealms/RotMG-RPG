@@ -38,60 +38,49 @@ namespace wServer.realm.entities.vendors
 
         private static readonly List<ISellableItem> Weapons = new List<ISellableItem>
         {
-            new ShopItem("Dagger of Foul Malevolence", 500),
-            new ShopItem("Bow of Covert Havens", 500),
-            new ShopItem("Staff of the Cosmic Whole", 500),
-            new ShopItem("Wand of Recompense", 500), 
-            new ShopItem("Sword of Acclaim", 500),
-            new ShopItem("Masamune", 500) 
+            new ShopItem("Agateclaw Dagger", 300),
+            new ShopItem("Bow of Innocent Blood", 300),
+            new ShopItem("Staff of Astral Knowledge", 300),
+            new ShopItem("Wand of Ancient Warning", 300), 
+            new ShopItem("Sword of Acclaim", 300),
+            new ShopItem("Muramasa", 300) 
         };
 
         private static readonly List<ISellableItem> Abilities = new List<ISellableItem>
         {
-            new ShopItem("Cloak of Ghostly Concealment", 500),
-            new ShopItem("Quiver of Elvish Mastery", 500),  
-            new ShopItem("Elemental Detonation Spell", 500),
-            new ShopItem("Tome of Holy Guidance", 500),
-            new ShopItem("Helm of the Great General", 500),
-            new ShopItem("Colossus Shield", 500), 
-            new ShopItem("Seal of the Blessed Champion", 500),
-            new ShopItem("Baneserpent Poison", 500),
-            new ShopItem("Bloodsucker Skull", 500),
-            new ShopItem("Giantcatcher Trap", 500),
-            new ShopItem("Planefetter Orb", 500),
-            new ShopItem("Prism of Apparitions", 500),
-            new ShopItem("Scepter of Storms", 500),
-            new ShopItem("Doom Circle", 500)
+            new ShopItem("Cloak of the Endless Twilight", 300),
+            new ShopItem("Golden Quiver", 300),  
+            new ShopItem("Magic Nova Spell", 300),
+            new ShopItem("Tome of Divine Favor", 300),
+            new ShopItem("Golden Helm", 300),
+            new ShopItem("Mithril Shield", 300), 
+            new ShopItem("Seal of the Holy Warrior", 300),
+            new ShopItem("Nightwing Poison", 300),
+            new ShopItem("Lifedrinker Skull", 300),
+            new ShopItem("Dragonstalker Trap", 300),
+            new ShopItem("Banishment Orb", 300),
+            new ShopItem("Prism of Phantoms", 300),
+            new ShopItem("Scepter of Skybolts", 300),
+            new ShopItem("Ice Star", 300)
         };
 
         private static readonly List<ISellableItem> Armor = new List<ISellableItem>
         {
-            new ShopItem("Robe of the Illusionist", 50),
-            new ShopItem("Robe of the Grand Sorcerer", 500),
-            new ShopItem("Studded Leather Armor", 50),
-            new ShopItem("Hydra Skin Armor", 500),
-            new ShopItem("Mithril Armor", 50),
-            new ShopItem("Acropolis Armor", 500)
+            new ShopItem("Robe of the Illusionist", 300),
+            new ShopItem("Studded Leather Armor", 300),
+            new ShopItem("Mithril Armor", 300)
         };
 
         private static readonly List<ISellableItem> Rings = new List<ISellableItem>
         {
-            new ShopItem("Ring of Paramount Attack", 100),
-            new ShopItem("Ring of Paramount Defense", 100),
-            new ShopItem("Ring of Paramount Speed", 100),
-            new ShopItem("Ring of Paramount Dexterity", 100),
-            new ShopItem("Ring of Paramount Vitality", 100),
-            new ShopItem("Ring of Paramount Wisdom", 100),
-            new ShopItem("Ring of Paramount Health", 100),
-            new ShopItem("Ring of Paramount Magic", 100),
-            new ShopItem("Ring of Unbound Attack", 750),
-            new ShopItem("Ring of Unbound Defense", 750),
-            new ShopItem("Ring of Unbound Speed", 750),
-            new ShopItem("Ring of Unbound Dexterity", 750),
-            new ShopItem("Ring of Unbound Vitality", 750),
-            new ShopItem("Ring of Unbound Wisdom", 750),
-            new ShopItem("Ring of Unbound Health", 750),
-            new ShopItem("Ring of Unbound Magic", 750)
+            new ShopItem("Ring of Paramount Attack", 300),
+            new ShopItem("Ring of Paramount Defense", 300),
+            new ShopItem("Ring of Paramount Speed", 300),
+            new ShopItem("Ring of Paramount Dexterity", 300),
+            new ShopItem("Ring of Paramount Vitality", 300),
+            new ShopItem("Ring of Paramount Wisdom", 300),
+            new ShopItem("Ring of Paramount Health", 300),
+            new ShopItem("Ring of Paramount Magic", 300)
         };
 
         private static readonly List<ISellableItem> Keys = new List<ISellableItem>
@@ -118,7 +107,6 @@ namespace wServer.realm.entities.vendors
             new ShopItem("Spider Den Key", 20),
             new ShopItem("Tomb of the Ancients Key", 200),
             new ShopItem("Battle Nexus Key", 150),
-            //new ShopItem("Deadwater Docks Key", 500000),
             new ShopItem("Woodland Labyrinth Key", 200),
             new ShopItem("Theatre Key", 80),
             new ShopItem("Ice Cave Key", 150),
@@ -139,13 +127,12 @@ namespace wServer.realm.entities.vendors
             new ShopItem("Saint Patty's Brew", 80),
             new ShopItem("Mad God Ale", 25),
             new ShopItem("XP Booster", 35),
-            new ShopItem("Backpack", 300),
-            new ShopItem("TEST Common Mystery Egg", 0)
+            new ShopItem("Backpack", 300)
         };
 
         private static readonly List<ISellableItem> Special = new List<ISellableItem>
         {
-            new ShopItem("Amulet of Resurrection", 50000) 
+            new ShopItem("Amulet of Resurrection", 10000) 
         };
         
         public static readonly Dictionary<TileRegion, Tuple<List<ISellableItem>, CurrencyType, /*Rank Req*/int>> Shops = 

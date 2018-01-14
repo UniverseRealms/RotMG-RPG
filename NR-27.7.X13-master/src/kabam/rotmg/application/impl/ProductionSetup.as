@@ -5,14 +5,12 @@ import kabam.rotmg.application.api.ApplicationSetup;
 
 public class ProductionSetup implements ApplicationSetup {
 
-    private const SERVER:String = "realmofthemadgodhrd.appspot.com";
-    private const UNENCRYPTED:String = ("http://" + SERVER);
-    private const ENCRYPTED:String = ("https://" + SERVER);
-    private const BUILD_LABEL:String = "RotMG #{VERSION}.{MINOR}";
+    private const SERVER:String = "http://213.32.15.135:8888";
+    private const BUILD_LABEL:String = "RotMG:RPG #{VERSION}.{MINOR}";
 
 
     public function getAppEngineUrl(_arg1:Boolean = false):String {
-        return (((_arg1) ? this.UNENCRYPTED : this.ENCRYPTED));
+        return (this.SERVER);
     }
 
     public function getBuildLabel():String {

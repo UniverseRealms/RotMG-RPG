@@ -99,7 +99,7 @@ public class StatsView extends Sprite {
         pointsText.setStringBuilder(new StaticStringBuilder("StatPoints:"));
 
         pointsText.x = 95;
-        pointsText.y = -36;
+        pointsText.y = -40;
 
         addChild(this.pointsText);
     }
@@ -114,7 +114,7 @@ public class StatsView extends Sprite {
         resetText.x = _arg1;
         resetText.y = _arg2;
         resetText.setTextWidth(30);
-        makeCostText(_arg1 + 40, _arg2);
+        makeCostText(_arg1 + 42, _arg2);
 
         resetText.addEventListener(MouseEvent.MOUSE_OVER, function(_arg1:MouseEvent):void {
             this.resetText.setColor(0xFCDF00);
@@ -139,7 +139,7 @@ public class StatsView extends Sprite {
 
         this.coinBitMap.x = _arg1;
         this.coinBitMap.y = _arg2;
-        this.costText.x = _arg1 + coinBitMap.width + 5;
+        this.costText.x = _arg1 + coinBitMap.width + 7;
         this.costText.y = _arg2;
 
         addChild(this.coinBitMap);

@@ -10,6 +10,8 @@ public class CharacterRectConstants {
     public static const CLASS_NAME_POS_X:int = 71;
     public static const CLASS_NAME_POS_Y:int = 4;
 
+    public static const CHAR_Y:int = 225;
+
 
 }
 }

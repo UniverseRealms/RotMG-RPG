@@ -50,10 +50,10 @@ public class CharacterRectList extends Sprite {
             _local8 = this.model.getCharStats()[_local5.objectType()];
             _local9 = new CurrentCharacterRect(_local2, _local7, _local5, _local8);
             if (Parameters.skinTypes16.indexOf(_local5.skinType()) != -1) {
-                _local9.setIcon(this.getIcon(_local5, 50));
+                _local9.setIcon(this.getIcon(_local5, 200));
             }
             else {
-                _local9.setIcon(this.getIcon(_local5, 100));
+                _local9.setIcon(this.getIcon(_local5, 400));
             }
             _local9.y = _local3;
             addChild(_local9);

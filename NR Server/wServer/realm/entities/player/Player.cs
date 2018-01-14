@@ -855,19 +855,34 @@ namespace wServer.realm.entities
             if (Resurrection())
                 return;
 
-            for (var i = 0; i <= Inventory.Length; i++)
-            {
-                Random ran = new Random();
-                Random ran2 = new Random();
-
-                int chance = ran.Next(0, 3);
-                int _chance = ran2.Next(0, 4);
-
-                if (chance != _chance)
-                    Inventory[i] = null;
-            }
+            CheckPlayer(Level, Rank);
             AnnounceDeath(killer);
             ReconnectToNexus();
+        }
+
+        private void CheckPlayer(int level, int rank)
+        {
+            if (rank <= 0)
+                RemoveItem(8, 0, 3);
+            else
+                RemoveItem(8, 0, 2);           
+        }
+
+        private void RemoveItem(int amount,int min,  int max)
+        {
+            Random inv = new Random();
+            Random c1 = new Random();
+            Random c2 = new Random();
+
+            for (var i = 0; i < amount; i++)
+            {
+                int invnum = inv.Next(0, Inventory.Length);
+                int chance = c1.Next(min, max);
+                int chance2 = c2.Next(min, max);
+
+                if (chance != chance2 && Inventory[invnum] != null)
+                    Inventory[invnum] = null; 
+            }
         }
 
         public void Reconnect(World world)

@@ -292,31 +292,25 @@ public class ObjectLibrary {
         return (false);
     }
 
-    public static function getRarity(_arg1:int):String {
+    public static function getRarity(_arg1:int):int {
         var _local1:XML = xmlLibrary_[_arg1];
-        if(_local1 == null) {
-            return "Common";
-        }
-        var _local2:String = "Common";
-        if(_local1.hasOwnProperty("Rarity")) {
-            _local2 = _local1.Rarity;
-        }
-        return _local2;
+
+        return _local1.BagType;
     }
 
-    public static function getRarityColor(_arg1:String):int {
+    public static function getRarityColor(_arg1:int):int {
         switch(_arg1) {
-            case "Poor":
+            case 0:
                 return 0x9d9d9d;
-            case "Common":
+            case 1:
                 return 0xffffff;
-            case "Uncommon":
+            case 2:
                 return 0x1eff00;
-            case "Rare":
+            case 3:
                 return 0x0070dd;
-            case "Heroic":
+            case 4:
                 return 0xa335ee;
-            case "Legendary":
+            case 6:
                 return 0xff8000;
             default:
                 return 0xffffff;

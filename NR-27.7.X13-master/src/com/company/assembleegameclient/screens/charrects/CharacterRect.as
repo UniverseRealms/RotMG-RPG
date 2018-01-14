@@ -13,7 +13,7 @@ import kabam.rotmg.text.view.stringBuilder.StringBuilder;
 public class CharacterRect extends Sprite {
 
     public static const WIDTH:int = 350;
-    public static const HEIGHT:int = 95;
+    public static const HEIGHT:int = 250;
 
     public var color:uint;
     public var overColor:uint;
@@ -94,7 +94,7 @@ public class CharacterRect extends Sprite {
         this.classNameText.setStringBuilder(this.className);
         this.classNameText.filters = makeDropShadowFilter();
         this.classNameText.x = CharacterRectConstants.CLASS_NAME_POS_X;
-        this.classNameText.y = CharacterRectConstants.CLASS_NAME_POS_Y;
+        this.classNameText.y = CharacterRectConstants.CHAR_Y;
         this.selectContainer.addChild(this.classNameText);
     }
 

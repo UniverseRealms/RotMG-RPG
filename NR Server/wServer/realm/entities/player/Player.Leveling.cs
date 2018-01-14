@@ -238,43 +238,7 @@ namespace wServer.realm.entities
                 }
             }
         }
-
-        //public void CalculateFame()
-        //{
-        //    var newFame = (Experience < 200 * 1000) ?
-        //        Experience / 1000 :
-        //        200 + (Experience - 200 * 1000) / 1000;
-
-        //    if (newFame == Fame) 
-        //        return;
-
-        //    var stats = FameCounter.ClassStats[ObjectType];
-        //    var newGoal = GetFameGoal(stats.BestFame > newFame ? stats.BestFame : newFame);
-
-        //    if (newGoal > FameGoal)
-        //    {
-        //        BroadcastSync(new Notification()
-        //        {
-        //            ObjectId = Id,
-        //            Color = new ARGB(0xFF00FF00),
-        //            Message = "{\"key\": \"server.class_quest_complete\"}"
-        //        }, p => this.DistSqr(p) < RadiusSqr);
-        //        Stars = GetStars();
-        //    }
-        //    else if (newFame != Fame)
-        //    {
-        //        BroadcastSync(new Notification()
-        //        {
-        //            ObjectId = Id,
-        //            Color = new ARGB(0xFFE25F00),
-        //            Message = "+" + (newFame - Fame) + "Fame"
-        //        }, p => this.DistSqr(p) < RadiusSqr);
-        //    }
-
-        //    Fame = newFame;
-        //    FameGoal = newGoal;
-        //}
-
+        
         bool CheckLevelUp()
         {
             if (Experience - GetLevelExp(Level) >= ExperienceGoal)
@@ -332,14 +296,21 @@ namespace wServer.realm.entities
                     Color = new ARGB(0xFF00FF00),
                     Message = "{\"key\":\"server.quest_complete\"}"
                 }, p => this.DistSqr(p) < RadiusSqr);
-            if (exp != 0 && exp < ExperienceGoal)
+
+            if (exp != 0)
             {
-                Experience += exp;
-            }
-            else if (exp != 0 && exp >= ExperienceGoal)
-            {
-                exp -= (exp - ExperienceGoal) - 1;
-                Experience += exp;
+                if (Rank > 0)
+                    exp = (int)(exp + (exp * 0.25));
+
+                if (exp < ExperienceGoal)
+                {
+                    Experience += exp;
+                }
+                else
+                {
+                    exp -= (exp - ExperienceGoal) - 1;
+                    Experience += exp;
+                }
             }
             FameCounter.Killed(enemy, killer);
             return CheckLevelUp();
