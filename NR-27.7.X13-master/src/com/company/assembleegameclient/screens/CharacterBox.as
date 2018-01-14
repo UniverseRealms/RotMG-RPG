@@ -29,8 +29,6 @@ import org.osflash.signals.natives.NativeSignal;
 
 public class CharacterBox extends Sprite {
 
-    public static const DELETE_CHAR:String = "DELETE_CHAR";
-    public static const ENTER_NAME:String = "ENTER_NAME";
     private static const fullCT:ColorTransform = new ColorTransform(0.8, 0.8, 0.8);
     private static const emptyCT:ColorTransform = new ColorTransform(0.2, 0.2, 0.2);
 
@@ -44,14 +42,9 @@ public class CharacterBox extends Sprite {
     private var bitmap_:Bitmap;
     private var statusText_:TextFieldDisplayConcrete;
     private var classNameText_:TextFieldDisplayConcrete;
-    private var buyButton_:LegacyBuyButton;
     private var cost:int = 0;
-    private var lock_:Bitmap;
-    private var saleText_:TextFieldDisplayConcrete;
-    private var unlockedText_:TextFieldDisplayConcrete;
-    private var saleTag_:*;
-    public var buyButtonClicked_:NativeSignal;
     public var characterSelectClicked_:NativeSignal;
+    private var charBackGround:Sprite;
 
     public function CharacterBox(_arg1:XML, _arg2:CharacterStats, _arg3:PlayerModel, _arg4:Boolean = false) {
         var _local5:Sprite;
@@ -63,95 +56,52 @@ public class CharacterBox extends Sprite {
         this.available_ = ((_arg4) || (_arg3.isLevelRequirementsMet(this.objectType())));
         if (!this.available_) {
             this.graphic_ = new LockedCharBoxGraphic();
+            this.graphic_.scaleX = 2;
+            this.graphic_.scaleY = 2;
             this.cost = this.playerXML_.UnlockCost;
         }
         else {
             this.graphic_ = new FullCharBoxGraphic();
+            this.graphic_.scaleX = 2;
+            this.graphic_.scaleY = 2;
         }
         this.graphicContainer_ = new Sprite();
         addChild(this.graphicContainer_);
+        makeCharBackGround();
         this.graphicContainer_.addChild(this.graphic_);
         this.characterSelectClicked_ = new NativeSignal(this.graphicContainer_, MouseEvent.CLICK, MouseEvent);
         this.bitmap_ = new Bitmap(null);
         this.setImage(AnimatedChar.DOWN, AnimatedChar.STAND, 0);
         this.graphic_.addChild(this.bitmap_);
-        this.classNameText_ = new TextFieldDisplayConcrete().setSize(14).setColor(0xFFFFFF).setAutoSize(TextFieldAutoSize.CENTER).setTextWidth(this.graphic_.width).setBold(true);
+        this.classNameText_ = new TextFieldDisplayConcrete().setSize(14).setColor(0xFFFFFF).setAutoSize(TextFieldAutoSize.CENTER).setTextWidth(this.graphic_.width).setBold(false);
         this.classNameText_.setStringBuilder(new LineBuilder().setParams(ClassToolTip.getDisplayId(this.playerXML_)));
         this.classNameText_.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
         this.graphic_.addChild(this.classNameText_);
-        this.setBuyButton();
         this.setStatusButton();
         if (this.available_) {
             _local5 = this.getStars(FameUtil.numStars(_arg3.getBestFame(this.objectType())), FameUtil.STARS.length);
-            _local5.y = 60;
-            _local5.x = ((this.graphic_.width / 2) - (_local5.width / 2));
+            _local5.y = 170;
+            _local5.x = 70;
             _local5.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
             this.graphicContainer_.addChild(_local5);
-            this.classNameText_.y = 74;
+            this.classNameText_.x = -54;
+            this.classNameText_.y = 68;
         }
-        else {
-            addChild(this.buyButton_);
-            this.lock_ = new Bitmap(AssetLibrary.getImageFromSet("lofiInterface2", 5));
-            this.lock_.scaleX = 2;
-            this.lock_.scaleY = 2;
-            this.lock_.x = 4;
-            this.lock_.y = 8;
-            addChild(this.lock_);
-            addChild(this.statusText_);
-            this.classNameText_.y = 78;
-        }
+    }
+
+    private function makeCharBackGround():void {
+        this.charBackGround = new Sprite();
+        this.charBackGround.graphics.beginFill(0x818181);
+        this.charBackGround.graphics.drawCircle(0, 0, 33);
+        this.charBackGround.graphics.endFill();
+        this.charBackGround.x = 53;
+        this.charBackGround.y = 35;
+
+        this.graphic_.addChild(this.charBackGround);
     }
 
     public function objectType():int {
         return (int(this.playerXML_.@type));
-    }
-
-    public function unlock():void {
-        var _local1:Sprite;
-        var _local2:GTween;
-        if (this.available_ == false) {
-            this.available_ = true;
-            this.graphicContainer_.removeChild(this.graphic_);
-            this.graphic_ = new FullCharBoxGraphic();
-            this.graphicContainer_.addChild(this.graphic_);
-            this.setImage(AnimatedChar.DOWN, AnimatedChar.STAND, 0);
-            this.graphic_.addChild(this.bitmap_);
-            this.graphic_.addChild(this.classNameText_);
-            if (contains(this.statusText_)) {
-                removeChild(this.statusText_);
-            }
-            if (contains(this.buyButton_)) {
-                removeChild(this.buyButton_);
-            }
-            if (((this.lock_) && (contains(this.lock_)))) {
-                removeChild(this.lock_);
-            }
-            if (((this.saleTag_) && (contains(this.saleTag_)))) {
-                removeChild(this.saleTag_);
-            }
-            if (((this.saleText_) && (contains(this.saleText_)))) {
-                removeChild(this.saleText_);
-            }
-            _local1 = this.getStars(FameUtil.numStars(this.model.getBestFame(this.objectType())), FameUtil.STARS.length);
-            _local1.y = 60;
-            _local1.x = ((this.graphic_.width / 2) - (_local1.width / 2));
-            _local1.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
-            addChild(_local1);
-            this.classNameText_.y = 74;
-            if (!this.unlockedText_) {
-                this.getCharacterUnlockText();
-            }
-            addChild(this.unlockedText_);
-            _local2 = new GTween(this.unlockedText_, 2.5, {
-                "alpha": 0,
-                "y": -30
-            });
-            _local2.onComplete = this.removeUnlockText;
-        }
-    }
-
-    private function removeUnlockText(_arg1:GTween):void {
-        removeChild(this.unlockedText_);
     }
 
     public function getTooltip():ToolTip {
@@ -172,7 +122,7 @@ public class CharacterBox extends Sprite {
 
     private function setImage(_arg1:int, _arg2:int, _arg3:Number):void {
         this.bitmap_.bitmapData = SavedCharacter.getImage(null, this.playerXML_, _arg1, _arg2, _arg3, this.available_, false);
-        this.bitmap_.x = ((this.graphic_.width / 2) - (this.bitmap_.bitmapData.width / 2));
+        this.bitmap_.x = 22;
     }
 
     private function getStars(_arg1:int, _arg2:int):Sprite {
@@ -199,51 +149,11 @@ public class CharacterBox extends Sprite {
         return (_local3);
     }
 
-    public function setSale(_arg1:int):void {
-        if (!this.saleTag_) {
-            this.saleTag_ = new this.SaleTag();
-            this.saleTag_.x = 38;
-            this.saleTag_.y = 8;
-            addChild(this.saleTag_);
-        }
-        if (!this.saleText_) {
-            this.setSaleText();
-            addChild(this.saleText_);
-        }
-        this.saleText_.setStringBuilder(new LineBuilder().setParams(TextKey.PERCENT_OFF, {"percent": String(_arg1)}));
-    }
-
-    private function setBuyButton():void {
-        this.buyButton_ = new LegacyBuyButton(TextKey.BUY_FOR, 13, this.cost, Currency.GOLD);
-        this.buyButton_.y = (this.buyButton_.y + this.graphic_.height);
-        this.buyButton_.setWidth(this.graphic_.width);
-        this.buyButtonClicked_ = new NativeSignal(this.buyButton_, MouseEvent.CLICK, MouseEvent);
-    }
-
     private function setStatusButton():void {
         this.statusText_ = new TextFieldDisplayConcrete().setSize(14).setColor(0xFF0000).setAutoSize(TextFieldAutoSize.CENTER).setBold(true).setTextWidth(this.graphic_.width);
         this.statusText_.setStringBuilder(new LineBuilder().setParams(TextKey.LOCKED));
         this.statusText_.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
         this.statusText_.y = 58;
     }
-
-    private function setSaleText():void {
-        this.saleText_ = new TextFieldDisplayConcrete().setSize(14).setColor(0xFFFFFF).setAutoSize(TextFieldAutoSize.CENTER).setBold(true).setTextHeight(this.saleTag_.height).setTextWidth(this.saleTag_.width);
-        this.saleText_.x = 42;
-        this.saleText_.y = 12;
-    }
-
-    private function getCharacterUnlockText():void {
-        this.unlockedText_ = new TextFieldDisplayConcrete().setSize(14).setColor(0xFF00).setBold(true).setAutoSize(TextFieldAutoSize.CENTER);
-        this.unlockedText_.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
-        this.unlockedText_.setStringBuilder(new LineBuilder().setParams(TextKey.UNLOCK_CLASS));
-        this.unlockedText_.y = -20;
-    }
-
-    public function setIsBuyButtonEnabled(_arg1:Boolean):void {
-        this.buyButton_.setEnabled(_arg1);
-    }
-
-
 }
 }

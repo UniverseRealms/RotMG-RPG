@@ -64,16 +64,12 @@ public class NewCharacterScreen extends Sprite {
             if (!_arg1.isClassAvailability(_local5, SavedCharactersList.UNAVAILABLE)) {
                 _local6 = _arg1.isClassAvailability(_local5, SavedCharactersList.UNRESTRICTED);
                 _local7 = new CharacterBox(_local3, _arg1.getCharStats()[_local4], _arg1, _local6);
-                _local7.x = (((50 + (140 * int((_local2 % 5)))) + 70) - (_local7.width / 2));
-                _local7.y = (88 + (140 * int((_local2 / 5))));
+                _local7.x = (((230 + (220 * int((_local2 % 3)))) + 70) - (_local7.width));
+                _local7.y = (50 + (220 * int((_local2 / 3))));
                 this.boxes_[_local4] = _local7;
                 _local7.addEventListener(MouseEvent.ROLL_OVER, this.onCharBoxOver);
                 _local7.addEventListener(MouseEvent.ROLL_OUT, this.onCharBoxOut);
                 _local7.characterSelectClicked_.add(this.onCharBoxClick);
-                _local7.buyButtonClicked_.add(this.onBuyClicked);
-                if ((((_local4 == 784)) && (!(_local7.available_)))) {
-                    _local7.setSale(75);
-                }
                 addChild(_local7);
             }
             _local2++;
@@ -113,42 +109,5 @@ public class NewCharacterScreen extends Sprite {
     public function updateCreditsAndFame(_arg1:int, _arg2:int):void {
         this.creditDisplay_.draw(_arg1, _arg2);
     }
-
-    public function update(_arg1:PlayerModel):void {
-        var _local3:XML;
-        var _local4:int;
-        var _local5:String;
-        var _local6:Boolean;
-        var _local7:CharacterBox;
-        var _local2:int;
-        while (_local2 < ObjectLibrary.playerChars_.length) {
-            _local3 = ObjectLibrary.playerChars_[_local2];
-            _local4 = int(_local3.@type);
-            _local5 = String(_local3.@id);
-            if (!_arg1.isClassAvailability(_local5, SavedCharactersList.UNAVAILABLE)) {
-                _local6 = _arg1.isClassAvailability(_local5, SavedCharactersList.UNRESTRICTED);
-                _local7 = this.boxes_[_local4];
-                if (_local7) {
-                    _local7.setIsBuyButtonEnabled(true);
-                    if (((_local6) || (_arg1.isLevelRequirementsMet(_local4)))) {
-                        _local7.unlock();
-                    }
-                }
-            }
-            _local2++;
-        }
-    }
-
-    private function onBuyClicked(_arg1:MouseEvent):void {
-        var _local3:int;
-        var _local2:CharacterBox = (_arg1.currentTarget.parent as CharacterBox);
-        if (((_local2) && (!(_local2.available_)))) {
-            _local3 = int(_local2.playerXML_.@type);
-            _local2.setIsBuyButtonEnabled(false);
-            this.buy.dispatch(_local3);
-        }
-    }
-
-
 }
 }

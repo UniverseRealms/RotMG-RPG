@@ -53,7 +53,6 @@ public class NewCharacterMediator extends Mediator {
         this.view.close.add(this.onClose);
         this.view.tooltip.add(this.onTooltip);
         this.view.buy.add(this.onBuy);
-        this.updateNewCharacterScreen.add(this.onUpdate);
         this.buyCharacterPending.add(this.onBuyCharacterPending);
         this.view.initialize(this.playerModel);
         if (this.securityQuestionsModel.showSecurityQuestionsOnStartup) {
@@ -71,7 +70,6 @@ public class NewCharacterMediator extends Mediator {
         this.view.tooltip.remove(this.onTooltip);
         this.view.buy.remove(this.onBuy);
         this.buyCharacterPending.remove(this.onBuyCharacterPending);
-        this.updateNewCharacterScreen.remove(this.onUpdate);
     }
 
     private function onClose():void {
@@ -90,10 +88,6 @@ public class NewCharacterMediator extends Mediator {
         else {
             this.hideTooltips.dispatch();
         }
-    }
-
-    private function onUpdate():void {
-        this.view.update(this.playerModel);
     }
 
     private function onBuy(_arg1:int):void {
