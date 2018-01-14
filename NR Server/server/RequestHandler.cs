@@ -111,7 +111,6 @@ namespace server
             {"/account/rp", new account.resetPassword() },
             {"/account/sendVerifyEmail", new account.sendVerifyEmail()},
             {"/account/changePassword", new account.changePassword()},
-            {"/account/purchaseCharSlot", new account.purchaseCharSlot()},
             {"/account/setName", new account.setName()},
             {"/account/purchaseMysteryBox", new account.purchaseMysteryBox()},
             {"/account/purchasePackage", new account.purchasePackage()},

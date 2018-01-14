@@ -54,6 +54,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
     private var backButton:TitleMenuOption;
     private var menuOptionsBar:MenuOptionsBar;
     private var lines:Shape;
+    private var blines:Shape;
 
     public function CharacterSelectionAndNewsScreen() {
         this.chooseName = new Signal();
@@ -81,6 +82,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
         this.createNameText();
         this.createCreditDisplay();
         this.createBoundaryLines();
+        this.makeBLine();
         this.createOpenCharactersText();
         var _local2:Graveyard = new Graveyard(_arg1);
         if (_local2.hasCharacters()) {
@@ -106,7 +108,7 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
         this.characterListType = CharacterList.TYPE_CHAR_SELECT;
         this.characterList = new CharacterList(this.model, CharacterList.TYPE_CHAR_SELECT);
         this.characterList.x = (this.stage.width/2) - (this.characterList.width/2);
-        this.characterList.y = this.CHARACTER_LIST_Y_POS;
+        this.characterList.y = (this.stage.height/2) - (this.characterList.height/2);
         this.characterListHeight = this.characterList.height;
         addChild(this.characterList);
     }
@@ -184,6 +186,15 @@ public class CharacterSelectionAndNewsScreen extends Sprite {
         this.lines.graphics.lineTo(800, 104);
         this.lines.graphics.lineStyle();
         addChild(this.lines);
+    }
+
+    private function makeBLine():void {
+        this.blines = new Shape();
+        this.blines.graphics.clear();
+        this.blines.graphics.lineStyle(2, 0xBFBFBF);
+        this.blines.graphics.moveTo(0, 510);
+        this.blines.graphics.lineTo(800, 510);
+        addChild(this.blines);
     }
 
     public function showBeginnersOfferButton():void {

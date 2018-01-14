@@ -74,6 +74,8 @@ public class CurrentCharacterRect extends CharacterRect {
         this.icon = _arg1;
         this.icon.x = CharacterRectConstants.ICON_POS_X;
         this.icon.y = CharacterRectConstants.ICON_POS_Y;
+        this.iconBackGround.x = (this.icon.x) - ((this.iconBackGround.width/2) - (this.icon.width/2));
+        this.iconBackGround.y = (this.icon.y) - ((this.iconBackGround.height/2) - (this.icon.height/2));
         ((this.icon) && (selectContainer.addChild(this.icon)));
     }
 
@@ -84,12 +86,10 @@ public class CurrentCharacterRect extends CharacterRect {
                 "fame": this.char.fame(),
                 "nextStarFame": this.getNextStarFame()
             }));
-            taglineText.x = (taglineText.x + taglineIcon.width);
         }
         else {
             super.makeTaglineIcon();
             super.makeTaglineText(new LineBuilder().setParams(TextKey.CURRENT_CHARACTER_TAGLINE_NOQUEST, {"fame": this.char.fame()}));
-            taglineText.x = (taglineText.x + taglineIcon.width);
         }
     }
 
@@ -130,7 +130,5 @@ public class CurrentCharacterRect extends CharacterRect {
         _arg1.stopImmediatePropagation();
         dispatchEvent(new DeleteCharacterEvent(this.char));
     }
-
-
 }
 }

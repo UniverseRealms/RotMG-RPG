@@ -8,8 +8,8 @@
   "serverInfo": {
     "type": "Account",
     "name": "AppEngine",
-    "bindAddress":  "213.32.15.135", // enter * to bind to all network connections
-    "port": "8888"
+    "bindAddress": "127.0.0.1", // enter * to bind to all network connections
+    "port": "8080"
   },
   "serverSettings": {
     "logFolder": "./logs",

@@ -83,7 +83,7 @@ namespace common
                 GuildId = 0,
                 GuildRank = 0,
                 VaultCount = newAccounts.VaultCount,
-                MaxCharSlot = newAccounts.MaxCharSlot,
+                MaxCharSlot = 1,
                 RegTime = DateTime.Now,
                 Guest = true,
                 Fame = newAccounts.Fame,

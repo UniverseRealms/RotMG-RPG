@@ -10,7 +10,7 @@ namespace wServer.networking.handlers
     {
         public override PacketId ID => PacketId.ENEMYHIT;
 
-        private static readonly RealmTime DummyTime = new RealmTime();
+        //private static readonly RealmTime DummyTime = new RealmTime();
 
         protected override void HandlePacket(Client client, EnemyHit packet)
         {

@@ -23,6 +23,7 @@ public class CharacterRect extends Sprite {
     protected var classNameText:TextFieldDisplayConcrete;
     protected var className:StringBuilder;
     public var selectContainer:Sprite;
+    public var iconBackGround:Sprite;
 
     public function CharacterRect() {
         this.box = new Shape();
@@ -38,6 +39,7 @@ public class CharacterRect extends Sprite {
         tabChildren = false;
         this.makeBox();
         this.makeContainer();
+        this.makeIconBackGround();
         this.makeClassNameText();
         this.addEventListeners();
     }
@@ -77,13 +79,22 @@ public class CharacterRect extends Sprite {
         addChild(this.selectContainer);
     }
 
+    public function makeIconBackGround():void {
+        this.iconBackGround = new Sprite();
+        this.iconBackGround.graphics.beginFill(0x727272);
+        this.iconBackGround.graphics.drawRoundRect(0, 0, 135, 135, 10 , 10);
+        this.iconBackGround.graphics.endFill();
+
+        this.selectContainer.addChild(this.iconBackGround);
+    }
+
     protected function makeTaglineIcon():void {
         this.taglineIcon = new StarGraphic();
         this.taglineIcon.transform.colorTransform = new ColorTransform((179 / 0xFF), (179 / 0xFF), (179 / 0xFF));
         this.taglineIcon.scaleX = 1.2;
         this.taglineIcon.scaleY = 1.2;
-        this.taglineIcon.x = CharacterRectConstants.TAGLINE_ICON_POS_X;
-        this.taglineIcon.y = CharacterRectConstants.TAGLINE_ICON_POS_Y;
+        this.taglineIcon.x = 220;
+        this.taglineIcon.y = CharacterRectConstants.TEXT_Y;
         this.taglineIcon.filters = [new DropShadowFilter(0, 0, 0)];
         this.selectContainer.addChild(this.taglineIcon);
     }
@@ -93,7 +104,7 @@ public class CharacterRect extends Sprite {
         this.classNameText.setBold(true);
         this.classNameText.setStringBuilder(this.className);
         this.classNameText.filters = makeDropShadowFilter();
-        this.classNameText.x = CharacterRectConstants.CLASS_NAME_POS_X;
+        this.classNameText.x = 47;
         this.classNameText.y = CharacterRectConstants.CHAR_Y;
         this.selectContainer.addChild(this.classNameText);
     }
@@ -102,11 +113,9 @@ public class CharacterRect extends Sprite {
         this.taglineText = new TextFieldDisplayConcrete().setSize(14).setColor(0xB3B3B3);
         this.taglineText.setStringBuilder(_arg1);
         this.taglineText.filters = makeDropShadowFilter();
-        this.taglineText.x = CharacterRectConstants.TAGLINE_TEXT_POS_X;
-        this.taglineText.y = CharacterRectConstants.TAGLINE_TEXT_POS_Y;
+        this.taglineText.x = 47;
+        this.taglineText.y = CharacterRectConstants.TEXT_Y;
         this.selectContainer.addChild(this.taglineText);
     }
-
-
 }
 }

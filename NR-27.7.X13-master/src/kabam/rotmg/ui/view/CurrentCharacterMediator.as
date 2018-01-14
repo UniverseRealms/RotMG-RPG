@@ -55,6 +55,7 @@ public class CurrentCharacterMediator extends Mediator {
         this.view.initialize(this.playerModel);
         this.view.close.add(this.onClose);
         this.view.chooseName.add(this.onChooseName);
+        this.view.showClasses.add(this.onNewCharacter);
         this.view.playGame.add(this.onPlayGame);
         this.nameChanged.add(this.onNameChanged);
         this.beginnersPackageAvailable.add(this.onBeginner);

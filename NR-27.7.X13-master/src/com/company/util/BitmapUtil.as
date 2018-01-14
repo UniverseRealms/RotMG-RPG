@@ -39,7 +39,7 @@ public class BitmapUtil {
     }
 
     public static function cropToBitmapData(_arg1:BitmapData, _arg2:int, _arg3:int, _arg4:int, _arg5:int):BitmapData {
-        var _local6:BitmapData = new BitmapData(_arg4, _arg5);
+        var _local6:BitmapData = new BitmapData(_arg4,_arg5);
         _local6.copyPixels(_arg1, new Rectangle(_arg2, _arg3, _arg4, _arg5), new Point(0, 0));
         return (_local6);
     }

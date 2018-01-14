@@ -122,7 +122,6 @@
     <Compile Include="account\rank.cs" />
     <Compile Include="account\resetPassword.cs" />
     <Compile Include="account\setName.cs" />
-    <Compile Include="account\purchaseCharSlot.cs" />
     <Compile Include="account\sendVerifyEmail.cs" />
     <Compile Include="account\forgotPassword.cs" />
     <Compile Include="account\verify.cs" />

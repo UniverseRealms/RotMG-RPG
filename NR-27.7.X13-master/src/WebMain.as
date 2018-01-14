@@ -98,7 +98,6 @@ public class WebMain extends Sprite {
         ENV = stage.loaderInfo.parameters["env"];
         if (ENV == null)
             ENV = "localhost";
-        ENV = "production";
     }
 
     private function hackParameters():void {

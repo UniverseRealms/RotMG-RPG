@@ -2,7 +2,6 @@
 public class TextKey {
 
     public static const LOADING_TEXT:String = "Loading.text";
-    public static const EMPTY_LEGENDS_LIST:String = "Legends.EmptyList";
     public static const CREDITS_DEVELOPED:String = "Credits.developed";
     public static const SERVER_BOX_BEST:String = "ServerBox.best";
     public static const SERVERS_SELECT:String = "Servers.select";
@@ -14,9 +13,6 @@ public class TextKey {
     public static const GUEST_ACCOUNT:String = "AccountInfo.guest";
     public static const REGISTER:String = "AccountInfo.register";
     public static const CHECK_BOX_TEXT:String = "WebRegister.check_box_text";
-    public static const TRANSFER_ACCOUNT_K_EMAIL:String = "TransferAccountView.kabamemail";
-    public static const TRANSFER_ACCOUNT_K_PWD:String = "TransferAccountView.kabampwd";
-    public static const TRANSFER_ACCOUNT_NEW_EMAIL:String = "TransferAccountView.newemail";
     public static const TRANSFER_ACCOUNT_NEW_PWD:String = "TransferAccountView.newpwd";
     public static const TOS_TEXT:String = "WebRegister.tos_text";
     public static const SIGN_IN_TEXT:String = "WebRegister.sign_in_text";
@@ -37,9 +33,7 @@ public class TextKey {
     public static const BEST_LEVEL_STATS:String = "bestLevel_.stats";
     public static const NEXT_CLASS_QUEST:String = "nextClassQuest_.text";
     public static const BUY_FOR:String = "Purchase.buyFor";
-    public static const CHARACTER_SELECTION_NEWS:String = "CharacterSelection.news";
     public static const CHARACTER_SELECTION_CHARACTERS:String = "CharacterSelection.characters";
-    public static const CHARACTER_SELECTION_GRAVEYARD:String = "CharacterSelection.graveyard";
     public static const CURRENT_CHARACTER_TAGLINE:String = "CurrentCharacter.tagline";
     public static const CURRENT_CHARACTER_TAGLINE_NOQUEST:String = "CurrentCharacter.tagline_noquest";
     public static const CURRENT_CHARACTER_DESCRIPTION:String = "CurrentCharacter.description";
@@ -55,14 +49,8 @@ public class TextKey {
     public static const STATUS_BAR_MANA_POINTS:String = "StatusBar.ManaPoints";
     public static const MY_PLAYER_TOOL_TIP_NEXT_CLASS_QUEST:String = "MyPlayerToolTip.NextClassQuest";
     public static const CHARACTER_SELECTION_AND_NEWS_SCREEN_CHOOSE_NAME:String = "CharacterSelectionAndNewsScreen.chooseName";
-    public static const SCREENS_PLAY:String = "Screens.play";
     public static const SCREENS_MAIN:String = "Screens.main";
     public static const SCREENS_CLASSES:String = "Screens.classes";
-    public static const BUY_CHAR_SLOT_DIALOG_TEXT:String = "BuyCharSlotDialog.text";
-    public static const BUY_CHAR_SLOT_DIALOG_TITLE:String = "BuyCharSlotDialog.title";
-    public static const BUY_CHAR_SLOT_DIALOG_RIGHT_BUTTON:String = "BuyCharSlotDialog.rightButton";
-    public static const BUY_CHAR_SLOT_DIALOG_LEFT_BUTTON:String = "BuyCharSlotDialog.leftButton";
-    public static const BUY_CHARACTER_RECT_TAGLINE_TEXT:String = "BuyCharacterRect.taglineText";
     public static const CLASSIC_SKIN:String = "Skins.Classic";
     public static const UNLOCK_LEVEL_SKIN:String = "CharacterSkinListItem.unlock";
     public static const PURCHASING_SKIN:String = "CharacterSkinListItem.purchasing";

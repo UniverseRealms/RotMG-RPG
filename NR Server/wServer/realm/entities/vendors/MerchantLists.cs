@@ -42,20 +42,20 @@ namespace wServer.realm.entities.vendors
             new ShopItem("Bow of Innocent Blood", 300),
             new ShopItem("Staff of Astral Knowledge", 300),
             new ShopItem("Wand of Ancient Warning", 300), 
-            new ShopItem("Sword of Acclaim", 300),
+            new ShopItem("Skysplitter Sword", 300),
             new ShopItem("Muramasa", 300) 
         };
 
         private static readonly List<ISellableItem> Abilities = new List<ISellableItem>
         {
-            new ShopItem("Cloak of the Endless Twilight", 300),
+            new ShopItem("Cloak of Endless Twilight", 300),
             new ShopItem("Golden Quiver", 300),  
             new ShopItem("Magic Nova Spell", 300),
             new ShopItem("Tome of Divine Favor", 300),
             new ShopItem("Golden Helm", 300),
             new ShopItem("Mithril Shield", 300), 
             new ShopItem("Seal of the Holy Warrior", 300),
-            new ShopItem("Nightwing Poison", 300),
+            new ShopItem("Nightwing Venom", 300),
             new ShopItem("Lifedrinker Skull", 300),
             new ShopItem("Dragonstalker Trap", 300),
             new ShopItem("Banishment Orb", 300),
@@ -66,21 +66,21 @@ namespace wServer.realm.entities.vendors
 
         private static readonly List<ISellableItem> Armor = new List<ISellableItem>
         {
-            new ShopItem("Robe of the Illusionist", 300),
-            new ShopItem("Studded Leather Armor", 300),
-            new ShopItem("Mithril Armor", 300)
+            new ShopItem("Robe of the Elder Warlock", 300),
+            new ShopItem("Griffon Hide Armor", 300),
+            new ShopItem("Abyssal Armor", 300)
         };
 
         private static readonly List<ISellableItem> Rings = new List<ISellableItem>
         {
-            new ShopItem("Ring of Paramount Attack", 300),
-            new ShopItem("Ring of Paramount Defense", 300),
-            new ShopItem("Ring of Paramount Speed", 300),
-            new ShopItem("Ring of Paramount Dexterity", 300),
-            new ShopItem("Ring of Paramount Vitality", 300),
-            new ShopItem("Ring of Paramount Wisdom", 300),
-            new ShopItem("Ring of Paramount Health", 300),
-            new ShopItem("Ring of Paramount Magic", 300)
+            new ShopItem("Ring of Exalted Attack", 300),
+            new ShopItem("Ring of Exalted Defense", 300),
+            new ShopItem("Ring of Exalted Speed", 300),
+            new ShopItem("Ring of Exalted Dexterity", 300),
+            new ShopItem("Ring of Exalted Vitality", 300),
+            new ShopItem("Ring of Exalted Wisdom", 300),
+            new ShopItem("Ring of Exalted Health", 300),
+            new ShopItem("Ring of Exalted Magic", 300)
         };
 
         private static readonly List<ISellableItem> Keys = new List<ISellableItem>
@@ -94,7 +94,6 @@ namespace wServer.realm.entities.vendors
             new ShopItem("Totem Key", 50),
             new ShopItem("Pirate Cave Key", 15),
             new ShopItem("Shatters Key", 200),
-            new ShopItem("Asylum Key", 200),
             new ShopItem("Beachzone Key", 30),
             new ShopItem("Ivory Wyvern Key", 150),
             new ShopItem("Lab Key", 40),
@@ -109,17 +108,7 @@ namespace wServer.realm.entities.vendors
             new ShopItem("Battle Nexus Key", 150),
             new ShopItem("Woodland Labyrinth Key", 200),
             new ShopItem("Theatre Key", 80),
-            new ShopItem("Ice Cave Key", 150),
-            new ShopItem("Tur-Key", 666)
-        };
-
-        private static readonly List<ISellableItem> PurchasableFame = new List<ISellableItem>
-        {
-            new ShopItem("50 Fame", 50),
-            new ShopItem("100 Fame", 100),
-            new ShopItem("500 Fame", 500),
-            new ShopItem("1000 Fame", 1000),
-            new ShopItem("5000 Fame", 5000)
+            new ShopItem("Ice Cave Key", 150)
         };
 
         private static readonly List<ISellableItem> Consumables = new List<ISellableItem>
@@ -127,12 +116,8 @@ namespace wServer.realm.entities.vendors
             new ShopItem("Saint Patty's Brew", 80),
             new ShopItem("Mad God Ale", 25),
             new ShopItem("XP Booster", 35),
-            new ShopItem("Backpack", 300)
-        };
-
-        private static readonly List<ISellableItem> Special = new List<ISellableItem>
-        {
-            new ShopItem("Amulet of Resurrection", 10000) 
+            new ShopItem("Backpack", 300),
+            new ShopItem("Amulet of Resurrection", 10000)
         };
         
         public static readonly Dictionary<TileRegion, Tuple<List<ISellableItem>, CurrencyType, /*Rank Req*/int>> Shops = 
@@ -143,9 +128,7 @@ namespace wServer.realm.entities.vendors
             { TileRegion.Store_3, new Tuple<List<ISellableItem>, CurrencyType, int>(Armor, CurrencyType.Fame, 0) },
             { TileRegion.Store_4, new Tuple<List<ISellableItem>, CurrencyType, int>(Rings, CurrencyType.Fame, 0) },
             { TileRegion.Store_5, new Tuple<List<ISellableItem>, CurrencyType, int>(Keys, CurrencyType.Fame, 0) },
-            { TileRegion.Store_6, new Tuple<List<ISellableItem>, CurrencyType, int>(PurchasableFame, CurrencyType.Fame, 5) },
-            { TileRegion.Store_7, new Tuple<List<ISellableItem>, CurrencyType, int>(Consumables, CurrencyType.Fame, 0) },
-            { TileRegion.Store_8, new Tuple<List<ISellableItem>, CurrencyType, int>(Special, CurrencyType.Fame, 0) },
+            { TileRegion.Store_6, new Tuple<List<ISellableItem>, CurrencyType, int>(Consumables, CurrencyType.Fame, 5) }
         };
         
         public static void Init(RealmManager manager)
