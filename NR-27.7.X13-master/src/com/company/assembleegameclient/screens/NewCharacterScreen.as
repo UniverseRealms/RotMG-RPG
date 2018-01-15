@@ -86,13 +86,13 @@ public class NewCharacterScreen extends Sprite {
 
     private function onCharBoxOver(_arg1:MouseEvent):void {
         var _local2:CharacterBox = (_arg1.currentTarget as CharacterBox);
-        _local2.setOver(true);
-        this.tooltip.dispatch(_local2.getTooltip());
+        //_local2.setOver(true);
+        //this.tooltip.dispatch(_local2.getTooltip());
     }
 
     private function onCharBoxOut(_arg1:MouseEvent):void {
         var _local2:CharacterBox = (_arg1.currentTarget as CharacterBox);
-        _local2.setOver(false);
+        //_local2.setOver(false);
         this.tooltip.dispatch(null);
     }
 
@@ -102,8 +102,8 @@ public class NewCharacterScreen extends Sprite {
         if (!_local2.available_) {
             return;
         }
-        var _local3:int = _local2.objectType();
-        this.selected.dispatch(_local3);
+        //var _local3:int = _local2.objectType();
+        //this.selected.dispatch(_local3);
     }
 
     public function updateCreditsAndFame(_arg1:int, _arg2:int):void {

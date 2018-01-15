@@ -54,37 +54,29 @@ public class CharacterBox extends Sprite {
         this.playerXML_ = _arg1;
         this.charStats_ = _arg2;
         this.available_ = ((_arg4) || (_arg3.isLevelRequirementsMet(this.objectType())));
-        if (!this.available_) {
-            this.graphic_ = new LockedCharBoxGraphic();
-            this.graphic_.scaleX = 2;
-            this.graphic_.scaleY = 2;
-            this.cost = this.playerXML_.UnlockCost;
-        }
-        else {
-            this.graphic_ = new FullCharBoxGraphic();
-            this.graphic_.scaleX = 2;
-            this.graphic_.scaleY = 2;
-        }
+        this.graphic_ = new FullCharBoxGraphic();
+        this.graphic_.width = 200;
+        this.graphic_.height = 200;
         this.graphicContainer_ = new Sprite();
         addChild(this.graphicContainer_);
-        makeCharBackGround();
         this.graphicContainer_.addChild(this.graphic_);
+        makeCharBackGround();
         this.characterSelectClicked_ = new NativeSignal(this.graphicContainer_, MouseEvent.CLICK, MouseEvent);
         this.bitmap_ = new Bitmap(null);
         this.setImage(AnimatedChar.DOWN, AnimatedChar.STAND, 0);
-        this.graphic_.addChild(this.bitmap_);
+        this.graphicContainer_.addChild(this.bitmap_);
         this.classNameText_ = new TextFieldDisplayConcrete().setSize(14).setColor(0xFFFFFF).setAutoSize(TextFieldAutoSize.CENTER).setTextWidth(this.graphic_.width).setBold(false);
         this.classNameText_.setStringBuilder(new LineBuilder().setParams(ClassToolTip.getDisplayId(this.playerXML_)));
         this.classNameText_.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
-        this.graphic_.addChild(this.classNameText_);
+        this.graphicContainer_.addChild(this.classNameText_);
         this.setStatusButton();
         if (this.available_) {
             _local5 = this.getStars(FameUtil.numStars(_arg3.getBestFame(this.objectType())), FameUtil.STARS.length);
             _local5.y = 170;
-            _local5.x = 70;
+            _local5.x = 100 - (_local5.width/2);
             _local5.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
             this.graphicContainer_.addChild(_local5);
-            this.classNameText_.x = -54;
+            this.classNameText_.x = 0;
             this.classNameText_.y = 68;
         }
     }
@@ -92,12 +84,12 @@ public class CharacterBox extends Sprite {
     private function makeCharBackGround():void {
         this.charBackGround = new Sprite();
         this.charBackGround.graphics.beginFill(0x818181);
-        this.charBackGround.graphics.drawCircle(0, 0, 33);
+        this.charBackGround.graphics.drawCircle(0, 0, 55);
         this.charBackGround.graphics.endFill();
-        this.charBackGround.x = 53;
+        this.charBackGround.x = (100) - (this.charBackGround.width/2);
         this.charBackGround.y = 35;
 
-        this.graphic_.addChild(this.charBackGround);
+        this.graphicContainer_.addChild(this.charBackGround);
     }
 
     public function objectType():int {
@@ -108,21 +100,11 @@ public class CharacterBox extends Sprite {
         return (new ClassToolTip(this.playerXML_, this.model, this.charStats_));
     }
 
-    public function setOver(_arg1:Boolean):void {
-        if (!this.available_) {
-            return;
-        }
-        if (_arg1) {
-            transform.colorTransform = new ColorTransform(1.2, 1.2, 1.2);
-        }
-        else {
-            transform.colorTransform = new ColorTransform(1, 1, 1);
-        }
-    }
-
     private function setImage(_arg1:int, _arg2:int, _arg3:Number):void {
         this.bitmap_.bitmapData = SavedCharacter.getImage(null, this.playerXML_, _arg1, _arg2, _arg3, this.available_, false);
-        this.bitmap_.x = 22;
+        this.bitmap_.width = 100;
+        this.bitmap_.height = 100;
+        this.bitmap_.x = (this.graphicContainer_.width/2) - (this.bitmap_.bitmapData.width/2);
     }
 
     private function getStars(_arg1:int, _arg2:int):Sprite {
