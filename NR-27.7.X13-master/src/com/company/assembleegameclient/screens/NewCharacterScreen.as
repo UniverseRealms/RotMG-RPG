@@ -1,8 +1,11 @@
 ﻿package com.company.assembleegameclient.screens {
 import com.company.assembleegameclient.appengine.SavedCharactersList;
 import com.company.assembleegameclient.constants.ScreenTypes;
+import com.company.assembleegameclient.map.Square;
 import com.company.assembleegameclient.objects.ObjectLibrary;
 import com.company.rotmg.graphics.ScreenGraphic;
+
+import flash.display.Shape;
 
 import flash.display.Sprite;
 import flash.events.Event;
@@ -25,6 +28,7 @@ public class NewCharacterScreen extends Sprite {
     public var selected:Signal;
     public var buy:Signal;
     private var isInitialized:Boolean = false;
+    private var line:Shape;
 
     public function NewCharacterScreen() {
         this.boxes_ = {};
@@ -64,8 +68,11 @@ public class NewCharacterScreen extends Sprite {
             if (!_arg1.isClassAvailability(_local5, SavedCharactersList.UNAVAILABLE)) {
                 _local6 = _arg1.isClassAvailability(_local5, SavedCharactersList.UNRESTRICTED);
                 _local7 = new CharacterBox(_local3, _arg1.getCharStats()[_local4], _arg1, _local6);
-                _local7.x = (((230 + (220 * int((_local2 % 3)))) + 70) - (_local7.width));
-                _local7.y = (50 + (220 * int((_local2 / 3))));
+                _local7.x = (((225 + (220 * int((_local2 % 3)))) + 70) - (_local7.width));
+                _local7.y = (60 + (220 * int((_local2 / 3))));
+                if (_local2 > 2) {
+                    _local7.x = (((330 + (220 * int((_local2 % 3)))) + 70) - (_local7.width));
+                }
                 this.boxes_[_local4] = _local7;
                 _local7.addEventListener(MouseEvent.ROLL_OVER, this.onCharBoxOver);
                 _local7.addEventListener(MouseEvent.ROLL_OUT, this.onCharBoxOut);
@@ -74,6 +81,7 @@ public class NewCharacterScreen extends Sprite {
             }
             _local2++;
         }
+        drawLine();
         this.backButton_.x = ((stage.stageWidth / 2) - (this.backButton_.width / 2));
         this.backButton_.y = 550;
         this.creditDisplay_.x = stage.stageWidth;
@@ -86,13 +94,13 @@ public class NewCharacterScreen extends Sprite {
 
     private function onCharBoxOver(_arg1:MouseEvent):void {
         var _local2:CharacterBox = (_arg1.currentTarget as CharacterBox);
-        //_local2.setOver(true);
-        //this.tooltip.dispatch(_local2.getTooltip());
+        _local2.setOver(true);
+        this.tooltip.dispatch(_local2.getTooltip());
     }
 
     private function onCharBoxOut(_arg1:MouseEvent):void {
         var _local2:CharacterBox = (_arg1.currentTarget as CharacterBox);
-        //_local2.setOver(false);
+        _local2.setOver(false);
         this.tooltip.dispatch(null);
     }
 
@@ -102,8 +110,16 @@ public class NewCharacterScreen extends Sprite {
         if (!_local2.available_) {
             return;
         }
-        //var _local3:int = _local2.objectType();
-        //this.selected.dispatch(_local3);
+        var _local3:int = _local2.objectType();
+        this.selected.dispatch(_local3);
+    }
+
+    private function drawLine():void {
+        this.line = new Shape();
+        this.line.graphics.lineStyle(2, 0xFFFFFF);
+        this.line.graphics.moveTo(0, 525);
+        this.line.graphics.lineTo(800, 525);
+        addChild(this.line);
     }
 
     public function updateCreditsAndFame(_arg1:int, _arg2:int):void {

@@ -65,19 +65,20 @@ public class CharacterBox extends Sprite {
         this.bitmap_ = new Bitmap(null);
         this.setImage(AnimatedChar.DOWN, AnimatedChar.STAND, 0);
         this.graphicContainer_.addChild(this.bitmap_);
-        this.classNameText_ = new TextFieldDisplayConcrete().setSize(14).setColor(0xFFFFFF).setAutoSize(TextFieldAutoSize.CENTER).setTextWidth(this.graphic_.width).setBold(false);
+        this.classNameText_ = new TextFieldDisplayConcrete().setSize(20).setColor(0xFFFFFF).setAutoSize(TextFieldAutoSize.CENTER).setTextWidth(this.graphic_.width).setBold(false);
         this.classNameText_.setStringBuilder(new LineBuilder().setParams(ClassToolTip.getDisplayId(this.playerXML_)));
         this.classNameText_.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
         this.graphicContainer_.addChild(this.classNameText_);
         this.setStatusButton();
         if (this.available_) {
             _local5 = this.getStars(FameUtil.numStars(_arg3.getBestFame(this.objectType())), FameUtil.STARS.length);
-            _local5.y = 170;
-            _local5.x = 100 - (_local5.width/2);
+            _local5.y = 160;
+            _local5.x = (this.graphicContainer_.width/2) - (_local5.width/2);
             _local5.filters = [new DropShadowFilter(0, 0, 0, 1, 4, 4)];
             this.graphicContainer_.addChild(_local5);
+
             this.classNameText_.x = 0;
-            this.classNameText_.y = 68;
+            this.classNameText_.y = 130;
         }
     }
 
@@ -86,8 +87,8 @@ public class CharacterBox extends Sprite {
         this.charBackGround.graphics.beginFill(0x818181);
         this.charBackGround.graphics.drawCircle(0, 0, 55);
         this.charBackGround.graphics.endFill();
-        this.charBackGround.x = (100) - (this.charBackGround.width/2);
-        this.charBackGround.y = 35;
+        this.charBackGround.x = this.graphicContainer_.width/2;
+        this.charBackGround.y = 70;
 
         this.graphicContainer_.addChild(this.charBackGround);
     }
@@ -104,7 +105,8 @@ public class CharacterBox extends Sprite {
         this.bitmap_.bitmapData = SavedCharacter.getImage(null, this.playerXML_, _arg1, _arg2, _arg3, this.available_, false);
         this.bitmap_.width = 100;
         this.bitmap_.height = 100;
-        this.bitmap_.x = (this.graphicContainer_.width/2) - (this.bitmap_.bitmapData.width/2);
+        this.bitmap_.x = this.bitmap_.width/2;
+        this.bitmap_.y += 10;
     }
 
     private function getStars(_arg1:int, _arg2:int):Sprite {
@@ -129,6 +131,18 @@ public class CharacterBox extends Sprite {
             _local4++;
         }
         return (_local3);
+    }
+
+    public function setOver(_arg1:Boolean):void {
+        if (!this.available_) {
+            return;
+        }
+        if (_arg1) {
+            transform.colorTransform = new ColorTransform(1.2, 1.2, 1.2);
+        }
+        else {
+            transform.colorTransform = new ColorTransform(1, 1, 1);
+        }
     }
 
     private function setStatusButton():void {
