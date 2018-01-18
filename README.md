@@ -8,6 +8,10 @@
   
 -Stale(SwyftLoe) 
   
+-Lynx(DazedLynx)
+
+-Sebafra(Sebafra)
+
 -(Retired)Kierze(Kierze) 
 
 ### Original Source Credit:
