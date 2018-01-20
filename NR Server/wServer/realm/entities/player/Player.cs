@@ -299,7 +299,7 @@ namespace wServer.realm.entities
             stats[StatsType.Guild] = Guild;
             stats[StatsType.GuildRank] = GuildRank;
             stats[StatsType.Credits] = Credits;
-            stats[StatsType.NameChosen] = // check from account in case ingame registration
+            stats[StatsType.NameChosen] = 
                 (_client.Account?.NameChosen ?? NameChosen) ? 1 : 0;
             stats[StatsType.Texture1] = Texture1;
             stats[StatsType.Texture2] = Texture2;

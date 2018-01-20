@@ -84,6 +84,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Tpl.Dataflow.4.5.23\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -98,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="logic\db\BehaviorDb.GodLands.cs" />
     <Compile Include="networking\handlers\IncrementStatHandler.cs" />
     <Compile Include="networking\packets\incoming\ClaimDailyRewardMessage.cs" />
     <Compile Include="networking\packets\incoming\GoToQuestRoom.cs" />
@@ -138,7 +140,6 @@
     <Compile Include="logic\behaviors\WhileWatched.cs" />
     <Compile Include="logic\behaviors\WhileEntityWithin.cs" />
     <Compile Include="logic\behaviors\TransferDamageOnDeath.cs" />
-    <Compile Include="logic\db\**\*" />
     <Compile Include="logic\transitions\AnyEntityWithinTransition.cs" />
     <Compile Include="logic\transitions\EntitiesNotExistTransition.cs" />
     <Compile Include="logic\transitions\EntityExistsTransition.cs" />
@@ -452,6 +453,12 @@
     <Compile Include="networking\RSA.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Vector2.cs" />
+    <Compile Include="WorldManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorldManager.Designer.cs">
+      <DependentUpon>WorldManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="wRandom.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +485,9 @@
     <Compile Include="realm\entities\player\Player.KeepAlive.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="WorldManager.resx">
+      <DependentUpon>WorldManager.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <EmbeddedResource Include="realm\worlds\world1.wmap" />
     <EmbeddedResource Include="realm\worlds\world2.wmap" />

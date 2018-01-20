@@ -80,10 +80,10 @@ namespace wServer.logic.loot
         public void Handle(Enemy enemy, RealmTime time)
         {
             // enemies that shouldn't drop loot
-            if (enemy.Spawned)
-            {
-                return;
-            }
+            //if (enemy.Spawned)
+            //{
+            //    return;
+            //}
 
             // generate a list of all possible loot drops
             var possibleDrops = GetPossibleDrops();
@@ -166,19 +166,32 @@ namespace wServer.logic.loot
                     reqDrops[i]--;
                 }
             }
+            foreach (var i in privateLoot)
+            {
+                var player = i.Key;
+
+                SendLootNotification(player, i.Value);
+            }
 
             AddBagsToWorld(enemy, publicLoot, privateLoot);
+        }
+
+        private void SendLootNotification(Player player, IEnumerable<Item> loot)
+        {
+            foreach(var i in loot)
+                if (i.BagType == 6)
+                    foreach (var w in player.Manager.Worlds.Values)
+                        foreach (var p in w.Players.Values)
+                            p.SendInfo("Congratulations! " + player.Name + " has gotten a legendary item: "
+                                + i.ObjectId);
         }
 
         private void AddBagsToWorld(Enemy enemy, IList<Item> shared, IDictionary<Player, IList<Item>> playerLoot)
         {
             foreach (var i in playerLoot)
-            {
                 if (i.Value.Count > 0)
-                {
                     ShowBags(enemy, i.Value, i.Key);
-                }
-            }
+
             ShowBags(enemy, shared);
         }
 
@@ -192,29 +205,21 @@ namespace wServer.logic.loot
             var bagType = 0;
 
             if (owners.Count() == 1 && owners[0].LDBoostTime > 0)
-            {
                 boosted = true;
-            }
-
+            
             if (enemy.ObjectDesc.TrollWhiteBag)
-            {
                 bagType = 8;
-            }
 
             foreach (var i in loots)
             {
                 if (i.BagType > bagType)
-                {
                     bagType = i.BagType;
-                }
-
+                
                 items[idx] = i;
                 idx++;
 
                 if (idx != 8)
-                {
                     continue;
-                }
 
                 ShowBag(enemy, ownerIds, bagType, items, boosted);
 
@@ -224,9 +229,7 @@ namespace wServer.logic.loot
             }
 
             if (idx > 0)
-            {
                 ShowBag(enemy, ownerIds, bagType, items, boosted);
-            }
         }
 
         private static void ShowBag(Enemy enemy, int[] owners, int bagType, Item[] items, bool boosted)
@@ -247,15 +250,13 @@ namespace wServer.logic.loot
 
             // allow white bags to override boosted bag
             if (boosted && bag < WHITE_BAG)
-            {
                 bag = RED_BAG;
-            }
-
+            
             var container = new Container(enemy.Manager, bag, 1000 * 60, true);
+
             for (int j = 0; j < 8; j++)
-            {
                 container.Inventory[j] = items[j];
-            }
+            
             container.BagOwners = owners;
             container.Move(
                 enemy.X + (float)((Rand.NextDouble() * 2 - 1) * 0.5),

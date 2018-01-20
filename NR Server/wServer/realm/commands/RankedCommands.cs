@@ -113,31 +113,15 @@ namespace wServer.realm.commands
                         y = new int[spawn.y.Length];
 
                     if (x != null)
-                    {
                         for (int i = 0; i < x.Length && i < count; i++)
-                        {
                             if (spawn.x[i] > 0 && spawn.x[i] <= player.Owner.Map.Width)
-                            {
                                 x[i] = spawn.x[i];
-                            }
-
-                        }
-
-                    }
 
                     if (y != null)
-                    {
                         for (int i = 0; i < y.Length && i < count; i++)
-                        {
                             if (spawn.y[i] > 0 && spawn.y[i] <= player.Owner.Map.Height)
-                            {
                                 y[i] = spawn.y[i];
-                            }
-
-                        }
-
-                    }
-
+                            
                     bool target = false;
                     if (spawn.target != null)
                         target = spawn.target.Value;

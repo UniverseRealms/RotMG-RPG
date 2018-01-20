@@ -10,6 +10,7 @@ using log4net;
 using log4net.Config;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace wServer
 {
@@ -57,6 +58,7 @@ namespace wServer
                     Config.serverInfo.port,
                     Config.serverSettings.maxConnections,
                     StringUtils.StringToByteArray(Config.serverSettings.key));
+
                 server.Start();
                 
                 Console.CancelKeyPress += delegate
