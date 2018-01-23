@@ -8,11 +8,11 @@
   
 -Stale(SwyftLoe) 
   
--Lynx(DazedLynx)
+-Lynx(DazedLynx)(Kicked)
 
--Sebafra(Sebafra12)
+-Sebafra(Sebafra12)(Kicked)
 
--(Retired)Kierze(Kierze) 
+-Kierze(Kierze) 
 
 ### Original Source Credit:
 
