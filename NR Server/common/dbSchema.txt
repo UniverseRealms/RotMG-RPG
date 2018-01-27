@@ -141,3 +141,8 @@ package.(pkgId)
   (accId) => amount account purchased (int)
 
 mutes:(ip) => ""
+
+tower.(towerid)
+	cfloor (int)
+	mfloor (int)
+	clearer (string)

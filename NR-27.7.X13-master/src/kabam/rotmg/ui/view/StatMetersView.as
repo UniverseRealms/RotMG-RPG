@@ -23,6 +23,10 @@ public class StatMetersView extends Sprite {
     private var curXPBoost:int;
     private var expTimer:ExperienceBoostTimerPopup;
 
+    private var hpIncrement:TextFieldDisplayConcrete;
+    private var mpIncrement:TextFieldDisplayConcrete;
+    public var incrementSignal:Signal = new Signal(int);
+
     public function StatMetersView() {
         this.expBar_ = new StatusBar(176, 16, 5931045, 0x545454, TextKey.EXP_BAR_LEVEL);
         this.hpBar_ = new StatusBar(176, 16, 14693428, 0x545454, TextKey.STATUS_BAR_HEALTH_POINTS);
@@ -30,9 +34,34 @@ public class StatMetersView extends Sprite {
         this.hpBar_.y = 24;
         this.mpBar_.y = 48;
         this.expBar_.visible = true;
+
         addChild(this.expBar_);
         addChild(this.hpBar_);
         addChild(this.mpBar_);
+
+        createIncrements();
+    }
+
+    private function createIncrements():void {
+        this.hpIncrement = new TextFieldDisplayConcrete().setSize(16).setColor(0xFFFFFF).setBold(true);
+        this.mpIncrement = new TextFieldDisplayConcrete().setSize(16).setColor(0xFFFFFF).setBold(true);
+        this.hpIncrement.setStringBuilder(new StaticStringBuilder("+"));
+        this.mpIncrement.setStringBuilder(new StaticStringBuilder("+"));
+
+        this.hpIncrement.x = 150;
+        this.hpIncrement.y = this.hpBar_.y - 2;
+        this.mpIncrement.x = 150;
+        this.mpIncrement.y = this.mpBar_.y - 2;
+
+        this.hpIncrement.addEventListener(MouseEvent.CLICK, function(_arg1:MouseEvent):void {
+           incrementSignal.dispatch(0);
+        });
+        this.mpIncrement.addEventListener(MouseEvent.CLICK, function(_arg1:MouseEvent):void {
+            incrementSignal.dispatch(1);
+        });
+
+        addChild(this.hpIncrement);
+        addChild(this.mpIncrement);
     }
 
     public function update(_arg1:Player):void {

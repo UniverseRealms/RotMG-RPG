@@ -746,8 +746,8 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         else {
             _local4 = ObjectLibrary.xmlLibrary_[_local3];
         }
-        if (((((_local4) && (!(_arg1.isPaused())))) && (((_local4.hasOwnProperty("Consumable")) || (_local4.hasOwnProperty("InvUse")))))) {
-            if (!this.validStatInc(_local3, _arg1)) {
+        if (((((_local4) && (!(_arg1.isPaused())))) && (((_local4.hasOwnProperty("Consumable")) || (((_local4.hasOwnProperty("IsCrate")) || (_local4.hasOwnProperty("InvUse")))))))) {
+            if (!this.validStatInc(_local3, _arg1) && !_local4.hasOwnProperty("IsCrate")) {
                 this.addTextLine.dispatch(ChatMessage.make("", (_local4.attribute("id") + " not consumed. Already at Max.")));
                 return (false);
             }
@@ -790,8 +790,10 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         _local5.itemUsePos_.x_ = 0;
         _local5.itemUsePos_.y_ = 0;
         serverConnection.queueMessage(_local5);
-        if (_arg4.hasOwnProperty("Consumable")) {
-            _arg1.equipment_[_arg2] = -1;
+        if (_arg4.hasOwnProperty("Consumable") || _arg4.hasOwnProperty("IsCrate")) {
+            if (!_arg4.hasOwnProperty("IsCrate")) {
+                _arg1.equipment_[_arg2] = -1;
+            }
             if (((_arg4.hasOwnProperty("Activate")) && ((_arg4.Activate == "UnlockSkin")))) {
             }
         }

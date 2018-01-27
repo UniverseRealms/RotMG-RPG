@@ -28,6 +28,7 @@ public class StatMetersMediator extends Mediator {
 
 
     override public function initialize():void {
+        this.view.incrementSignal.add(this.onIncrement);
         this.updateHUD.add(this.onUpdateHUD);
     }
 
@@ -39,23 +40,15 @@ public class StatMetersMediator extends Mediator {
         this.view.update(_arg1);
     }
 
-    /*private function onIncrement(_arg1:String):void {
-        this.view.statIncrement.x -= 10;
-        switch(_arg1)
-        {
-            case "Hp":
-                IncStat(0);
-                break;
-            default:
-                this.view.statIncrement.x += 10;
-                break;
-        }
+    private function onIncrement(_arg1:int):void {
+        IncStat(_arg1);
     }
 
-    private function IncStat(_arg1:int){
-        var _local1:IncrementStat = (this.messages.require(GameServerConnection.STATINCREMENT) as kabam.rotmg.messaging.impl.outgoing.IncrementStat);
+    private function IncStat(_arg1:int):void {
+        var _local1:IncrementStat = (this.messages.require(GameServerConnection.STATINCREMENT) as IncrementStat);
         _local1.statType  = _arg1;
+        _local1.reset = false;
         this.socketServer.queueMessage(_local1);
-    }*/
+    }
 }
 }

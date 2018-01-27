@@ -247,6 +247,32 @@ namespace common
         }
     }
 
+    public class DbTower : RedisObject
+    {
+        public int CurrentFloor
+        {
+            get { return GetValue<int>("cfloor"); }
+            set { SetValue<int>("cfloor", value); }
+        }
+
+        public int MaxFloor
+        {
+            get { return GetValue<int>("mfloor"); }
+            set { SetValue<int>("mfloor", value); }
+        }
+
+        public string Clearer
+        {
+            get { return GetValue<string>("clearer"); }
+            set { SetValue<string>("clearer", value); }
+        }
+
+        public DbTower(IDatabase db, int towerid, string field = null)
+        {
+            Init(db, "tower." + towerid, field);
+        }
+    }
+
     public class DbAccount : RedisObject
     {
         public DbAccount(IDatabase db, int accId, string field = null)

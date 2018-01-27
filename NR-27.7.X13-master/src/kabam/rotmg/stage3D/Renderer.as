@@ -168,7 +168,7 @@ public class Renderer {
     }
 
     private function onRender(_arg1:Vector.<IGraphicsData>, _arg2:Vector.<Object3DStage3D>, _arg3:Number, _arg4:Number, _arg5:Camera, _arg6:uint):void {
-        WebMain.STAGE.scaleMode = StageScaleMode.NO_SCALE;
+        WebMain.STAGE.scaleMode = StageScaleMode.EXACT_FIT;
         if (((!((((WebMain.STAGE.stageWidth * 3) / 4) == this.stageWidth))) || (!((WebMain.STAGE.stageHeight == this.stageHeight))))) {
             this.resizeStage3DBackBuffer();
         }

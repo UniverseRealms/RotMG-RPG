@@ -264,6 +264,20 @@ namespace server
         }
     }
 
+    //class Tower
+    //{
+    //    public int CurrentFloor { get; set; }
+    //    public int MaxFloor { get; set; }
+    //    public string Clearer { get; set; }
+
+    //    public Tower(DbTower tower)
+    //    {
+    //        tower.MaxFloor = MaxFloor;
+    //        tower.CurrentFloor = CurrentFloor;
+    //        tower.Clearer = Clearer;
+    //    }
+    //}
+
     class Account
     {
         public int AccountId { get; private set; }

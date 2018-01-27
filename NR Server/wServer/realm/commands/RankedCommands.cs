@@ -1961,22 +1961,6 @@ namespace wServer.realm.commands
         }
     }
 
-    class Level20Command : Command
-    {
-        public Level20Command() : base("level20", permLevel: 80, alias: "l20") { }
-
-        protected override bool Process(Player player, RealmTime time, string args)
-        {
-            if (player.Level < 20)
-            {
-                player.Experience = Player.GetLevelExp(20);
-                player.Level = 20;
-                return true;
-            }
-            return false;
-        }
-    }
-
     class RenameCommand : Command
     {
         public RenameCommand() : base("rename", permLevel: 100) { }

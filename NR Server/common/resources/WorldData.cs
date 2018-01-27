@@ -21,10 +21,14 @@ namespace common.resources
         public bool restrictTp;
         public bool showDisplays;
         public bool persist;
+        public bool isTower;
+        public bool towerStarted;
+        public string towermap;
         public int blocking;
         public bool setpiece;
         public int[] portals;
         public string[] maps;
+        public string[] towermaps;
         public string[] music;
         public byte[][] wmap;
     }
@@ -74,7 +78,13 @@ namespace common.resources
                         world.wmap[j] = Json2Wmap.Convert(gameData, jm);
                     }
                 }
-                worlds.Add(world.name, world);
+                if (world.isTower == true && world.towerStarted == true)
+                {
+                    world.wmap[0] = Json2Wmap.Convert(gameData, world.towermap);
+                    worlds.Add(world.name, world);
+                }
+                else
+                    worlds.Add(world.name, world);
             }
         }
 

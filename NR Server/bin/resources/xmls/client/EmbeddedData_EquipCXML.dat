@@ -2599,6 +2599,37 @@
       <BagType>5</BagType>
       <feedPower>250</feedPower>
    </Object>
+   <Object type="0xc96" id="Loot Crate">
+      <Class>Equipment</Class>
+      <Item/>
+      <Texture>
+         <File>lofiObj2</File>
+         <Index>0x34</Index>
+      </Texture>
+	  <Crate>
+		<Items>Potion of Attack (SB),Potion of Defense (SB),Potion of Speed (SB)</Items>
+		<Key>Bronze Key</Key>
+	  </Crate>
+      <SlotType>10</SlotType>
+      <Tier>2</Tier>
+      <Description>Nice stuff</Description>
+      <Sound>use_potion</Sound>
+      <IsCrate/>
+      <BagType>5</BagType>
+      <feedPower>150</feedPower>
+   </Object>
+   <Object type="0xc95" id="Bronze Key">
+      <Class>Equipment</Class>
+      <Item/>
+      <Texture>
+         <File>lofiObj2</File>
+         <Index>0x34</Index>
+      </Texture>
+      <SlotType>10</SlotType>
+      <Tier>2</Tier>
+      <Description>Nice stuff</Description>
+      <feedPower>150</feedPower>
+   </Object>
    <Object type="0x1559" id="Potion of Attack (SB)">
       <Class>Equipment</Class>
       <Item/>
@@ -13749,7 +13780,7 @@
       <BagType>5</BagType>
       <Soulbound/>
       <feedPower>50000</feedPower>
-   </Object>   
+   </Object>
    <Object type="0x5e2d" id="Treasure Map">
       <Class>Equipment</Class>
       <Item/>
@@ -15614,7 +15645,7 @@
       <BagType>5</BagType>
       <Track/>
    </Object>
-      <Object type="0x7016" id="50 Fame"> 
+      <Object type="0x7016" id="50 Fame">
         <Class>Equipment</Class>
         <Item />
         <Texture>
@@ -15628,8 +15659,8 @@
         <Consumable />
         <Potion />
         <BagType>2</BagType>
-      </Object> 
-      <Object type="0x7017" id="100 Fame"> 
+      </Object>
+      <Object type="0x7017" id="100 Fame">
         <Class>Equipment</Class>
         <Item />
         <Texture>
@@ -15644,7 +15675,7 @@
         <Potion />
         <BagType>2</BagType>
       </Object>
-      <Object type="0x7018" id="500 Fame"> 
+      <Object type="0x7018" id="500 Fame">
         <Class>Equipment</Class>
         <Item />
         <Texture>
@@ -15659,7 +15690,7 @@
         <Potion />
         <BagType>2</BagType>
       </Object>
-      <Object type="0x7019" id="1000 Fame"> 
+      <Object type="0x7019" id="1000 Fame">
         <Class>Equipment</Class>
         <Item />
         <Texture>
@@ -15674,7 +15705,7 @@
         <Potion />
         <BagType>2</BagType>
       </Object>
-      <Object type="0x7021" id="5000 Fame"> 
+      <Object type="0x7021" id="5000 Fame">
         <Class>Equipment</Class>
         <Item />
         <Texture>

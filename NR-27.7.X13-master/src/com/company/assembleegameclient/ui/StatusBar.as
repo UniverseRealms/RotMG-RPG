@@ -28,7 +28,7 @@ public class StatusBar extends Sprite {
     public var maxMax_:int = -1;
     private var labelText_:TextFieldDisplayConcrete;
     private var labelTextStringBuilder_:LineBuilder;
-    private var valueText_:TextFieldDisplayConcrete;
+    public var valueText_:TextFieldDisplayConcrete;
     private var valueTextStringBuilder_:StaticStringBuilder;
     private var boostText_:TextFieldDisplayConcrete;
     private var multiplierText:TextFieldDisplayConcrete;

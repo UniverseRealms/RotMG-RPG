@@ -172,6 +172,12 @@ namespace wServer.realm.entities
                 {
                     slotType = container.SlotTypes[slot];
 
+                    if (item.IsCrate)
+                    {
+                        OpenCrate(item);
+                        return;
+                    }
+
                     if (item.Consumable)
                     {
                         var gameData = Manager.Resources.GameData;
@@ -211,9 +217,8 @@ namespace wServer.realm.entities
                                         FameCounter.DrinkPot();
                                     }
                                 }
-
-
                                 Activate(time, item, pos);
+                                OpenCrate(item);
                             });
                         task.ContinueWith(e =>
                             Log.Error(e.Exception.InnerException.ToString()),
@@ -230,17 +235,89 @@ namespace wServer.realm.entities
                 {
                     FameCounter.DrinkPot();
                 }
-
                 if (item.Consumable || item.SlotType == slotType)
+                {
                     Activate(time, item, pos);
+                }
                 else
                     Client.SendPacket(new InvResult() { Result = 1 });
             }
         }
 
+        private void OpenCrate(Item item)
+        {
+            if (CheckKey(item))
+            {
+                GiveRandomItem(item);
+                RemoveKey(item);
+                RemoveCrate(item);
+                SendInfo("Success!");
+            }
+            else
+            {
+                SendError("You do not have the required key!");
+                return;
+            }
+        }
+
+        private bool CheckKey(Item item)
+        {
+            foreach (var c in item.Crates)
+                for (var i = 3; i < Inventory.Length; i++)
+                    if (Inventory[i] != null)
+                        if (Inventory[i].ObjectId == c.Key)
+                            return true;
+            return false;
+        }
+
+        private void GiveRandomItem(Item item)
+        {
+            Random ran = new Random();
+
+            foreach (var i in item.Crates)
+            {
+                int chance = ran.Next(0, i.Items.Count);
+
+                for (var e = 3; e < Inventory.Length; e++)
+                {
+                    ushort iten = Manager.Resources.GameData.IdToObjectType[i.Items[chance]];
+
+                    if (Inventory[e] == null)
+                    {
+                        Inventory[e] = Manager.Resources.GameData.Items[iten];
+                        return;
+                    } 
+                }
+            }
+        }
+
+        private void RemoveCrate(Item item)
+        {
+            for (var i = 3; i < Inventory.Length; i++)
+                if (Inventory[i] != null)
+                    if (Inventory[i].ObjectId == item.ObjectId)
+                    {
+                        Inventory[i] = null;
+                        return;
+                    }
+        }
+
+        private void RemoveKey(Item item)
+        {
+            foreach (var c in item.Crates)
+                for (var i = 3; i < Inventory.Length; i++)
+                    if (Inventory[i] != null)
+                        if (Inventory[i].ObjectId == c.Key)
+                        {
+                            Inventory[i] = null;
+                            return;
+                        }
+        }
+
         private void Activate(RealmTime time, Item item, Position target)
         {
             MP -= item.MpCost;
+        
             foreach (var eff in item.ActivateEffects)
             {
                 switch (eff.Effect)

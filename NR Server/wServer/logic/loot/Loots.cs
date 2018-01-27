@@ -182,8 +182,8 @@ namespace wServer.logic.loot
                 if (i.BagType == 6)
                     foreach (var w in player.Manager.Worlds.Values)
                         foreach (var p in w.Players.Values)
-                            p.SendInfo("Congratulations! " + player.Name + " has gotten a legendary item: "
-                                + i.ObjectId);
+                            p.SendInfo("Congratulations! " + player.Name + " has obtianed a legendary item: "
+                                + i.ObjectId + "!");
         }
 
         private void AddBagsToWorld(Enemy enemy, IList<Item> shared, IDictionary<Player, IList<Item>> playerLoot)

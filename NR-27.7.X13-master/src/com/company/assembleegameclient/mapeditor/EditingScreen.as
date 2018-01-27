@@ -548,45 +548,45 @@ public class EditingScreen extends Sprite {
     }
 
     private function createMapJSON():String {
-        var _local7:int;
-        var _local8:METile;
-        var _local9:Object;
-        var _local10:String;
-        var _local11:int;
-        var _local1:Rectangle = this.meMap_.getTileBounds();
-        if (_local1 == null) {
+        var _local_7:int;
+        var _local_8:METile;
+        var _local_9:Object;
+        var _local_10:String;
+        var _local_11:int;
+        var _local_1:Rectangle = this.meMap_.getTileBounds();
+        if (_local_1 == null) {
             return (null);
         }
-        var _local2:Object = {};
-        _local2["width"] = int(_local1.width);
-        _local2["height"] = int(_local1.height);
-        var _local3:Object = {};
-        var _local4:Array = [];
-        var _local5:ByteArray = new ByteArray();
-        var _local6:int = _local1.y;
-        while (_local6 < _local1.bottom) {
-            _local7 = _local1.x;
-            while (_local7 < _local1.right) {
-                _local8 = this.meMap_.getTile(_local7, _local6);
-                _local9 = this.getEntry(_local8);
-                _local10 = this.json.stringify(_local9);
-                if (!_local3.hasOwnProperty(_local10)) {
-                    _local11 = _local4.length;
-                    _local3[_local10] = _local11;
-                    _local4.push(_local9);
+        var _local_2:Object = {};
+        _local_2["width"] = int(_local_1.width);
+        _local_2["height"] = int(_local_1.height);
+        var _local_3:Object = {};
+        var _local_4:Array = [];
+        var _local_5:ByteArray = new ByteArray();
+        var _local_6:int = _local_1.y;
+        while (_local_6 < _local_1.bottom) {
+            _local_7 = _local_1.x;
+            while (_local_7 < _local_1.right) {
+                _local_8 = this.meMap_.getTile(_local_7, _local_6);
+                _local_9 = this.getEntry(_local_8);
+                _local_10 = this.json.stringify(_local_9);
+                if (!_local_3.hasOwnProperty(_local_10)) {
+                    _local_11 = _local_4.length;
+                    _local_3[_local_10] = _local_11;
+                    _local_4.push(_local_9);
                 }
                 else {
-                    _local11 = _local3[_local10];
+                    _local_11 = _local_3[_local_10];
                 }
-                _local5.writeShort(_local11);
-                _local7++;
+                _local_5.writeShort(_local_11);
+                _local_7++;
             }
-            _local6++;
+            _local_6++;
         }
-        _local2["dict"] = _local4;
-        _local5.compress();
-        _local2["data"] = Base64.encodeByteArray(_local5);
-        return (this.json.stringify(_local2));
+        _local_2["dict"] = _local_4;
+        _local_5.compress();
+        _local_2["data"] = Base64.encodeByteArray(_local_5);
+        return (this.json.stringify(_local_2));
     }
 
     private function onSave(_arg1:CommandEvent):void {

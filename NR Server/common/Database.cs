@@ -1236,6 +1236,31 @@ namespace common
             abi.Flush();
         }
 
+        public void CreateTower(int towerid, int maxfloor)
+        {
+            var tower = new DbTower(_db, towerid)
+            {
+                MaxFloor = maxfloor,
+                CurrentFloor = 0,
+                Clearer = "",
+            };
+            tower.FlushAsync();
+        }
+
+        public DbTower GetTower(int towerid)
+        {
+            return new DbTower(_db, towerid);
+        }
+
+        public void IncreaseFloor(int currentfloor, int towerid)
+        {
+            var tower = new DbTower(_db, towerid)
+            {
+                CurrentFloor = towerid
+            };
+            tower.FlushAsync();
+        }
+
         public bool UnBanIp(string ip)
         {
             var abi = new DbIpInfo(_db, ip);

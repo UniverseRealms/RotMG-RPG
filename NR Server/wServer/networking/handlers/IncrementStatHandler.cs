@@ -60,6 +60,11 @@ namespace wServer.networking.handlers
         {
             var statinfo = player.Manager.Resources.GameData.Classes[player.ObjectType].Stats;
 
+            if (player.Stats.Base[stat] + 5 >= statinfo[stat].MaxValue)
+            {
+                int difference = (player.Stats.Base[stat] + 5) - statinfo[stat].MaxValue;
+                amount -= difference;
+            }
             if (player.Stats.Base[stat] >= statinfo[stat].MaxValue)
             {
                 player.SendError("Stat already maxed!");

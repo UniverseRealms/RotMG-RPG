@@ -228,6 +228,31 @@ namespace common.resources
         }
     }
 
+    public class Crate
+    {
+        public List<string> Items = new List<string>();
+        public string Key { get; set; }
+
+        public Crate(XElement elem)
+        {
+            if (elem.Element("Items") != null)
+                foreach (string s in elem.Element("Items").Value.Split(','))
+                {
+                    try
+                    {
+                        Items.Add(s);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+
+            if (elem.Element("Key") != null)
+                Key = elem.Element("Key").Value;
+        }
+    }
+
     public enum ActivateEffects
     {
         Shoot,
@@ -468,6 +493,7 @@ namespace common.resources
         public int NumProjectiles2 { get; private set; }
         public bool DualShooting { get; private set; }
         public bool Consumable { get; private set; }
+        public bool IsCrate { get; private set; }
         public bool Potion { get; private set; }
         public string DisplayId { get; private set; }
         public string DisplayName { get; private set; }
@@ -487,6 +513,7 @@ namespace common.resources
 
         public KeyValuePair<int, int>[] StatsBoost { get; private set; }
         public ActivateEffect[] ActivateEffects { get; private set; }
+        public Crate[] Crates { get; set; }
         public ProjectileDesc[] Projectiles { get; private set; }
 
         public Item(ushort type, XElement elem)
@@ -587,6 +614,8 @@ namespace common.resources
 
             Consumable = elem.Element("Consumable") != null;
 
+            IsCrate = elem?.Element("IsCrate") != null;
+
             Potion = elem.Element("Potion") != null;
 
             if ((n = elem.Element("DisplayId")) != null)
@@ -649,6 +678,13 @@ namespace common.resources
             foreach (XElement i in elem.Elements("Activate"))
                 activate.Add(new ActivateEffect(i));
             ActivateEffects = activate.ToArray();
+
+            var crate = new List<Crate>();
+            foreach (XElement i in elem.Elements("Crate"))
+                crate.Add(new Crate(i));
+            
+                
+            Crates = crate.ToArray();
 
             var prj = new List<ProjectileDesc>();
             foreach (XElement i in elem.Elements("Projectile"))

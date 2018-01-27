@@ -24,13 +24,13 @@ import flash.utils.Dictionary;
 
 public class MEMap extends Sprite {
 
-    public static const MAX_ALLOWED_SQUARES:int = 0x0200;
-    public static const SQUARE_SIZE:int = 16;
+    public static const MAX_ALLOWED_SQUARES:int = 0x0400;
+    public static const SQUARE_SIZE:int = 8;
     public static const SIZE:int = 0x0200;
 
     private static var transbackgroundEmbed_:Class = MEMap_transbackgroundEmbed_;
     private static var transbackgroundBD_:BitmapData = new transbackgroundEmbed_().bitmapData;
-    public static var NUM_SQUARES:int = 128;
+    public static var NUM_SQUARES:int = 1024;
 
     public var tileDict_:Dictionary;
     public var fullMap_:BigBitmapData;

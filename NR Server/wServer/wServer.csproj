@@ -399,6 +399,7 @@
     <Compile Include="realm\worlds\logic\Test.cs" />
     <Compile Include="realm\worlds\logic\Vault.cs" />
     <Compile Include="realm\worlds\DungeonTemplates.cs" />
+    <Compile Include="realm\worlds\Tower.cs" />
     <Compile Include="realm\WorldTimer.cs" />
     <Compile Include="realm\Entity.cs" />
     <Compile Include="logic\FameCounter.cs" />
