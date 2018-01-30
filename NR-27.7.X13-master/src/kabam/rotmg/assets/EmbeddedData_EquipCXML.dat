@@ -2604,10 +2604,15 @@
       <Item/>
       <Texture>
          <File>lofiObj2</File>
-         <Index>0x34</Index>
+         <Index>0x84</Index>
       </Texture>
 	  <Crate>
-		<Items>Potion of Attack (SB),Potion of Defense (SB),Potion of Speed (SB)</Items>
+		<Items>Potion of Attack,Potion of Defense,Potion of Speed,
+        Ancient Stone Sword,Helmet of the Great General,Cloak of Ghostly Concealment,
+        Planefetter Orb,Baneserpent Poison,Prism of Apparitions,Quiver of Elvish Mastery,
+        Scepter of Storms,Seal of the Blessed Champion,Colussus Shield,Doom Circle,Bloodsucker Skull,
+        Elemental Detonation Spell,Sword of Acclaim,Ring of Unbound Defense,Ring of Unbound Dexterity,
+        Ring of Unbound Health</Items>
 		<Key>Bronze Key</Key>
 	  </Crate>
       <SlotType>10</SlotType>
@@ -2623,7 +2628,7 @@
       <Item/>
       <Texture>
          <File>lofiObj2</File>
-         <Index>0x34</Index>
+         <Index>0x85</Index>
       </Texture>
       <SlotType>10</SlotType>
       <Tier>2</Tier>

@@ -1,24 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using common.resources;
-using common;
-using wServer.networking;
-using wServer.networking.packets.incoming;
 using wServer.networking.packets.outgoing;
-using wServer.realm.entities;
 
 namespace wServer.realm.worlds
 {
     public class Tower : World
     {
         #region _towers
-        public readonly int DemonTower = 0;
+        public const int DemonTower = 0;
         #endregion
 
-        public Dictionary<int, string> floormaps = new Dictionary<int, string>();
-        ProtoWorld _poto;
+        public Dictionary<int, string> FloorMaps = new Dictionary<int, string>();
 
-        private bool floorCleared;
+        ProtoWorld _poto;
 
         private int _maxfloor;
         public int CurrentFloor
@@ -31,58 +25,60 @@ namespace wServer.realm.worlds
             }
         }
 
+        private int towerId;
+        public string FloorName;
+
         public Tower(ProtoWorld proto, int id, int maxfloor) : base(proto)
         {
             _poto = proto;
-            Manager.Database.CreateTower(id, maxfloor);
+            towerId = id;
 
-            var currenttower = Manager.Database.GetTower(id);
+            if (Manager.Database.TowerExist(id) == false)
+            {
+                Manager.Database.CreateTower(id, maxfloor);
+                CurrentFloor = 0;
+            } else
+            {
+                var currenttower = Manager.Database.GetTower(id);
+                
+                CurrentFloor = currenttower.CurrentFloor;
+            }
 
             _maxfloor = maxfloor;
-            CurrentFloor = currenttower.CurrentFloor;
-
             proto = _poto;
         }
 
         protected override void Init()
         {
-            floorCleared = false;
             _poto.isTower = true;
             _poto.towerStarted = true;
         }
 
         public override void Tick(RealmTime time)
         {
+            base.Tick(time);
+
             int istrue = 0;
             if (_poto.towerStarted)
             {
                 istrue++;
                 if (istrue == 1)
                 {
+                    AddMaps();
+
                     foreach (var i in Players.Values)
                         i.Reconnect(this);
-                    AddMaps();
                 }
 
                 if (IsCleared())
-                    ToNexus();
+                    OnClear();
             }
         }
 
         private void AddMaps()
         {
-            int worldcount = 0;
-            foreach (var i in _poto.towermaps)
-            {
-                worldcount++;
-                floormaps.Add(worldcount, i.ToString());
-            }
-
-            for (var i = 0; i < _maxfloor; i++)
-            {
-                if (i == CurrentFloor)
-                    _poto.towermap = floormaps[i];
-            }
+            if (CurrentFloor + 1 < _maxfloor)
+                _poto.towermap = FloorMaps[CurrentFloor + 1];
         }
 
         private bool IsCleared()
@@ -90,6 +86,18 @@ namespace wServer.realm.worlds
             if (Enemies.Count < 1)
                 return true;
             return false;
+        }
+
+        private void OnClear()
+        {
+            foreach (var i in Manager.Worlds.Values)
+                foreach (var e in i.Players.Values)
+                    e.SendInfo("{ } has cleared floor:" + CurrentFloor + " of the " + FloorName + "."); //todo:add clearer
+
+            Manager.Database.IncreaseFloor(CurrentFloor + 1, towerId);
+            Manager.Database.SetClearer(towerId, "Player");//for now
+
+            ToNexus();
         }
 
         private void ToNexus()

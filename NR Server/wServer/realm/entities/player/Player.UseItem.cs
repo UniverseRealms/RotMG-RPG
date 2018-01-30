@@ -172,7 +172,7 @@ namespace wServer.realm.entities
                 {
                     slotType = container.SlotTypes[slot];
 
-                    if (item.IsCrate)
+                    if (IsCrate(item) == true)
                     {
                         OpenCrate(item);
                         return;
@@ -218,7 +218,6 @@ namespace wServer.realm.entities
                                     }
                                 }
                                 Activate(time, item, pos);
-                                OpenCrate(item);
                             });
                         task.ContinueWith(e =>
                             Log.Error(e.Exception.InnerException.ToString()),
@@ -244,6 +243,14 @@ namespace wServer.realm.entities
             }
         }
 
+        private bool IsCrate(Item item)
+        {
+            foreach (var c in item.Crates)
+                if (c.Items.Count > 0 && !string.IsNullOrEmpty(c.Key))
+                    return true;
+            return false;
+        }
+
         private void OpenCrate(Item item)
         {
             if (CheckKey(item))
@@ -263,7 +270,7 @@ namespace wServer.realm.entities
         private bool CheckKey(Item item)
         {
             foreach (var c in item.Crates)
-                for (var i = 3; i < Inventory.Length; i++)
+                for (var i = 4; i < Inventory.Length; i++)
                     if (Inventory[i] != null)
                         if (Inventory[i].ObjectId == c.Key)
                             return true;
@@ -278,13 +285,18 @@ namespace wServer.realm.entities
             {
                 int chance = ran.Next(0, i.Items.Count);
 
-                for (var e = 3; e < Inventory.Length; e++)
+                for (var e = 4; e < Inventory.Length; e++)
                 {
                     ushort iten = Manager.Resources.GameData.IdToObjectType[i.Items[chance]];
 
                     if (Inventory[e] == null)
                     {
                         Inventory[e] = Manager.Resources.GameData.Items[iten];
+
+                        Client.SendPacket(new RewardPacket
+                        {
+                            ItemId = iten
+                        });
                         return;
                     } 
                 }
@@ -293,7 +305,7 @@ namespace wServer.realm.entities
 
         private void RemoveCrate(Item item)
         {
-            for (var i = 3; i < Inventory.Length; i++)
+            for (var i = 4; i < Inventory.Length; i++)
                 if (Inventory[i] != null)
                     if (Inventory[i].ObjectId == item.ObjectId)
                     {
@@ -305,7 +317,7 @@ namespace wServer.realm.entities
         private void RemoveKey(Item item)
         {
             foreach (var c in item.Crates)
-                for (var i = 3; i < Inventory.Length; i++)
+                for (var i = 4; i < Inventory.Length; i++)
                     if (Inventory[i] != null)
                         if (Inventory[i].ObjectId == c.Key)
                         {

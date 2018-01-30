@@ -1261,6 +1261,24 @@ namespace common
             tower.FlushAsync();
         }
 
+        public void SetClearer(int id, string name)
+        {
+            var tower = new DbTower(_db, id)
+            {
+                Clearer = name
+            };
+            tower.FlushAsync();
+        }
+
+        public bool TowerExist(int towerid)
+        {
+            var tower = new DbTower(_db, towerid);
+
+            if (tower != null)
+                return true;
+            return false;
+        }
+
         public bool UnBanIp(string ip)
         {
             var abi = new DbIpInfo(_db, ip);

@@ -1,5 +1,6 @@
 ﻿package kabam.rotmg.messaging.impl {
 import com.company.assembleegameclient.game.AGameSprite;
+import com.company.assembleegameclient.game.GameSprite;
 import com.company.assembleegameclient.game.events.GuildResultEvent;
 import com.company.assembleegameclient.game.events.KeyInfoResponseSignal;
 import com.company.assembleegameclient.game.events.NameResultEvent;
@@ -123,6 +124,7 @@ import kabam.rotmg.messaging.impl.incoming.Goto;
 import kabam.rotmg.messaging.impl.incoming.GuildResult;
 import kabam.rotmg.messaging.impl.incoming.InvResult;
 import kabam.rotmg.messaging.impl.incoming.InvitedToGuild;
+import kabam.rotmg.messaging.impl.incoming.RewardPacket;
 import kabam.rotmg.messaging.impl.incoming.KeyInfoResponse;
 import kabam.rotmg.messaging.impl.incoming.MapInfo;
 import kabam.rotmg.messaging.impl.incoming.NameResult;
@@ -441,6 +443,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         _local1.map(QUEUE_PING).toMessage(QueuePing).toMethod(this.HandleQueuePing);
         _local1.map(SWITCH_MUSIC).toMessage(SwitchMusic).toMethod(this.onSwitchMusic);
         _local1.map(STATINCREMENT).toMessage(IncrementStat);
+        _local1.map(REWARD).toMessage(RewardPacket).toMethod(this.onRewardRecieved);
     }
 
     private function onSwitchMusic(sm:SwitchMusic):void {
@@ -539,6 +542,7 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         _local1.unmap(QUEUE_PONG);
         _local1.unmap(SET_FOCUS);
         _local1.unmap(SWITCH_MUSIC);
+        _local1.unmap(REWARD);
     }
 
     private function encryptConnection():void {
@@ -1942,12 +1946,18 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         if (Parameters.data_.showGuildInvitePopup) {
             gs_.hudView.interactPanel.setOverride(new GuildInvitePanel(gs_, _arg1.name_, _arg1.guildName_));
         }
-        this.addTextLine.dispatch(ChatMessage.make("", (((((("You have been invited by " + _arg1.name_) + " to join the guild ") + _arg1.guildName_) + '.\n  If you wish to join type "/join ') + _arg1.guildName_) + '"')));
+        this.addTextLine.dispatch(ChatMessage.make("", (((((("You have been invited by " +
+                _arg1.name_) + " to join the guild ") + _arg1.guildName_) +
+                '.\n  If you wish to join type "/join ') + _arg1.guildName_) + '"')));
     }
 
     private function onPlaySound(_arg1:PlaySound):void {
         var _local2:GameObject = gs_.map.goDict_[_arg1.ownerId_];
         ((_local2) && (_local2.playSound(_arg1.soundId_)));
+    }
+
+    private function onRewardRecieved(_arg1:RewardPacket):void {
+        this.gs_.hudView.SetReward(_arg1.itemId_);
     }
 
     private function onImminentArenaWave(_arg1:ImminentArenaWave):void {

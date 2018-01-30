@@ -56,7 +56,7 @@ public class ObjectProperties {
             this.displayId_ = _arg1.DisplayId;
         }
         this.shadowSize_ = ((_arg1.hasOwnProperty("ShadowSize")) ? _arg1.ShadowSize : 100);
-        this.isPlayer_ = _arg1.hasOwnProperty("Demon");
+        this.isPlayer_ = _arg1.hasOwnProperty("Player");
         this.isEnemy_ = _arg1.hasOwnProperty("Enemy");
         this.drawOnGround_ = _arg1.hasOwnProperty("DrawOnGround");
         if (((this.drawOnGround_) || (_arg1.hasOwnProperty("DrawUnder")))) {

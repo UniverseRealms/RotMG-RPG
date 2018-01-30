@@ -10,6 +10,7 @@ import com.company.assembleegameclient.parameters.Parameters;
 import com.company.assembleegameclient.tutorial.Tutorial;
 import com.company.assembleegameclient.ui.GuildText;
 import com.company.assembleegameclient.ui.RankText;
+import com.company.assembleegameclient.ui.RewardNotification;
 import com.company.assembleegameclient.ui.menu.PlayerMenu;
 import com.company.assembleegameclient.util.TextureRedrawer;
 import com.company.util.CachingColorTransformer;
@@ -220,6 +221,10 @@ public class GameSprite extends AGameSprite {
         this.creditDisplay_.x = 594;
         this.creditDisplay_.y = 0;
         addChild(this.creditDisplay_);
+
+
+
+
         var _local2:AppEngineClient = StaticInjectorContext.getInjector().getInstance(AppEngineClient);
         var _local3:Object = {
             "game_net_user_id": _local1.gameNetworkUserId(),
@@ -496,6 +501,7 @@ public class GameSprite extends AGameSprite {
             }
             moveRecords_.addRecord(_local2, _local5.x_, _local5.y_);
         }
+
         lastUpdate_ = _local2;
         var _local6:int = (getTimer() - _local2);
         this.monitor.dispatch("GameSprite.loop", _local6);

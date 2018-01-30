@@ -3,11 +3,13 @@ import com.company.assembleegameclient.game.AGameSprite;
 import com.company.assembleegameclient.game.GameSprite;
 import com.company.assembleegameclient.objects.GameObject;
 import com.company.assembleegameclient.objects.Player;
+import com.company.assembleegameclient.ui.RewardNotification;
 import com.company.assembleegameclient.ui.TradePanel;
 import com.company.assembleegameclient.ui.panels.InteractPanel;
 import com.company.assembleegameclient.ui.panels.itemgrids.EquippedGrid;
 import com.company.util.GraphicsUtil;
 import com.company.util.SpriteUtil;
+import com.gskinner.motion.GTween;
 
 import flash.display.GraphicsPath;
 import flash.display.GraphicsSolidFill;
@@ -42,6 +44,7 @@ public class HUDView extends Sprite implements UnFocusAble {
     public var tabStrip:TabStripView;
     public var interactPanel:InteractPanel;
     public var tradePanel:TradePanel;
+    private var rewardNotification:RewardNotification;
 
     public function HUDView() {
         this.createAssets();
@@ -83,6 +86,25 @@ public class HUDView extends Sprite implements UnFocusAble {
         this.createEquippedGridBackground();
         this.createEquippedGrid();
         this.createInteractPanel(_arg1);
+        addRewardNotifivation();
+    }
+
+    private function addRewardNotifivation():void {
+        this.rewardNotification = new RewardNotification();
+        this.rewardNotification.x -= this.rewardNotification.width;
+        this.rewardNotification.y = this.characterDetails.y;
+        this.rewardNotification.alpha = 0;
+
+        addChild(this.rewardNotification);
+    }
+
+    public function SetReward(_arg1:uint):void {
+        this.rewardNotification.setItemBitmap(_arg1);
+        if (!this.stage.contains(this.rewardNotification)){
+            addChild(this.rewardNotification);
+            this.rewardNotification.alpha = 0;
+        }
+        new GTween(this.rewardNotification, 1, {"alpha": 1});
     }
 
     private function createInteractPanel(_arg1:GameSprite):void {

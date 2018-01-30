@@ -98,5 +98,6 @@ namespace wServer.networking.packets
         CLAIM_LOGIN_REWARD_MSG = 153,
         LOGIN_REWARD_MSG = 154,
         STATINCREMENT = 156,
+        REWARD = 157,
     }
 }

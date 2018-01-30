@@ -117,11 +117,13 @@ public class GameServerConnection {
     public static const CLAIM_LOGIN_REWARD_MSG:int = 153;
     public static const LOGIN_REWARD_MSG:int = 154;
     public static const STATINCREMENT:int = 156;
+    public static const REWARD:int = 157;
 
     
     public static var instance:GameServerConnection;
 
     public var changeMapSignal:Signal;
+    public var rewardedSignal:Signal = new Signal(String);
     public var gs_:AGameSprite;
     public var server_:Server;
     public var gameId_:int;
