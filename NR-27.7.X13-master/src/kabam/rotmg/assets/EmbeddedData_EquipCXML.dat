@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <Objects>
+<Object type="0x54b9" id="Marketman">
+              <Class>MarketNPC</Class>
+              <ShadowSize>10</ShadowSize>
+              <Size>20</Size>
+              <Texture>
+                   <File>lofiObjBig</File>
+                     <Index>0x184</Index>
+              </Texture>
+          </Object>
    <Object type="0xa00" id="Short Sword">
       <Class>Equipment</Class>
       <Item/>
