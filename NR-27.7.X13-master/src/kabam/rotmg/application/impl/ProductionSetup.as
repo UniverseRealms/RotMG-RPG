@@ -5,7 +5,7 @@ import kabam.rotmg.application.api.ApplicationSetup;
 
 public class ProductionSetup implements ApplicationSetup {
 
-    private const SERVER:String = "http://192.168.0.107:8080";
+    private const SERVER:String = "http://127.0.0.1:8080";
     private const BUILD_LABEL:String = "RotMG:RPG #{VERSION}.{MINOR}";
 
 

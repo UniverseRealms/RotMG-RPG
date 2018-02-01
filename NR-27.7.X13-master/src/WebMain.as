@@ -2,7 +2,7 @@
 import com.company.assembleegameclient.parameters.Parameters;
 import com.company.assembleegameclient.util.AssetLoader;
 import com.company.assembleegameclient.util.StageProxy;
-import com.demonsters.debugger.MonsterDebugger;
+import Market.ui.MarketMediatorConfig;
 
 import flash.display.LoaderInfo;
 import flash.display.Sprite;
@@ -151,6 +151,7 @@ public class WebMain extends Sprite {
                 .configure(MysteryBoxConfig)
                 .configure(FortuneConfig)
                 .configure(FriendConfig)
+                .configure(MarketMediatorConfig)
                 .configure(QueueConfig)
                 .configure(this);
         this.context.logLevel = LogLevel.DEBUG;

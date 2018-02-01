@@ -66,6 +66,7 @@ public class ObjectLibrary {
         "Stalagmite": Stalagmite,
         "Wall": Wall,
         "Pet": Pet,
+        "MarketNPC": MarketNPC,
         "PetUpgrader": PetUpgrader,
         "YardUpgrader": YardUpgrader
     };
