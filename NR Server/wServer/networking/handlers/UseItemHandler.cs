@@ -20,6 +20,8 @@ namespace wServer.networking.handlers
         {
             if (player?.Owner == null)
                 return;
+            
+            var item = player.Manager.Resources.GameData.Items[(ushort)packet.SlotObject.ObjectId];
  
             player.UseItem(time, packet.SlotObject.ObjectId, packet.SlotObject.SlotId, packet.ItemUsePos);
         }

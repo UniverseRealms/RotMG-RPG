@@ -41,6 +41,11 @@ namespace wServer.networking.handlers
             if (player?.Owner == null)
                 return;
 
+            var playersitem = player.Manager.Resources.GameData.Items[player.Inventory[slotB].ObjectType];
+
+            if (playersitem.LevelRequirement > player.Level)
+                return;
+
             if (!ValidateEntities(player, a, b) || player.tradeTarget != null)
             {
                 a.ForceUpdate(slotA);
@@ -128,7 +133,7 @@ namespace wServer.networking.handlers
                 if (!Inventory.Revert(conATrans, conBTrans))
                     Log.Warn($"Failed to revert changes. {player.Name} has an extra {itemA?.ObjectId} or {itemB?.ObjectId}");
             }
-
+            
             a.ForceUpdate(slotA);
             b.ForceUpdate(slotB);
             player.Client.SendPacket(new InvResult() { Result = 1 });

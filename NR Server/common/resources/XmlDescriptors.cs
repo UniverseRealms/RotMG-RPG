@@ -510,6 +510,7 @@ namespace common.resources
         public int Doses { get; private set; }
         public int FeedPower { get; private set; }
         public int Rarity { get; private set; }
+        public int LevelRequirement { get; private set; }
 
         public KeyValuePair<int, int>[] StatsBoost { get; private set; }
         public ActivateEffect[] ActivateEffects { get; private set; }
@@ -559,6 +560,9 @@ namespace common.resources
                 RateOfFire = 1;
 
             Usable = elem.Element("Usable") != null;
+
+            if ((n = elem.Element("LevelReq")) != null)
+                LevelRequirement = Utils.FromString(n.Value);
 
             if ((n = elem.Element("BagType")) != null)
                 BagType = Utils.FromString(n.Value);

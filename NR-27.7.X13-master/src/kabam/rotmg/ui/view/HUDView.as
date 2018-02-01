@@ -16,7 +16,9 @@ import flash.display.GraphicsSolidFill;
 import flash.display.IGraphicsData;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.events.TimerEvent;
 import flash.geom.Point;
+import flash.utils.Timer;
 
 import kabam.rotmg.game.view.components.TabStripView;
 import kabam.rotmg.messaging.impl.incoming.TradeAccepted;
@@ -93,6 +95,7 @@ public class HUDView extends Sprite implements UnFocusAble {
         this.rewardNotification = new RewardNotification();
         this.rewardNotification.x -= this.rewardNotification.width;
         this.rewardNotification.y = this.characterDetails.y;
+        this.rewardNotification.visible = false;
         this.rewardNotification.alpha = 0;
 
         addChild(this.rewardNotification);
@@ -100,11 +103,20 @@ public class HUDView extends Sprite implements UnFocusAble {
 
     public function SetReward(_arg1:uint):void {
         this.rewardNotification.setItemBitmap(_arg1);
+        this.rewardNotification.visible = true;
         if (!this.stage.contains(this.rewardNotification)){
             addChild(this.rewardNotification);
+            this.rewardNotification.visible = true;
             this.rewardNotification.alpha = 0;
         }
         new GTween(this.rewardNotification, 1, {"alpha": 1});
+        var _local1:Timer = new Timer(500, 0);
+        _local1.addEventListener(TimerEvent.TIMER_COMPLETE, onTimer);
+    }
+
+    private function onTimer(_arg1:TimerEvent):void {
+        this.rewardNotification.visible = false;
+        this.rewardNotification.alpha = 0;
     }
 
     private function createInteractPanel(_arg1:GameSprite):void {
