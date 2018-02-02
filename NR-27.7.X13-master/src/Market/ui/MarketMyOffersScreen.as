@@ -13,7 +13,6 @@ import kabam.rotmg.text.view.TextFieldDisplayConcrete;
 import kabam.rotmg.text.view.stringBuilder.StaticStringBuilder;
 import kabam.rotmg.util.components.VerticalScrollbar;
 
-import mx.controls.scrollClasses.ScrollBar;
 
    import flash.display.Sprite;
    import org.osflash.signals.natives.NativeMappedSignal
@@ -50,7 +49,7 @@ import mx.controls.scrollClasses.ScrollBar;
          this.status = new TextFieldDisplayConcrete().setSize(46).setBold(true).setStringBuilder(new StaticStringBuilder("Loading...")).setAutoSize(TextFieldAutoSize.CENTER).setTextWidth(600).setVerticalAlign(TextFieldDisplayConcrete.MIDDLE).setPosition(0,250).setColor(16777215);
          addChild(this.status);
          StaticInjectorContext.getInjector().getInstance(MarketItemsResultSignal).add(this.onOffersGet);
-          gsc_.requestMarketOffers();
+          //gsc_.requestMarketOffers();
       }
       
       private function onOffersGet(param1:Vector.<PlayerShopItem>) : void
@@ -94,7 +93,7 @@ import mx.controls.scrollClasses.ScrollBar;
       private function onOfferRemove(param1:PlayerShopItem) : void
       {
          StaticInjectorContext.getInjector().getInstance(MarketResultSignal).add(this.onResult);
-         gsc_.removeMarketOffer(param1);
+         //gsc_.removeMarketOffer(param1);
       }
       
       private function onResult(param1:String, param2:Boolean) : void

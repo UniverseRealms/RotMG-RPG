@@ -2,20 +2,19 @@ package Market
 {
 import com.company.assembleegameclient.ui.DeprecatedTextButton;
 import com.company.assembleegameclient.ui.panels.Panel
-   import com.company.ui.BaseSimpleText;
-
-import com.company.ui.BaseSimpleText;
 
 import flash.display.Bitmap;
+import flash.events.MouseEvent;
 
 import kabam.rotmg.pets.util.PetsViewAssetFactory;
 import kabam.rotmg.text.view.TextFieldDisplayConcrete;
 import kabam.rotmg.text.view.stringBuilder.LineBuilder;
-import kabam.rotmg.text.view.stringBuilder.StaticStringBuilder;
-import mx.controls.Button
-   import com.company.assembleegameclient.game.GameSprite;
-   
-   public class MarketNPCPanel extends Panel
+
+import com.company.assembleegameclient.game.GameSprite;
+
+import org.osflash.signals.Signal;
+
+public class MarketNPCPanel extends Panel
    {
 
 
@@ -35,6 +34,8 @@ import mx.controls.Button
 
       private var type:uint;
 
+       public var onManageSignal:Signal = new Signal();
+
       public function MarketNPCPanel(param1:GameSprite, param2:uint)
       {
          this.type = param2;
@@ -43,9 +44,9 @@ import mx.controls.Button
 
       private function _0Y_I_() : void
       {
-         this._0R_w = new DeprecatedTextButton(16,this._sell,0,true);
-         this._0R_w.textChanged.addOnce(this._17U_);
-         addChild(this._0R_w);
+          this._0R_w = new DeprecatedTextButton(16,this._sell,0,true);
+          this._0R_w.textChanged.addOnce(this._17U_);
+          addChild(this._0R_w);
       }
 
       private function _A_v() : void
@@ -61,9 +62,14 @@ import mx.controls.Button
       private function _1Q_D_() : void
       {
          this._0J___ = new DeprecatedTextButton(16,this._manage,0,true);
+          this._0J___.addEventListener(MouseEvent.CLICK, onManage);
          this._0J___.textChanged.addOnce(this._17U_);
          addChild(this._0J___);
       }
+
+       private function onManage(_arg1:MouseEvent):void {
+           this.onManageSignal.dispatch();
+       }
 
       public function init() : void
       {

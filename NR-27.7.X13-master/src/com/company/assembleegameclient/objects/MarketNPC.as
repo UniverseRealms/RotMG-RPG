@@ -1,10 +1,8 @@
 package com.company.assembleegameclient.objects
 {
-import com.company.assembleegameclient.game.GameSprite;
 import com.company.assembleegameclient.ui.panels.Panel;
 import com.company.assembleegameclient.ui.tooltip.TextToolTip;
 import com.company.assembleegameclient.ui.tooltip.ToolTip;
-import kabam.rotmg.pets.view.components.PetInteractionPanel;
 import kabam.rotmg.text.model.TextKey;
 
 import com.company.assembleegameclient.game.GameSprite;

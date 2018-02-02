@@ -1,4 +1,7 @@
 ﻿package kabam.rotmg.ui {
+import Market.MarketNPCPanel;
+import Market.MarketNPCPanelMediator;
+
 import com.company.assembleegameclient.account.ui.ChooseNameFrame;
 import com.company.assembleegameclient.account.ui.ChooseNameFrameMediator;
 import com.company.assembleegameclient.account.ui.CreateGuildFrame;

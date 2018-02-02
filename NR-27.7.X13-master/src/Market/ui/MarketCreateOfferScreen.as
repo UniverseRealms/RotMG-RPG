@@ -14,8 +14,7 @@ import com.company.assembleegameclient.ui.Scrollbar
 import kabam.rotmg.core.StaticInjectorContext;
 import kabam.rotmg.messaging.impl.GameServerConnection;
 
-import org.osflash.signals.natives.NativeMappedSignal
-import mx.controls.Button;
+import org.osflash.signals.natives.NativeMappedSignal;
 
 public class MarketCreateOfferScreen extends Sprite
    {
@@ -101,7 +100,7 @@ public class MarketCreateOfferScreen extends Sprite
             return;
          }
           StaticInjectorContext.getInjector().getInstance(MarketResultSignal).add(this.onResult);
-         gsc_.addOffer(offers);
+         //gsc_.addOffer(offers);
          this.saveOffersButton.setEnabled(false);
       }
       
@@ -177,8 +176,6 @@ import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.events.Event;
 import Market.MarketOffer;
-
-import mx.controls.TextInput;
 
 import org.osflash.signals.Signal;
 

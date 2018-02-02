@@ -57,41 +57,51 @@ public class InfoDialog extends Sprite
       }];
        
       
-      private const _1g3:SignalWaiter = _1ze();
+      private const _1g3:SignalWaiter = getSignal();
       
       private const container:DisplayObjectContainer = makeContainer();
+
+      private const background:PopupWindowBackground = getBackGround();
       
-      private const background:PopupWindowBackground = _1L_c();
+      private const query:InfoDialogQuery = getInfoDialog();
       
-      private const query:InfoDialogQuery = _qy();
+      private const title:TextFieldDisplayConcrete = getTextTitle();
       
-      private const title:TextFieldDisplayConcrete = _1lN_();
-      
-      private const _16P_:CaretakerQueryDialogCategoryList = _0i9();
+      private const _16P_:CaretakerQueryDialogCategoryList = getCaretaker();
       
       private const BackBtn:DeprecatedTextButton = CreateBackButton();
 
       private const CloseBtn:DeprecatedTextButton = CreateCloseButton();
-      
-      public const closed:Signal = new NativeMappedSignal(CloseBtn,MouseEvent.CLICK);
       
       public function InfoDialog()
       {
          super();
       }
       
-      private function _1ze() : SignalWaiter
+      private function getSignal() : SignalWaiter
       {
          var _loc1_:SignalWaiter = new SignalWaiter();
-         _loc1_.complete.addOnce(this._R_k);
+         _loc1_.complete.addOnce(this.buttonLayout);
          return _loc1_;
       }
       
-      private function _R_k() : void
+      private function buttonLayout() : void
       {
          var _loc1_:ButtonLayoutHelper = new ButtonLayoutHelper();
          _loc1_.layout(WIDTH,this.CloseBtn);
+          this.CloseBtn.addEventListener(MouseEvent.CLICK, onClose);
          _loc1_.layout(WIDTH,this.BackBtn);
+          this.BackBtn.addEventListener(MouseEvent.CLICK, onBack);
+      }
+
+      private function onBack(_arg1:MouseEvent):void {
+          //this.query.visible = false;
+          this._16P_.visible = true;
+          this.CloseBtn.visible = true;
+      }
+
+      private function onClose(_arg1:MouseEvent):void {
+          this.parent.removeChild(this);
       }
       
       private function makeContainer() : DisplayObjectContainer
@@ -103,8 +113,8 @@ public class InfoDialog extends Sprite
          addChild(_loc1_);
          return _loc1_;
       }
-      
-      private function _1L_c() : PopupWindowBackground
+
+      private function getBackGround() : PopupWindowBackground
       {
          var _loc1_:PopupWindowBackground = new PopupWindowBackground();
          _loc1_.draw(WIDTH,HEIGHT);
@@ -113,7 +123,7 @@ public class InfoDialog extends Sprite
          return _loc1_;
       }
       
-      private function _qy() : InfoDialogQuery
+      private function getInfoDialog() : InfoDialogQuery
       {
          var _loc1_:InfoDialogQuery = null;
          _loc1_ = new InfoDialogQuery();
@@ -123,7 +133,7 @@ public class InfoDialog extends Sprite
          return _loc1_;
       }
       
-      private function _1lN_() : TextFieldDisplayConcrete
+      private function getTextTitle() : TextFieldDisplayConcrete
       {
          var _loc1_:TextFieldDisplayConcrete = null;
         _loc1_ = PetsViewAssetFactory.returnTextfield(0xFFFFFF, 18, true);
@@ -164,27 +174,28 @@ public class InfoDialog extends Sprite
          return _loc1_;
       }
       
-      private function _0i9() : CaretakerQueryDialogCategoryList {
+      private function getCaretaker() : CaretakerQueryDialogCategoryList {
          var _local1:CaretakerQueryDialogCategoryList = new CaretakerQueryDialogCategoryList(Questions);
          _local1.x = 20;
          _local1.y = 110;
-         _local1.selected.add(this._X_Y_);
+         _local1.selected.add(this.setQuery);
          this.container.addChild(_local1);
          this._1g3.push(_local1.ready);
          return (_local1);
       }
       
-      private function _X_Y_(param1:String) : void
+      private function setQuery(param1:String) : void
       {
-         this._16P_.visible = false;
-         this.CloseBtn.visible = false;
-         this.BackBtn.visible = true;
-         this.query._070(param1);
+          this._16P_.visible = false;
+          this.CloseBtn.visible = false;
+          this.BackBtn.visible = true;
+          this.query.visible = true;
+          this.query._070(param1);
       }
       
       public function _0K_L_(param1:BitmapData) : void
       {
-         this.query._0K_L_(param1);
+          this.query._0K_L_(param1);
       }
    }
 }

@@ -24,7 +24,6 @@ package Market
       
       override public function initialize() : void
       {
-         this.view.closed.addOnce(this._qN_);
          this.view._0K_L_(this._05V_());
       }
       
@@ -32,11 +31,6 @@ package Market
       {
          var _loc1_:int = 403;
          return ObjectLibrary.getRedrawnTextureFromType(_loc1_,80,true);
-      }
-      
-      override public function destroy() : void
-      {
-         this.view.closed.removeAll();
       }
       
       private function _qN_() : void

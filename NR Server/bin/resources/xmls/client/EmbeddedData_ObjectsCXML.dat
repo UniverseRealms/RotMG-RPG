@@ -734,4 +734,13 @@
       <Z>0.4</Z>
       <Flying/>
    </Object>
+   <Object type="0x54b9" id="MarketNPC">
+              <Class>MarketNPC</Class>
+              <ShadowSize>10</ShadowSize>
+              <Size>20</Size>
+              <Texture>
+                   <File>lofiObjBig</File>
+                     <Index>0x184</Index>
+              </Texture>
+          </Object>
 </Objects>

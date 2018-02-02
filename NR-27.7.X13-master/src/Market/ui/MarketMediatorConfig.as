@@ -1,6 +1,9 @@
 package Market.ui
 {
-   import robotlegs.bender.framework.api.IConfig
+import Market.MarketNPCPanel;
+import Market.MarketNPCPanelMediator;
+
+import robotlegs.bender.framework.api.IConfig
    import org.swiftsuspenders.Injector;
    import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
    import Market.MarketItemsResultSignal;
@@ -26,6 +29,7 @@ package Market.ui
          this.injector.map(MarketItemsResultSignal).asSingleton();
          this.injector.map(MarketResultSignal).asSingleton();
          this.injector.map(MarketActionSignal).asSingleton();
+         this.mediatorMap.map(MarketNPCPanel).toMediator(MarketNPCPanelMediator);
          this.mediatorMap.map(MarketOverview).toMediator(MarketMediator);
       }
    }

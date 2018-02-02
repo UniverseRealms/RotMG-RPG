@@ -15,10 +15,10 @@ package Market
       
       [Inject]
       public var _06Z_:OpenDialogSignal;
-      
+
       [Inject]
       public var dialogNoDim:OpenDialogSignal;
-      
+
       [Inject]
       public var account:Account;
       
@@ -29,10 +29,11 @@ package Market
       
       override public function initialize() : void
       {
+          this.view.onManageSignal.add(_0my);
          this.view.init();
          this._Z_7();
       }
-      
+
       private function _Z_7() : void
       {
          if(this.view._0J___)

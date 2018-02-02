@@ -41,10 +41,10 @@ namespace wServer.networking.handlers
             if (player?.Owner == null)
                 return;
 
-            var playersitem = player.Manager.Resources.GameData.Items[player.Inventory[slotB].ObjectType];
+            //var playersitem = player.Manager.Resources.GameData.Items[player.Inventory[slotB].ObjectType];
 
-            if (playersitem.LevelRequirement > player.Level)
-                return;
+            //if (playersitem.LevelRequirement > player.Level)
+            //    return;
 
             if (!ValidateEntities(player, a, b) || player.tradeTarget != null)
             {
