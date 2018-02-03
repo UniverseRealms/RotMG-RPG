@@ -1,22 +1,19 @@
 package Market.ui
 {
-/*   import _4Z_._08i;
 
-import com.company.assembleegameclient.account.ui.Frame;
-import com.company.assembleegameclient.ui.panels.itemgrids.itemtiles.ItemTile;
+
+import flash.display.Sprite;
 
 import flash.events.Event;
    import com.company.assembleegameclient.objects.ObjectLibrary;
    import flash.events.MouseEvent;
-   import com.company.assembleegameclient.util._P_K_;
    import Market.ObjectSlot;
 
-import starling.display.Sprite;
+import kabam.rotmg.pets.view.components.slot.FeedFuseSlot;
 
-public class MarketInventorySlot extends ItemTile
+public class MarketInventorySlot extends FeedFuseSlot
    {
 
-       protected var itemSprite:Sprite;
 
        private var unblockItemUpdates:Function;
       
@@ -26,12 +23,11 @@ public class MarketInventorySlot extends ItemTile
          itemSprite.addEventListener(MouseEvent.MOUSE_DOWN,this.onMouseDown);
          this.updateTitle();
       }
-      
-      override protected function onRemovedFromStage(param1:Event) : void
-      {
-         super.onRemovedFromStage(param1);
-         this.unblockSlot();
-      }
+
+   override protected function onRemovedFromStage(_arg1:Event):void {
+      super.onRemovedFromStage(_arg1);
+      this.unblockSlot();
+   }
       
       public function setItem(param1:int, param2:int, param3:int, param4:Function) : void
       {
@@ -41,8 +37,8 @@ public class MarketInventorySlot extends ItemTile
             this.itemId = param1;
             this.slotId = param2;
             this.objectId = param3;
-            itemSlotSprite.bitmapData = ObjectLibrary.getRedrawnTextureFromType(param1,80,true);
-            _0du();
+            itemBitmap.bitmapData = ObjectLibrary.getRedrawnTextureFromType(param1,80,true);
+            alignBitmapInBox();
             this.updateTitle();
             this.unblockItemUpdates = param4;
          }
@@ -57,12 +53,12 @@ public class MarketInventorySlot extends ItemTile
             setTitle("Ready to sell",{});
             _loc1_ = ObjectLibrary.parseFromXML[itemId];
             _loc2_ = !!_loc1_.hasOwnProperty("DisplayId")?_loc1_.DisplayId:_loc1_.@id;
-            setDescription(_loc2_,{});
+            setSubtitle(_loc2_,{});
          }
          else
          {
             setTitle("",{});
-            setDescription("Drag an item here if you wish to sell it",{});
+            setSubtitle("Drag an item here if you wish to sell it",{});
          }
       }
       
@@ -70,7 +66,7 @@ public class MarketInventorySlot extends ItemTile
       {
          this.unblockSlot();
          itemId = -1;
-         itemSlotSprite.bitmapData = null;
+         itemBitmap.bitmapData = null;
          slotId = -1;
          objectId = -1;
          this.updateTitle();
@@ -78,8 +74,8 @@ public class MarketInventorySlot extends ItemTile
       
       private function alignImage(param1:int, param2:int) : void
       {
-         itemSlotSprite.x = -itemSlotSprite.width / 2;
-         itemSlotSprite.y = -itemSlotSprite.height / 2;
+         itemBitmap.x = -itemBitmap.width / 2;
+         itemBitmap.y = -itemBitmap.height / 2;
          itemSprite.x = param1;
          itemSprite.y = param2;
       }
@@ -98,17 +94,17 @@ public class MarketInventorySlot extends ItemTile
       
       private function onMouseUp(param1:MouseEvent) : void
       {
-         itemSprite.stopDrag();
+          itemSprite.stopDrag();
          itemSprite.removeEventListener(MouseEvent.MOUSE_UP,this.onMouseUp);
          stage.removeChild(itemSprite);
          addChild(itemSprite);
-         _0du();
-         var _loc2_:* = _P_K_._0Z_w(itemSprite.dropTarget,MarketInventorySlot);
+        alignBitmapInBox();
+         var _loc2_:* = (itemSprite.dropTarget, MarketInventorySlot);
          if(!(_loc2_ is MarketInventorySlot))
          {
             this.unblockSlot();
             itemId = -1;
-            itemSlotSprite.bitmapData = null;
+            itemBitmap.bitmapData = null;
             this.updateTitle();
          }
       }
@@ -118,7 +114,7 @@ public class MarketInventorySlot extends ItemTile
          this.unblockItemUpdates && this.unblockItemUpdates();
          this.unblockItemUpdates = null;
       }
-      
+
       public function makeObjectSlot() : ObjectSlot
       {
          var _loc1_:ObjectSlot = new ObjectSlot();
@@ -127,5 +123,5 @@ public class MarketInventorySlot extends ItemTile
          _loc1_.slotId = slotId;
          return _loc1_;
       }
-   } */
+   }
 }

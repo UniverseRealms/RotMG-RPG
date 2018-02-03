@@ -25,17 +25,17 @@ import kabam.rotmg.util.graphics.ButtonLayoutHelper;
 
 public class InfoDialog extends Sprite
    {
-      
+
       public static const WIDTH:int = 274;
-      
+
       public static const HEIGHT:int = 428;
-      
+
       public static const TITLE:String = "Market Info";
-      
+
       public static const CLOSE:String = "Close";
-      
+
       public static const BACK:String = "Back";
-      
+
       public static const Questions:Array = [{
          "category":"marketInfo.about",
          "info":"marketInfo.about.desc"
@@ -55,36 +55,36 @@ public class InfoDialog extends Sprite
          "category":"marketInfo.gimmeBack",
          "info":"marketInfo.gimmeBack.desc"
       }];
-       
-      
+
+
       private const _1g3:SignalWaiter = getSignal();
-      
+
       private const container:DisplayObjectContainer = makeContainer();
 
       private const background:PopupWindowBackground = getBackGround();
-      
+
       private const query:InfoDialogQuery = getInfoDialog();
-      
+
       private const title:TextFieldDisplayConcrete = getTextTitle();
-      
+
       private const _16P_:CaretakerQueryDialogCategoryList = getCaretaker();
-      
+
       private const BackBtn:DeprecatedTextButton = CreateBackButton();
 
       private const CloseBtn:DeprecatedTextButton = CreateCloseButton();
-      
+
       public function InfoDialog()
       {
          super();
       }
-      
+
       private function getSignal() : SignalWaiter
       {
          var _loc1_:SignalWaiter = new SignalWaiter();
          _loc1_.complete.addOnce(this.buttonLayout);
          return _loc1_;
       }
-      
+
       private function buttonLayout() : void
       {
          var _loc1_:ButtonLayoutHelper = new ButtonLayoutHelper();
@@ -95,7 +95,7 @@ public class InfoDialog extends Sprite
       }
 
       private function onBack(_arg1:MouseEvent):void {
-          //this.query.visible = false;
+          this.query.visible = false;
           this._16P_.visible = true;
           this.CloseBtn.visible = true;
       }
@@ -103,7 +103,7 @@ public class InfoDialog extends Sprite
       private function onClose(_arg1:MouseEvent):void {
           this.parent.removeChild(this);
       }
-      
+
       private function makeContainer() : DisplayObjectContainer
       {
          var _loc1_:Sprite = null;
@@ -122,7 +122,7 @@ public class InfoDialog extends Sprite
          this.container.addChild(_loc1_);
          return _loc1_;
       }
-      
+
       private function getInfoDialog() : InfoDialogQuery
       {
          var _loc1_:InfoDialogQuery = null;
@@ -132,7 +132,7 @@ public class InfoDialog extends Sprite
          this.container.addChild(_loc1_);
          return _loc1_;
       }
-      
+
       private function getTextTitle() : TextFieldDisplayConcrete
       {
          var _loc1_:TextFieldDisplayConcrete = null;
@@ -144,7 +144,7 @@ public class InfoDialog extends Sprite
          this.container.addChild(_loc1_);
          return _loc1_;
       }
-      
+
       private function CreateBackButton() : DeprecatedTextButton
       {
          var _loc1_:DeprecatedTextButton = new DeprecatedTextButton(16, BACK, 80);
@@ -155,7 +155,7 @@ public class InfoDialog extends Sprite
          this._1g3.push(_loc1_.textChanged);
          return _loc1_;
       }
-      
+
       private function BackEvent(param1:MouseEvent) : void
       {
          this.query._14E_();
@@ -163,7 +163,7 @@ public class InfoDialog extends Sprite
          this.CloseBtn.visible = true;
          this.BackBtn.visible = false;
       }
-      
+
       private function CreateCloseButton() : DeprecatedTextButton
       {
          var _loc1_:DeprecatedTextButton = null;
@@ -173,7 +173,7 @@ public class InfoDialog extends Sprite
          this._1g3.push(_loc1_.textChanged);
          return _loc1_;
       }
-      
+
       private function getCaretaker() : CaretakerQueryDialogCategoryList {
          var _local1:CaretakerQueryDialogCategoryList = new CaretakerQueryDialogCategoryList(Questions);
          _local1.x = 20;
@@ -183,7 +183,7 @@ public class InfoDialog extends Sprite
          this._1g3.push(_local1.ready);
          return (_local1);
       }
-      
+
       private function setQuery(param1:String) : void
       {
           this._16P_.visible = false;
@@ -192,7 +192,7 @@ public class InfoDialog extends Sprite
           this.query.visible = true;
           this.query._070(param1);
       }
-      
+
       public function _0K_L_(param1:BitmapData) : void
       {
           this.query._0K_L_(param1);
