@@ -100,7 +100,7 @@ public class MarketCreateOfferScreen extends Sprite
             return;
          }
           StaticInjectorContext.getInjector().getInstance(MarketResultSignal).add(this.onResult);
-         //gsc_.addOffer(offers);
+         gsc_.addOffer(offers);
          this.saveOffersButton.setEnabled(false);
       }
       
@@ -168,6 +168,8 @@ public class MarketCreateOfferScreen extends Sprite
    }
 }
 
+import Market.ui.MarketInventorySlot;
+
 import com.company.assembleegameclient.account.ui.TextInputField;
 import com.company.assembleegameclient.ui.DeprecatedTextButton;
 import com.company.assembleegameclient.ui.dialogs.Dialog;
@@ -193,7 +195,7 @@ class OfferEntry extends Sprite
    
    private var removeButton:DeprecatedTextButton;
    
-  // private var sellSlot:MarketInventorySlot;
+   private var sellSlot:MarketInventorySlot;
    
    function OfferEntry()
    {
@@ -206,12 +208,12 @@ class OfferEntry extends Sprite
       graphics.lineStyle(1,16777215,1);
       graphics.drawRect(0,0,WIDTH,HEIGHT);
       graphics.lineStyle();
-   //   this.sellSlot = new MarketInventorySlot();
-     // this.sellSlot.x = 5;
-    //  this.sellSlot.y = 10;
-   //   addChild(this.sellSlot);
+      this.sellSlot = new MarketInventorySlot();
+      this.sellSlot.x = 5;
+      this.sellSlot.y = 10;
+      addChild(this.sellSlot);
       this.priceInput = new TextInputField("Offer Price",false);
-    //  this.priceInput.x = 55 + this.sellSlot.width;
+      this.priceInput.x = 55 + this.sellSlot.width;
       this.priceInput.y = 15;
       this.priceInput.inputText_.restrict = "0-9";
       addChild(this.priceInput);
@@ -260,7 +262,7 @@ class OfferEntry extends Sprite
    public function makeOffer() : MarketOffer
    {
       var _loc1_:MarketOffer = new MarketOffer();
-     // _loc1_.objectSlot = this.sellSlot.makeObjectSlot();
+      _loc1_.objectSlot = this.sellSlot.makeObjectSlot();
       _loc1_.price = int(this.priceInput.text());
       return _loc1_;
    }
