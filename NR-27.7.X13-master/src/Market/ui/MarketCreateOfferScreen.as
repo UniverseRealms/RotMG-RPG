@@ -100,7 +100,7 @@ public class MarketCreateOfferScreen extends Sprite
             return;
          }
           StaticInjectorContext.getInjector().getInstance(MarketResultSignal).add(this.onResult);
-         gsc_.addOffer(offers);
+         //gsc_.addOffer(offers);
          this.saveOffersButton.setEnabled(false);
       }
       

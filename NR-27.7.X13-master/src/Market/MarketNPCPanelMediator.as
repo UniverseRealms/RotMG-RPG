@@ -1,6 +1,8 @@
 package Market
 {
-   import robotlegs.bender.bundles.mvcs.Mediator
+import kabam.rotmg.dialogs.control.OpenDialogNoModalSignal;
+
+import robotlegs.bender.bundles.mvcs.Mediator
    import kabam.rotmg.dialogs.control.OpenDialogSignal
    import kabam.rotmg.account.core.Account
    import flash.events.MouseEvent;
@@ -17,7 +19,7 @@ package Market
       public var _06Z_:OpenDialogSignal;
 
       [Inject]
-      public var dialogNoDim:OpenDialogSignal;
+      public var dialogNoDim:OpenDialogNoModalSignal;
 
       [Inject]
       public var account:Account;
@@ -29,21 +31,20 @@ package Market
       
       override public function initialize() : void
       {
-          this.view.onManageSignal.add(_0my);
          this.view.init();
-         this._Z_7();
+         this.Events();
       }
 
-      private function _Z_7() : void
+      private function Events() : void
       {
          if(this.view._0J___)
          {
-            this.view._0J___.addEventListener(MouseEvent.CLICK,this._0my);
-            this.view._0R_w.addEventListener(MouseEvent.CLICK,this._ln);
+            this.view._0J___.addEventListener(MouseEvent.CLICK,this.OpenDialogNoDim);
+            this.view._0R_w.addEventListener(MouseEvent.CLICK,this.OpenDialog);
          }
          else
          {
-            this.view._0R_w.addEventListener(MouseEvent.CLICK,this._ln);
+            this.view._0R_w.addEventListener(MouseEvent.CLICK,this.OpenDialog);
          }
       }
       
@@ -52,12 +53,12 @@ package Market
          super.destroy();
       }
       
-      protected function _ln(param1:MouseEvent) : void
+      protected function OpenDialog(param1:MouseEvent) : void
       {
          this._06Z_.dispatch(new InfoDialog());
       }
       
-      protected function _0my(param1:MouseEvent) : void
+      protected function OpenDialogNoDim(param1:MouseEvent) : void
       {
          this.dialogNoDim.dispatch(new MarketOverview());
       }

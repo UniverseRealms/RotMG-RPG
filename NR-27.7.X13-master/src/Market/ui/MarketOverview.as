@@ -35,7 +35,7 @@ public class MarketOverview extends EmptyFrame
     private function makeCloseButton():void {
         this.closeButtonTxt = new TextFieldDisplayConcrete().setSize(16).setColor(0xFFFFFF).setBold(true);
         this.closeButtonTxt.setStringBuilder(new StaticStringBuilder("CLOSE"));
-        this.closeButtonTxt.setPosition(0, 40);
+        this.closeButtonTxt.setPosition(240, 60);
 
         this.closeButtonTxt.addEventListener(MouseEvent.CLICK, onClose);
 
@@ -78,7 +78,7 @@ public class MarketOverview extends EmptyFrame
         x = 0;
         y = 0;
         var _local1:Sprite = new Sprite();
-        _local1.graphics.beginFill(0,0.75);
+        _local1.graphics.beginFill(0,0.9);
         _local1.graphics.drawRect(0,0,600,600);
         _local1.graphics.endFill();
         _local1.graphics.beginFill(16777215,1);

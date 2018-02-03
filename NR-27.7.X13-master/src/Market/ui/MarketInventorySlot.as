@@ -1,33 +1,30 @@
 package Market.ui
 {
-
-
-import flash.display.Sprite;
+import com.company.assembleegameclient.util.DisplayHierarchy;
 
 import flash.events.Event;
-   import com.company.assembleegameclient.objects.ObjectLibrary;
-   import flash.events.MouseEvent;
-   import Market.ObjectSlot;
+import com.company.assembleegameclient.objects.ObjectLibrary;
+import flash.events.MouseEvent;
+import Market.ObjectSlot;
 
 import kabam.rotmg.pets.view.components.slot.FeedFuseSlot;
 
 public class MarketInventorySlot extends FeedFuseSlot
    {
 
-
        private var unblockItemUpdates:Function;
       
-      public function MarketInventorySlot()
-      {
+       public function MarketInventorySlot()
+       {
          super();
          itemSprite.addEventListener(MouseEvent.MOUSE_DOWN,this.onMouseDown);
          this.updateTitle();
-      }
+       }
 
-   override protected function onRemovedFromStage(_arg1:Event):void {
-      super.onRemovedFromStage(_arg1);
-      this.unblockSlot();
-   }
+       override protected function onRemovedFromStage(_arg1:Event):void {
+           super.onRemovedFromStage(_arg1);
+           this.unblockSlot();
+       }
       
       public function setItem(param1:int, param2:int, param3:int, param4:Function) : void
       {
@@ -95,18 +92,18 @@ public class MarketInventorySlot extends FeedFuseSlot
       private function onMouseUp(param1:MouseEvent) : void
       {
           itemSprite.stopDrag();
-         itemSprite.removeEventListener(MouseEvent.MOUSE_UP,this.onMouseUp);
-         stage.removeChild(itemSprite);
-         addChild(itemSprite);
-        alignBitmapInBox();
-         var _loc2_:* = (itemSprite.dropTarget, MarketInventorySlot);
-         if(!(_loc2_ is MarketInventorySlot))
-         {
+          itemSprite.removeEventListener(MouseEvent.MOUSE_UP,this.onMouseUp);
+          stage.removeChild(itemSprite);
+          addChild(itemSprite);
+          alignBitmapInBox();
+          var _loc2_:* = (itemSprite.dropTarget, MarketInventorySlot);
+          if(!(_loc2_ is MarketInventorySlot))
+          {
             this.unblockSlot();
             itemId = -1;
             itemBitmap.bitmapData = null;
             this.updateTitle();
-         }
+          }
       }
       
       private function unblockSlot() : void

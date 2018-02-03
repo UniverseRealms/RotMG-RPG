@@ -34,8 +34,6 @@ public class MarketNPCPanel extends Panel
 
       private var type:uint;
 
-       public var onManageSignal:Signal = new Signal();
-
       public function MarketNPCPanel(param1:GameSprite, param2:uint)
       {
          this.type = param2;
@@ -62,14 +60,9 @@ public class MarketNPCPanel extends Panel
       private function _1Q_D_() : void
       {
          this._0J___ = new DeprecatedTextButton(16,this._manage,0,true);
-          this._0J___.addEventListener(MouseEvent.CLICK, onManage);
          this._0J___.textChanged.addOnce(this._17U_);
          addChild(this._0J___);
       }
-
-       private function onManage(_arg1:MouseEvent):void {
-           this.onManageSignal.dispatch();
-       }
 
       public function init() : void
       {
