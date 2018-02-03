@@ -8,7 +8,7 @@
   
 -Stale(SwyftLoe) 
   
--Lynx(DazedLynx)(Kicked)
+-Lynx(DazedLynx)
 
 -Sebafra(Sebafra12)(Kicked)
 
