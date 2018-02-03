@@ -185,6 +185,18 @@ namespace wServer.realm.entities
             set { _rank.SetValue(value); }
         }
 
+        #region rankidentifier
+        public Dictionary<string, int> RankIdentifier = new Dictionary<string, int>()
+        {
+            { "Owner", 100 },
+            { "Developer", 80 },
+            { "Staff", 60 },
+            { "PremiumPlus", 40 },
+            { "Premium", 20 },
+            { "Default", 0 }
+        };
+        #endregion
+
         private readonly SV<int> _admin;
         public int Admin
         {

@@ -11,13 +11,14 @@ namespace wServer.realm.commands
 
         public string CommandName { get; private set; }
         public string Alias { get; private set; }
-        public int PermissionLevel { get; private set; }
+        public string Rank { get; private set; }
         public bool ListCommand { get; private set; }
 
-        protected Command(string name, int permLevel = 0, string alias = null, bool listCommand = true)
+        protected Command(string name, string rankname = "Default", string alias = null, bool listCommand = true)
         {
             CommandName = name;
-            PermissionLevel = permLevel;
+            
+            Rank = rankname;
             ListCommand = listCommand;
             Alias = alias;
         }
@@ -31,7 +32,8 @@ namespace wServer.realm.commands
 
         public bool HasPermission(Player player)
         {
-            return GetPermissionLevel(player) >= PermissionLevel;
+            int permlevel = player.RankIdentifier[Rank];
+            return GetPermissionLevel(player) >= permlevel;
         }
 
         public bool Execute(Player player, RealmTime time, string args, bool bypassPermission = false)

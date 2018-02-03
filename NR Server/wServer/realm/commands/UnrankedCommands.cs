@@ -1178,7 +1178,7 @@ namespace wServer.realm.commands
 
     class RemoveAccountOverrideCommand : Command
     {
-        public RemoveAccountOverrideCommand() : base("removeOverride", 0, listCommand: false) { }
+        public RemoveAccountOverrideCommand() : base("removeOverride", listCommand: false) { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {

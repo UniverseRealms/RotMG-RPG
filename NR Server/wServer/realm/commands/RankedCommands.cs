@@ -41,7 +41,7 @@ namespace wServer.realm.commands
 
         private const int Delay = 3; // in seconds
 
-        public SpawnCommand() : base("spawn", permLevel: 90) { }
+        public SpawnCommand() : base("spawn", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -296,7 +296,7 @@ namespace wServer.realm.commands
 
     class ClearSpawnsCommand : Command
     {
-        public ClearSpawnsCommand() : base("clearspawn", permLevel: 90, alias: "cs") { }
+        public ClearSpawnsCommand() : base("clearspawn", rankname: "Developer", alias: "cs") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -327,7 +327,7 @@ namespace wServer.realm.commands
 
     class ClearGravesCommand : Command
     {
-        public ClearGravesCommand() : base("cleargraves", permLevel: 80, alias: "cgraves") { }
+        public ClearGravesCommand() : base("cleargraves", rankname: "Developer", alias: "cgraves") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -351,7 +351,7 @@ namespace wServer.realm.commands
 
     class ToggleEffCommand : Command
     {
-        public ToggleEffCommand() : base("eff", permLevel: 90) { }
+        public ToggleEffCommand() : base("eff", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -387,7 +387,7 @@ namespace wServer.realm.commands
 
     class GuildRankCommand : Command
     {
-        public GuildRankCommand() : base("grank", permLevel: 95) { }
+        public GuildRankCommand() : base("grank", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -464,7 +464,7 @@ namespace wServer.realm.commands
 
     class GimmeCommand : Command
     {
-        public GimmeCommand() : base("gimme", permLevel: 80, alias: "give") { }
+        public GimmeCommand() : base("gimme", rankname: "Developer", alias: "give") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -513,7 +513,7 @@ namespace wServer.realm.commands
 
     class TpPosCommand : Command
     {
-        public TpPosCommand() : base("tpPos", permLevel: 90, alias: "goto") { }
+        public TpPosCommand() : base("tpPos", rankname: "Staff", alias: "goto") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -540,7 +540,7 @@ namespace wServer.realm.commands
 
     class SetpieceCommand : Command
     {
-        public SetpieceCommand() : base("setpiece", permLevel: 90) { }
+        public SetpieceCommand() : base("setpiece", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string setPiece)
         {
@@ -602,7 +602,7 @@ namespace wServer.realm.commands
             }
         }
 
-        public DebugCommand() : base("debug", permLevel: 90, listCommand: false) { }
+        public DebugCommand() : base("debug", rankname: "Developer", listCommand: false) { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -614,7 +614,7 @@ namespace wServer.realm.commands
 
     class KillAllCommand : Command
     {
-        public KillAllCommand() : base("killAll", permLevel: 90, alias: "ka") { }
+        public KillAllCommand() : base("killAll", rankname: "Developer", alias: "ka") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -644,7 +644,7 @@ namespace wServer.realm.commands
 
     class KickCommand : Command
     {
-        public KickCommand() : base("kick", permLevel: 80) { }
+        public KickCommand() : base("kick", rankname: "Staff") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -668,7 +668,7 @@ namespace wServer.realm.commands
 
     class GetQuestCommand : Command
     {
-        public GetQuestCommand() : base("getQuest", permLevel: 90) { }
+        public GetQuestCommand() : base("getQuest", rankname: "Premium") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -684,7 +684,7 @@ namespace wServer.realm.commands
 
     class OryxSayCommand : Command
     {
-        public OryxSayCommand() : base("oryxSay", permLevel: 80, alias: "osay") { }
+        public OryxSayCommand() : base("oryxSay", rankname: "PermiumPlus", alias: "osay") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -695,7 +695,7 @@ namespace wServer.realm.commands
 
     class AnnounceCommand : Command
     {
-        public AnnounceCommand() : base("announce", permLevel: 80) { }
+        public AnnounceCommand() : base("announce", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -706,7 +706,7 @@ namespace wServer.realm.commands
 
     class SummonCommand : Command
     {
-        public SummonCommand() : base("summon", permLevel: 90) { }
+        public SummonCommand() : base("summon", rankname: "Staff") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -732,7 +732,7 @@ namespace wServer.realm.commands
 
     class SummonAllCommand : Command
     {
-        public SummonAllCommand() : base("summonall", permLevel: 90) { }
+        public SummonAllCommand() : base("summonall", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -753,7 +753,7 @@ namespace wServer.realm.commands
 
     class KillPlayerCommand : Command
     {
-        public KillPlayerCommand() : base("killPlayer", permLevel: 100) { }
+        public KillPlayerCommand() : base("killPlayer", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -774,7 +774,7 @@ namespace wServer.realm.commands
 
     class SizeCommand : Command
     {
-        public SizeCommand() : base("size", permLevel: 20) { }
+        public SizeCommand() : base("size", rankname: "Premium") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -790,6 +790,12 @@ namespace wServer.realm.commands
             if (size < min && size != 0 || size > max)
             {
                 player.SendError($"Invalid size. Size needs to be within the range: {min}-{max}. Use 0 to reset size to default.");
+                return false;
+            }
+
+            if ((player.Rank > 80) && (size > 120 || size < 80))
+            {
+                player.SendInfo($"Invalad Size for your rank. Can use 80-120.");
                 return false;
             }
             
@@ -813,7 +819,7 @@ namespace wServer.realm.commands
         // An external program is used to monitor the world server existance.
         // If !exist it automatically restarts it.
 
-        public RebootCommand() : base("reboot", permLevel: 80) { }
+        public RebootCommand() : base("reboot", rankname: "Developer") { }
         
         protected override bool Process(Player player, RealmTime time, string name)
         {
@@ -894,7 +900,7 @@ namespace wServer.realm.commands
 
     class ReSkinCommand : Command
     {
-        public ReSkinCommand() : base("reskin", permLevel: 70) { }
+        public ReSkinCommand() : base("reskin", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -936,7 +942,7 @@ namespace wServer.realm.commands
 
     class CurrencyCommand : Command //gold and fame command
     {
-        public CurrencyCommand() : base("currency", permLevel: 80, alias: "c") { }
+        public CurrencyCommand() : base("currency", rankname: "Developer", alias: "c") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -963,7 +969,7 @@ namespace wServer.realm.commands
 
     class MaxCommand : Command
     {
-        public MaxCommand() : base("max", permLevel: 80) { }
+        public MaxCommand() : base("max", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1008,7 +1014,7 @@ namespace wServer.realm.commands
 
     class WipeServer : Command
     {
-        public WipeServer() : base("wipeServer", permLevel: 100) { }
+        public WipeServer() : base("wipeServer", rankname: "Owner") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1029,7 +1035,7 @@ namespace wServer.realm.commands
 
     class TpQuestCommand : Command
     {
-        public TpQuestCommand() : base("tq", permLevel: 90) { }
+        public TpQuestCommand() : base("tq", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1048,7 +1054,7 @@ namespace wServer.realm.commands
 
     class RankCommand : Command
     {
-        public RankCommand() : base("rank", permLevel: 100) { }
+        public RankCommand() : base("rank", rankname: "Owner") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1111,7 +1117,7 @@ namespace wServer.realm.commands
 
         private readonly RealmManager _manager;
 
-        public MuteCommand(RealmManager manager) : base("mute", permLevel: 80)
+        public MuteCommand(RealmManager manager) : base("mute", rankname: "Staff")
         {
             _manager = manager;
             _manager.DbEvents.Expired += HandleUnMute;
@@ -1213,7 +1219,7 @@ namespace wServer.realm.commands
 
     class UnMuteCommand : Command
     {
-        public UnMuteCommand() : base("unmute", permLevel: 80) { }
+        public UnMuteCommand() : base("unmute", rankname: "Staff") { }
 
         protected override bool Process(Player player, RealmTime time, string name)
         {
@@ -1266,7 +1272,7 @@ namespace wServer.realm.commands
 
     class BanAccountCommand : Command
     {
-        public BanAccountCommand() : base("ban", permLevel: 80) { }
+        public BanAccountCommand() : base("ban", rankname: "Staff") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1344,7 +1350,7 @@ namespace wServer.realm.commands
     
     class BanIPCommand : Command
     {
-        public BanIPCommand() : base("banip", permLevel: 80, alias: "ipban") { }
+        public BanIPCommand() : base("banip", rankname: "Developer", alias: "ipban") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1419,7 +1425,7 @@ namespace wServer.realm.commands
 
     class UnBanAccountCommand : Command
     {
-        public UnBanAccountCommand() : base("unban", permLevel: 80) { }
+        public UnBanAccountCommand() : base("unban", rankname: "Staff") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1475,7 +1481,7 @@ namespace wServer.realm.commands
 
     class ClearInvCommand : Command
     {
-        public ClearInvCommand() : base("clearinv", permLevel: 80) { }
+        public ClearInvCommand() : base("clearinv", rankname: "Premium") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1488,7 +1494,7 @@ namespace wServer.realm.commands
 
     class MusicCommand : Command
     {
-        public MusicCommand() : base("music", permLevel: 70) { }
+        public MusicCommand() : base("music", rankname: "PremiumPlus") { }
 
         protected override bool Process(Player player, RealmTime time, string music)
         {
@@ -1537,7 +1543,7 @@ namespace wServer.realm.commands
 
     class CloseRealmCommand : Command
     {
-        public CloseRealmCommand() : base("closerealm", permLevel: 80) { }
+        public CloseRealmCommand() : base("closerealm", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1562,7 +1568,7 @@ namespace wServer.realm.commands
 
     class QuakeCommand : Command
     {
-        public QuakeCommand() : base("quake", permLevel: 80) { }
+        public QuakeCommand() : base("quake", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string worldName)
         {
@@ -1609,7 +1615,7 @@ namespace wServer.realm.commands
 
     class VisitCommand : Command
     {
-        public VisitCommand() : base("visit", permLevel: 80) { }
+        public VisitCommand() : base("visit", rankname: "Staff") { }
 
         protected override bool Process(Player player, RealmTime time, string name)
         {
@@ -1643,7 +1649,7 @@ namespace wServer.realm.commands
 
     class HideCommand : Command
     {
-        public HideCommand() : base("hide", permLevel: 80, alias: "h") { }
+        public HideCommand() : base("hide", rankname: "Staff", alias: "h") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1671,7 +1677,7 @@ namespace wServer.realm.commands
 
     class GlowCommand : Command
     {
-        public GlowCommand() : base("glow", permLevel: 70) { }
+        public GlowCommand() : base("glow", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string color)
         {
@@ -1693,7 +1699,7 @@ namespace wServer.realm.commands
 
     class LinkCommand : Command
     {
-        public LinkCommand() : base("link", permLevel: 50) { }
+        public LinkCommand() : base("link", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1719,7 +1725,7 @@ namespace wServer.realm.commands
 
     class UnLinkCommand : Command
     {
-        public UnLinkCommand() : base("unlink", permLevel: 50) { }
+        public UnLinkCommand() : base("unlink", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1744,7 +1750,7 @@ namespace wServer.realm.commands
 
     class GiftCommand : Command
     {
-        public GiftCommand() : base("gift", permLevel: 100) { }
+        public GiftCommand() : base("gift", rankname: "Owner") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1829,7 +1835,7 @@ namespace wServer.realm.commands
 
     class RemoveServerGold : Command
     {
-        public RemoveServerGold() : base("removeAllGold", permLevel: 100) { }
+        public RemoveServerGold() : base("removeAllGold", rankname: "Owner") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1885,7 +1891,7 @@ namespace wServer.realm.commands
 
     class OverrideAccountCommand : Command
     {
-        public OverrideAccountCommand() : base("override", permLevel: 100) { }
+        public OverrideAccountCommand() : base("override", rankname: "Owner") { }
 
         protected override bool Process(Player player, RealmTime time, string name)
         {
@@ -1913,7 +1919,7 @@ namespace wServer.realm.commands
 
     class StatCommand : Command
     {
-        public StatCommand() : base("stat", permLevel: 80, alias: "st") { }
+        public StatCommand() : base("stat", rankname: "Developer", alias: "st") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1932,7 +1938,7 @@ namespace wServer.realm.commands
 
     class DisplayStatCommand : Command
     {
-        public DisplayStatCommand() : base("displaystat", permLevel: 80, alias:"dstat") { }
+        public DisplayStatCommand() : base("displaystat", rankname: "Premium", alias:"dstat") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1943,7 +1949,7 @@ namespace wServer.realm.commands
 
     class LevelUpCommand : Command
     {
-        public LevelUpCommand() : base("lvlup", permLevel: 80, alias: "lup") { }
+        public LevelUpCommand() : base("lvlup", rankname: "Developer", alias: "lup") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1963,7 +1969,7 @@ namespace wServer.realm.commands
 
     class RenameCommand : Command
     {
-        public RenameCommand() : base("rename", permLevel: 100) { }
+        public RenameCommand() : base("rename", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -2033,7 +2039,7 @@ namespace wServer.realm.commands
 
     class UnnameCommand : Command
     {
-        public UnnameCommand() : base("unname", permLevel: 100) { }
+        public UnnameCommand() : base("unname", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -2088,7 +2094,7 @@ namespace wServer.realm.commands
 
     class WargCommand : Command
     {
-        public WargCommand() : base("warg", permLevel: 90) { }
+        public WargCommand() : base("warg", rankname: "Developer") { }
 
         protected override bool Process(Player player, RealmTime time, string name)
         {
@@ -2136,7 +2142,7 @@ namespace wServer.realm.commands
 
     class CompactLOHCommand : Command
     {
-        public CompactLOHCommand() : base("compactLOH", permLevel: 80, listCommand: false) { }
+        public CompactLOHCommand() : base("compactLOH", rankname: "Developer", listCommand: false) { }
 
         protected override bool Process(Player player, RealmTime time, string name)
         {
