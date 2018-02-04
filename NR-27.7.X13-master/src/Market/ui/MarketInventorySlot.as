@@ -7,13 +7,19 @@ import com.company.assembleegameclient.objects.ObjectLibrary;
 import flash.events.MouseEvent;
 import Market.ObjectSlot;
 
+import kabam.rotmg.constants.ItemConstants;
+
+import kabam.rotmg.pets.view.FeedPetView;
+import kabam.rotmg.pets.view.FusePetView;
+
 import kabam.rotmg.pets.view.components.slot.FeedFuseSlot;
+import kabam.rotmg.questrewards.components.ModalItemSlot;
 
 public class MarketInventorySlot extends FeedFuseSlot
    {
 
        private var unblockItemUpdates:Function;
-      
+
        public function MarketInventorySlot()
        {
          super();
@@ -26,7 +32,7 @@ public class MarketInventorySlot extends FeedFuseSlot
            this.unblockSlot();
        }
       
-      public function setItem(param1:int, param2:int, param3:int, param4:Function) : void
+      public function setItem(param1:int, param2:int, param3:int) : void
       {
          if(this.itemId != param1)
          {
@@ -37,7 +43,6 @@ public class MarketInventorySlot extends FeedFuseSlot
             itemBitmap.bitmapData = ObjectLibrary.getRedrawnTextureFromType(param1,80,true);
             alignBitmapInBox();
             this.updateTitle();
-            this.unblockItemUpdates = param4;
          }
       }
       
@@ -89,23 +94,18 @@ public class MarketInventorySlot extends FeedFuseSlot
          }
       }
       
-      private function onMouseUp(param1:MouseEvent) : void
-      {
+      private function onMouseUp(param1:MouseEvent) : void {
           itemSprite.stopDrag();
-          itemSprite.removeEventListener(MouseEvent.MOUSE_UP,this.onMouseUp);
-          stage.removeChild(itemSprite);
-          addChild(itemSprite);
+          itemSprite.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+          stage.removeChild(this.itemSprite);
           alignBitmapInBox();
+
           var _loc2_:* = (itemSprite.dropTarget, MarketInventorySlot);
-          if(!(_loc2_ is MarketInventorySlot))
-          {
-            this.unblockSlot();
-            itemId = -1;
-            itemBitmap.bitmapData = null;
-            this.updateTitle();
+          if (!(_loc2_ is MarketInventorySlot)) {
+              clearSlot();
           }
       }
-      
+
       private function unblockSlot() : void
       {
          this.unblockItemUpdates && this.unblockItemUpdates();

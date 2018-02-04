@@ -13,6 +13,7 @@ import com.company.assembleegameclient.ui.Scrollbar
 
 import kabam.rotmg.core.StaticInjectorContext;
 import kabam.rotmg.messaging.impl.GameServerConnection;
+import kabam.rotmg.messaging.impl.data.MarketOffer;
 
 import org.osflash.signals.natives.NativeMappedSignal;
 
@@ -80,7 +81,7 @@ public class MarketCreateOfferScreen extends Sprite
          var dialog:Dialog = null;
          var event:MouseEvent = param1;
          var valid:Boolean = true;
-         var offers:Vector.<MarketOffer> = new Vector.<MarketOffer>();
+         //var offers:Vector.<Market.MarketOffer> = new Vector.<Market.MarketOffer>();
          for each(i in this.offers)
          {
             if(!i.isValidOffer())

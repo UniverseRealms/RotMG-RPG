@@ -6,8 +6,6 @@ namespace wServer.realm
 {
     public class StatsManager
     {
-        //static readonly ILog Log = LogManager.GetLogger(typeof(StatsManager));
-
         internal const int NumStatTypes = 11;
         private const float MinAttackMult = 0.5f;
         private const float MaxAttackMult = 2f;
@@ -30,9 +28,9 @@ namespace wServer.realm
 
             _stats = new SV<int>[NumStatTypes];
             for (var i = 0; i < NumStatTypes; i++)
-                _stats[i] = new SV<int>(Owner, GetStatType(i), this[i], i != 0 && i!= 1); // make maxHP and maxMP global update
+                _stats[i] = new SV<int>(Owner, GetStatType(i), this[i], i != 0 && i != 1); // make maxHP and maxMP global update
         }
-        
+
         public void ReCalculateValues(InventoryChangedEventArgs e = null)
         {
             Base.ReCalculateValues(e);
@@ -50,9 +48,8 @@ namespace wServer.realm
         public int GetAttackDamage(int min, int max, bool isAbility = false)
         {
             var ret = Owner.Client.Random.NextIntRange((uint)min, (uint)max) * GetAttackMult(isAbility);
-            //Log.Info($"Dmg: {ret}");
             return (int)ret;
-        } 
+        }
 
         public float GetAttackMult(bool isAbility)
         {
@@ -103,7 +100,7 @@ namespace wServer.realm
                 ret = 0;
             return ret;
         }
-        
+
         public float GetDefenseDamage(int dmg, bool noDef)
         {
             var def = this[3];
@@ -160,20 +157,6 @@ namespace wServer.realm
             return 0.5f + this[7] * .06f;
         }
 
-        /*public float Dex()
-        {
-            var dex = this[5];
-            if (Owner.HasConditionEffect(ConditionEffects.Dazed))
-                dex = 0;
-
-            var ret = 1.5f + 6.5f * (dex / 75f);
-            if (Owner.HasConditionEffect(ConditionEffects.Berserk))
-                ret *= 1.5f;
-            if (Owner.HasConditionEffect(ConditionEffects.Stunned))
-                ret = 0;
-            return ret;
-        }*/
-
         public static string StatIndexToName(int index)
         {
             switch (index)
@@ -189,7 +172,8 @@ namespace wServer.realm
                 case 8: return "DamageMin";
                 case 9: return "DamageMax";
                 case 10: return "LuckBoost";
-            } return null;
+            }
+            return null;
         }
 
         public static int GetStatIndex(string name)
@@ -207,7 +191,8 @@ namespace wServer.realm
                 case "DamageMin": return 8;
                 case "DamageMax": return 9;
                 case "LuckBoost": return 10;
-            } return -1;
+            }
+            return -1;
         }
 
         public static int GetStatIndex(StatsType stat)

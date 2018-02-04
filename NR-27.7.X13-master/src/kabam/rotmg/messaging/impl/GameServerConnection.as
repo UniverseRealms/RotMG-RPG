@@ -1,4 +1,6 @@
 ﻿package kabam.rotmg.messaging.impl {
+import Market.PlayerShopItem;
+
 import com.company.assembleegameclient.game.AGameSprite;
 import com.company.assembleegameclient.objects.GameObject;
 import com.company.assembleegameclient.objects.Player;
@@ -7,6 +9,7 @@ import com.company.assembleegameclient.objects.Projectile;
 import flash.utils.ByteArray;
 
 import kabam.lib.net.impl.SocketServer;
+import kabam.rotmg.messaging.impl.data.MarketOffer;
 import kabam.rotmg.servers.api.Server;
 
 import org.osflash.signals.Signal;
@@ -139,10 +142,16 @@ public class GameServerConnection {
     public var outstandingBuy_:Boolean;
 
 
-    public function chooseName(_arg1:String):void {
+    public function requestMarketOffers() : void{
     }
 
-    public function incrementStat(_arg1:int):void {
+    public function removeMarketOffer(param1:PlayerShopItem) : void {
+    }
+
+    public function addOffer(param1:Vector.<Market.MarketOffer>) : void {
+    }
+
+    public function chooseName(_arg1:String):void {
     }
 
     public function createGuild(_arg1:String):void {

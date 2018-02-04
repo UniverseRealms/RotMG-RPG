@@ -1,18 +1,14 @@
 package Market.ui
 {
-import com.company.assembleegameclient.game.AGameSprite;
-import com.company.assembleegameclient.ui.dialogs.Dialog;
+   import com.company.assembleegameclient.ui.dialogs.Dialog;
 
-import kabam.rotmg.core.StaticInjectorContext;
+   import kabam.rotmg.core.StaticInjectorContext;
 
-import kabam.rotmg.messaging.impl.GameServerConnection;
+   import kabam.rotmg.messaging.impl.GameServerConnection;
 
-import kabam.rotmg.messaging.impl.GameServerConnectionConcrete;
 
-import kabam.rotmg.text.view.TextFieldDisplayConcrete;
-import kabam.rotmg.text.view.stringBuilder.StaticStringBuilder;
-import kabam.rotmg.util.components.VerticalScrollbar;
-
+   import kabam.rotmg.text.view.TextFieldDisplayConcrete;
+   import kabam.rotmg.text.view.stringBuilder.StaticStringBuilder;
 
    import flash.display.Sprite;
    import org.osflash.signals.natives.NativeMappedSignal

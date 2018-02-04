@@ -1,4 +1,7 @@
 ﻿package kabam.rotmg.messaging.impl {
+import Market.MarketItemsResultSignal;
+import Market.MarketOffer;
+
 import com.company.assembleegameclient.game.AGameSprite;
 import com.company.assembleegameclient.game.GameSprite;
 import com.company.assembleegameclient.game.events.GuildResultEvent;
@@ -107,6 +110,7 @@ import kabam.rotmg.maploading.signals.HideMapLoadingSignal;
 import kabam.rotmg.messaging.impl.data.GroundTileData;
 import kabam.rotmg.messaging.impl.data.ObjectData;
 import kabam.rotmg.messaging.impl.data.ObjectStatusData;
+import kabam.rotmg.messaging.impl.data.PlayerShopItem;
 import kabam.rotmg.messaging.impl.data.StatData;
 import kabam.rotmg.messaging.impl.incoming.AccountList;
 import kabam.rotmg.messaging.impl.incoming.AllyShoot;
@@ -124,6 +128,7 @@ import kabam.rotmg.messaging.impl.incoming.Goto;
 import kabam.rotmg.messaging.impl.incoming.GuildResult;
 import kabam.rotmg.messaging.impl.incoming.InvResult;
 import kabam.rotmg.messaging.impl.incoming.InvitedToGuild;
+import kabam.rotmg.messaging.impl.incoming.MarketResult;
 import kabam.rotmg.messaging.impl.incoming.RewardPacket;
 import kabam.rotmg.messaging.impl.incoming.KeyInfoResponse;
 import kabam.rotmg.messaging.impl.incoming.MapInfo;
@@ -180,6 +185,7 @@ import kabam.rotmg.messaging.impl.outgoing.InvSwap;
 import kabam.rotmg.messaging.impl.outgoing.JoinGuild;
 import kabam.rotmg.messaging.impl.outgoing.KeyInfoRequest;
 import kabam.rotmg.messaging.impl.outgoing.Load;
+import kabam.rotmg.messaging.impl.outgoing.MarketCommand;
 import kabam.rotmg.messaging.impl.outgoing.Move;
 import kabam.rotmg.messaging.impl.outgoing.OtherHit;
 import kabam.rotmg.messaging.impl.outgoing.OutgoingMessage;
@@ -766,6 +772,42 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         return (false);
     }
 
+    override public function requestMarketOffers() : void
+    {
+        var _loc1_:MarketCommand = this.messages.require(MARKET_COMMAND) as MarketCommand;
+        _loc1_.commandId = MarketCommand.REQUEST_MY_ITEMS;
+        serverConnection.queueMessage(_loc1_);
+    }
+
+    override public function removeMarketOffer(param1:Market.PlayerShopItem) : void{
+        var _loc2_:MarketCommand = this.messages.require(MARKET_COMMAND) as MarketCommand;
+        _loc2_.commandId = MarketCommand.REMOVE_OFFER;
+        _loc2_.offerId = param1.id;
+        serverConnection.queueMessage(_loc2_);
+    }
+
+    private function HandleMarketResult(param1:MarketResult) : void
+    {
+        switch(param1.commandId)
+        {
+            case MarketResult.MARKET_REQUEST_RESULT:
+                StaticInjectorContext.getInjector().getInstance(MarketItemsResultSignal).dispatch(param1.items);
+                break;
+            case MarketResult.MARKET_ERROR:
+            case MarketResult.MARKET_SUCCESS:
+                StaticInjectorContext.getInjector().getInstance(MarketItemsResultSignal).dispatch(param1.message,param1.error);
+        }
+    }
+
+    override public function addOffer(param1:Vector.<MarketOffer>) : void
+    {
+        var _local_1:MarketCommand = null;
+        _local_1 = this.messages.require(GameServerConnection.MARKET_COMMAND) as MarketCommand;
+        _local_1.commandId = MarketCommand.ADD_OFFER;
+        _local_1.newOffers = param1;
+        serverConnection.queueMessage(_local_1);
+    }
+
     private function validStatInc(itemId:int, itemOwner:GameObject):Boolean {
         var p:Player;
         try {
@@ -910,12 +952,6 @@ public class GameServerConnectionConcrete extends GameServerConnection {
         var _local2:ChooseName = (this.messages.require(CHOOSENAME) as ChooseName);
         _local2.name_ = _arg1;
         serverConnection.queueMessage(_local2);
-    }
-
-    override public function incrementStat(_arg1:int):void {
-        var _local1:IncrementStat = (this.messages.require(CHOOSENAME) as IncrementStat);
-        _local1.statType = _arg1;
-        serverConnection.queueMessage(_local1);
     }
 
     override public function createGuild(_arg1:String):void {

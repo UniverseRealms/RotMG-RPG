@@ -27,6 +27,7 @@ namespace wServer.realm.worlds
 
         private int towerId;
         public string FloorName;
+        public string Clearer;
 
         public Tower(ProtoWorld proto, int id, int maxfloor) : base(proto)
         {
@@ -92,7 +93,7 @@ namespace wServer.realm.worlds
         {
             foreach (var i in Manager.Worlds.Values)
                 foreach (var e in i.Players.Values)
-                    e.SendInfo("{ } has cleared floor:" + CurrentFloor + " of the " + FloorName + "."); //todo:add clearer
+                    e.SendInfo($"{Clearer} has cleared floor:" + CurrentFloor + " of the " + FloorName + "."); //todo:add clearer
 
             Manager.Database.IncreaseFloor(CurrentFloor + 1, towerId);
             Manager.Database.SetClearer(towerId, "Player");//for now

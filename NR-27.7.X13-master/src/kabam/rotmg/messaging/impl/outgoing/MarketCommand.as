@@ -1,8 +1,5 @@
-/**
- * Created by Fabian on 14.07.2015.
- */
 package kabam.rotmg.messaging.impl.outgoing {
-import kabam.rotmg.messaging.impl.data.MarketOffer
+import Market.MarketOffer;
 
 import flash.utils.IDataOutput;
 
@@ -14,7 +11,7 @@ public class MarketCommand extends OutgoingMessage {
 
     public var commandId:int;
     public var offerId:uint;
-    public var newOffers:Vector.<MarketOffer>;
+    public var newOffers:Vector.<Market.MarketOffer>;
 
     public function MarketCommand(packetId:uint, callback:Function) {
         super(packetId, callback);

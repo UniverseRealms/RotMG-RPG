@@ -1,4 +1,6 @@
 ﻿package com.company.assembleegameclient.ui.panels.mediators {
+import Market.ui.MarketInventorySlot;
+
 import com.company.assembleegameclient.map.Map;
 import com.company.assembleegameclient.objects.Container;
 import com.company.assembleegameclient.objects.GameObject;
@@ -84,9 +86,10 @@ public class ItemGridMediator extends Mediator {
         var _local5:TabStripView;
         var _local6:int;
         var _local7:FoodFeedFuseSlot;
+        var _local9:MarketInventorySlot;
         var _local8:int;
         var _local2:InteractiveItemTile = _arg1.tile;
-        var _local3:* = DisplayHierarchy.getParentWithTypeArray(_local2.getDropTarget(), TabStripView, InteractiveItemTile, FoodFeedFuseSlot, QuestRewardsView, Map);
+        var _local3:* = DisplayHierarchy.getParentWithTypeArray(_local2.getDropTarget(), TabStripView, InteractiveItemTile, FoodFeedFuseSlot, MarketInventorySlot, QuestRewardsView, Map);
         if ((((_local2.getItemId() == PotionInventoryModel.HEALTH_POTION_ID)) || ((((_local2.getItemId() == PotionInventoryModel.MAGIC_POTION_ID)) && (!(Boolean((_local3 as FoodFeedFuseSlot)))))))) {
             this.onPotionMove(_arg1);
             return;
@@ -126,9 +129,19 @@ public class ItemGridMediator extends Mediator {
                         _local7.setItemPart2(_local8);
                     }
                 }
-                else {
-                    if ((((_local3 is Map)) || ((this.hudModel.gameSprite.map.mouseX < 300)))) {
-                        this.dropItem(_local2);
+                else{
+                    if ((_local3 is MarketInventorySlot)) {
+                        _local9 = (_local3 as MarketInventorySlot);
+                        _local8 = _local2.getItemId();
+                        _local9.setItem(_local8, _local2.tileId, _local2.ownerGrid.owner.objectId_);
+                        _local2.setItem(ItemConstants.NO_ITEM);
+                        _local2.blockingItemUpdates = true;
+                        _local2.updateUseability(this.view.curPlayer);
+                    }
+                    else {
+                        if ((((_local3 is Map)) || ((this.hudModel.gameSprite.map.mouseX < 300)))) {
+                            this.dropItem(_local2);
+                        }
                     }
                 }
             }
