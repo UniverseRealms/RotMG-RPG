@@ -14,9 +14,12 @@ namespace wServer.realm.commands
         public string Rank { get; private set; }
         public bool ListCommand { get; private set; }
 
-        protected Command(string name, string rankname = "Default", string alias = null, bool listCommand = true)
+        protected Command(string name, string rankname = null, string alias = null, bool listCommand = true)
         {
             CommandName = name;
+
+            if (String.IsNullOrEmpty(rankname))
+                rankname = "Default";
             
             Rank = rankname;
             ListCommand = listCommand;

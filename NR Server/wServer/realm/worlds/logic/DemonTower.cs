@@ -22,11 +22,11 @@ namespace wServer.realm.worlds.logic
         {
             FloorMaps = new Dictionary<int, string>
             {
-                { 0 , "" },
-                { 1 , "" },
-                { 2 , "" },
-                { 3 , "" },
-                { 4 , "" }
+                { 0 , "DemonTower1.jm" },
+                { 1 , "DemonTower2.jm" },
+                { 2 , "DemonTower3.jm" },
+                { 3 , "DemonTower4.jm" },
+                { 4 , "DemonTower5.jm" }
             };
         }
 

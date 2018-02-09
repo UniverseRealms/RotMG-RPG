@@ -46,7 +46,8 @@ namespace wServer.realm.setpieces
             SetPiece(new TempleB(), 10, 20, WmapTerrain.MidForest, WmapTerrain.MidPlains),
             SetPiece(new Oasis(), 0, 5, WmapTerrain.LowSand, WmapTerrain.MidSand),
             SetPiece(new Pyre(), 0, 5, WmapTerrain.MidSand, WmapTerrain.HighSand),
-            SetPiece(new KageKami(), 2, 3, WmapTerrain.HighForest, WmapTerrain.HighPlains)
+            SetPiece(new KageKami(), 2, 3, WmapTerrain.HighForest, WmapTerrain.HighPlains),
+            SetPiece(new SPNexus(), 1, 1, WmapTerrain.LowSand, WmapTerrain.LowSand)
         };
 
         public static int[,] rotateCW(int[,] mat)

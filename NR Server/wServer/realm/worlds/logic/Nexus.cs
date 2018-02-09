@@ -8,8 +8,12 @@ namespace wServer.realm.worlds.logic
 {
     class Nexus : World
     {
+
+        public static ProtoWorld Proto;
+
         public Nexus(ProtoWorld proto, Client client = null) : base(proto)
         {
+            Proto = proto;
         }
 
         protected override void Init()

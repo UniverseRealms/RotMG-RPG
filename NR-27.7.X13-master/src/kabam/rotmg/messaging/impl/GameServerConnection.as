@@ -122,7 +122,7 @@ public class GameServerConnection {
     public static const STATINCREMENT:int = 156;
     public static const REWARD:int = 157;
 
-    
+
     public static var instance:GameServerConnection;
 
     public var changeMapSignal:Signal;

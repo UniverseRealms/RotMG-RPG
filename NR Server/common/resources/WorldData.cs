@@ -64,7 +64,7 @@ namespace common.resources
                     worlds.Add(world.name, world);
                     continue;
                 }
-               
+
                 world.wmap = new byte[world.maps.Length][];
                 var di = Directory.GetParent(jwFiles[i]);
                 for (var j = 0; j < world.maps.Length; j++)

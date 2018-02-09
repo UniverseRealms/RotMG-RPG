@@ -41,10 +41,22 @@ namespace wServer.networking.handlers
             if (player?.Owner == null)
                 return;
 
-            //var playersitem = player.Manager.Resources.GameData.Items[player.Inventory[slotB].ObjectType];
+            if (a == b)
+            {
+                for (var i = 0; i < 4; i++)
+                {
+                    var swapeditem = player.Inventory[slotA] as Item;
+                    int levelreq = swapeditem.LevelRequirement;
 
-            //if (playersitem.LevelRequirement > player.Level)
-            //    return;
+                    if (ValidateLevel(levelreq, player) && slotB == i)
+                    {
+                        a.ForceUpdate(slotA);
+                        b.ForceUpdate(slotB);
+                        return;
+                    }
+                }
+            }
+
 
             if (!ValidateEntities(player, a, b) || player.tradeTarget != null)
             {
@@ -63,7 +75,9 @@ namespace wServer.networking.handlers
                     if (stack.Slot == slotB)
                     {
                         var stackTrans = conA.Inventory.CreateTransaction();
+
                         var item = stack.Put(stackTrans[slotA]);
+
                         if (item == null) // success
                         {
                             // if a stackable item ends up in a gift chest it becomes infinite if not removed
@@ -138,6 +152,14 @@ namespace wServer.networking.handlers
             b.ForceUpdate(slotB);
             player.Client.SendPacket(new InvResult() { Result = 1 });
         }
+
+        bool ValidateLevel(int levelreq, Player player)
+        {
+            if (levelreq > player.Level)
+                return true;
+            return false;
+        }
+
 
         bool ValidateEntities(Player p, Entity a, Entity b)
         { // returns false if bad input

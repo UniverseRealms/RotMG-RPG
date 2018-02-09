@@ -561,11 +561,10 @@ namespace common.resources
 
             Usable = elem.Element("Usable") != null;
 
-            if ((n = elem.Element("LevelReq")) != null)
-                LevelRequirement = Utils.FromString(n.Value);
+            LevelRequirement = (elem.Element("LevelReq") != null) ? Utils.FromString(elem.Element("LevelReq").Value) : 0;
 
             if ((n = elem.Element("BagType")) != null)
-                BagType = Utils.FromString(n.Value);
+                BagType = Utils.FromString(elem.Value);
             else
                 BagType = 0;
 

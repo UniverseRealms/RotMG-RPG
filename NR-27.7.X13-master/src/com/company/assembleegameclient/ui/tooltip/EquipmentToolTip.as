@@ -60,6 +60,7 @@ public class EquipmentToolTip extends ToolTip {
     private var playerCanUse:Boolean;
     private var comparisonResults:SlotComparisonResult;
     private var powerText:TextFieldDisplayConcrete;
+    private var levelReqText:TextFieldDisplayConcrete;
     private var keyInfoResponse:KeyInfoResponseSignal;
     private var originalObjectType:int;
     private var glowFilter:GlowFilter;
@@ -133,6 +134,7 @@ public class EquipmentToolTip extends ToolTip {
         this.makeRestrictionList();
         this.makeRestrictionText();
         this.makeItemPowerText();
+        this.makeLevelReqText();
         this.makeNameColor();
     }
 
@@ -149,6 +151,18 @@ public class EquipmentToolTip extends ToolTip {
             this.powerText.filters = [new DropShadowFilter(0, 0, 0, 0.5, 12, 12)];
             waiter.push(this.powerText.textChanged);
             addChild(this.powerText);
+        }
+    }
+
+    private function makeLevelReqText():void {
+        var _local1:int;
+        if (this.objectXML.hasOwnProperty("LevelReq")) {
+            _local1 = ((((this.playerCanUse) || ((this.player == null)))) ? 0xFFFFFF : 16549442);
+            this.levelReqText = new TextFieldDisplayConcrete().setSize(12).setColor(_local1).setBold(true).setTextWidth((((MAX_WIDTH - this.icon.width) - 4) - 30)).setWordWrap(true);
+            this.levelReqText.setStringBuilder(new StaticStringBuilder().setString(("Level Requirement: " + this.objectXML.LevelReq)));
+            this.levelReqText.filters = [new DropShadowFilter(0, 0, 0, 0.5, 12, 12)];
+            waiter.push(this.levelReqText.textChanged);
+            addChild(this.levelReqText);
         }
     }
 
@@ -859,6 +873,13 @@ public class EquipmentToolTip extends ToolTip {
             if (contains(this.powerText)) {
                 this.powerText.x = 4;
                 this.powerText.y = _local1;
+                _local1 = (_local1 + this.powerText.height + 2);
+            }
+        }
+        if (this.levelReqText) {
+            if (contains(this.levelReqText)){
+                this.levelReqText.x = 4;
+                this.levelReqText.y = _local1;
             }
         }
     }

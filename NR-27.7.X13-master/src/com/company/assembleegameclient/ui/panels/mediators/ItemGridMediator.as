@@ -90,7 +90,7 @@ public class ItemGridMediator extends Mediator {
         var _local8:int;
         var _local2:InteractiveItemTile = _arg1.tile;
         var _local3:* = DisplayHierarchy.getParentWithTypeArray(_local2.getDropTarget(), TabStripView, InteractiveItemTile, FoodFeedFuseSlot, MarketInventorySlot, QuestRewardsView, Map);
-        if ((((_local2.getItemId() == PotionInventoryModel.HEALTH_POTION_ID)) || ((((_local2.getItemId() == PotionInventoryModel.MAGIC_POTION_ID)) && (!(Boolean((_local3 as FoodFeedFuseSlot)))))))) {
+        if ((((_local2.getItemId() == PotionInventoryModel.HEALTH_POTION_ID)) || ((((_local2.getItemId() == PotionInventoryModel.MAGIC_POTION_ID)) && (!(Boolean((_local3 as MarketInventorySlot)))) && (!(Boolean((_local3 as FoodFeedFuseSlot)))))))) {
             this.onPotionMove(_arg1);
             return;
         }

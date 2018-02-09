@@ -317,6 +317,7 @@
     <Compile Include="realm\ConnectManager.cs" />
     <Compile Include="realm\setpieces\KageKami.cs" />
     <Compile Include="realm\BaseStatManager.cs" />
+    <Compile Include="realm\setpieces\SPNexus.cs" />
     <Compile Include="realm\worlds\DynamicWorld.cs" />
     <Compile Include="realm\worlds\logic\Davy.cs" />
     <Compile Include="realm\worlds\logic\Candyland.cs" />

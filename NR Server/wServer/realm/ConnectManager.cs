@@ -196,7 +196,7 @@ namespace wServer.realm
             else
             {
                 if (gameId != World.Test)
-                    gameId = World.Nexus;
+                    gameId = World.Realm;
             }
 
             if (!client.Manager.Database.AcquireLock(acc))
@@ -236,7 +236,7 @@ namespace wServer.realm
                     Name = "*Error*",
                     Txt = "World does not exist."
                 });
-                world = client.Manager.GetWorld(World.Nexus);
+                world = client.Manager.GetWorld(World.Realm);
             }
 
             if (world is Test &&
@@ -265,7 +265,7 @@ namespace wServer.realm
                 });
 
                 if (!(world is Nexus))
-                    world = client.Manager.GetWorld(World.Nexus);
+                    world = client.Manager.GetWorld(World.Realm);
                 else
                 {
                     client.Disconnect();

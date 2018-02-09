@@ -99,7 +99,6 @@ public class MarketInventorySlot extends FeedFuseSlot
           itemSprite.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
           stage.removeChild(this.itemSprite);
           alignBitmapInBox();
-
           var _loc2_:* = (itemSprite.dropTarget, MarketInventorySlot);
           if (!(_loc2_ is MarketInventorySlot)) {
               clearSlot();

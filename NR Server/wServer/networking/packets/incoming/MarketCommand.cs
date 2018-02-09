@@ -33,7 +33,6 @@ namespace wServer.networking.packets.incoming
                     OfferId = rdr.ReadUInt32();
                     break;
             }
-
         }
 
         protected override void Write(NWriter wtr)

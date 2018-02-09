@@ -12,7 +12,7 @@ namespace wServer.realm.worlds
 
         public Dictionary<int, string> FloorMaps = new Dictionary<int, string>();
 
-        ProtoWorld _poto;
+        ProtoWorld _proto;
 
         private int _maxfloor;
         public int CurrentFloor
@@ -31,7 +31,7 @@ namespace wServer.realm.worlds
 
         public Tower(ProtoWorld proto, int id, int maxfloor) : base(proto)
         {
-            _poto = proto;
+            _proto = proto;
             towerId = id;
 
             if (Manager.Database.TowerExist(id) == false)
@@ -46,13 +46,13 @@ namespace wServer.realm.worlds
             }
 
             _maxfloor = maxfloor;
-            proto = _poto;
+            proto = _proto;
         }
 
         protected override void Init()
         {
-            _poto.isTower = true;
-            _poto.towerStarted = true;
+            _proto.isTower = true;
+            _proto.towerStarted = true;
         }
 
         public override void Tick(RealmTime time)
@@ -60,7 +60,7 @@ namespace wServer.realm.worlds
             base.Tick(time);
 
             int istrue = 0;
-            if (_poto.towerStarted)
+            if (_proto.towerStarted)
             {
                 istrue++;
                 if (istrue == 1)
@@ -79,7 +79,7 @@ namespace wServer.realm.worlds
         private void AddMaps()
         {
             if (CurrentFloor + 1 < _maxfloor)
-                _poto.towermap = FloorMaps[CurrentFloor + 1];
+                _proto.towermap = FloorMaps[CurrentFloor + 1];
         }
 
         private bool IsCleared()
