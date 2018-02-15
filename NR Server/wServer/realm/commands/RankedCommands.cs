@@ -684,7 +684,7 @@ namespace wServer.realm.commands
 
     class OryxSayCommand : Command
     {
-        public OryxSayCommand() : base("oryxSay", rankname: "PermiumPlus", alias: "osay") { }
+        public OryxSayCommand() : base("oryxSay", rankname: "PremiumPlus", alias: "osay") { }
 
         protected override bool Process(Player player, RealmTime time, string args)
         {
@@ -1537,31 +1537,6 @@ namespace wServer.realm.commands
                 }));
                 i++;
             }
-            return true;
-        }
-    }
-
-    class CloseRealmCommand : Command
-    {
-        public CloseRealmCommand() : base("closerealm", rankname: "Developer") { }
-
-        protected override bool Process(Player player, RealmTime time, string args)
-        {
-            var gw = player.Manager.Worlds[World.Realm] as Realm;
-
-            if (gw == null)
-            {
-                player.SendError("An undefined error occurred.");
-                return false;
-            }
-
-            if (gw.IsClosing())
-            {
-                player.SendError("Realm already closing.");
-                return false;
-            }
-
-            gw.CloseRealm();
             return true;
         }
     }

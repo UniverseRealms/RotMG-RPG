@@ -2,6 +2,7 @@
 using wServer.networking.packets;
 using wServer.networking.packets.incoming;
 using System.Collections.Generic;
+using wServer.realm;
 
 namespace wServer.networking.handlers
 {
@@ -45,15 +46,23 @@ namespace wServer.networking.handlers
 
             for (var i = 0; i < 8; i++)
             {
-                int diff = player.Stats.Base[i] - statinfo[i].StartingValue;
+                int diff = GetStatDifference(player, i);
+                statamount += diff;
 
                 player.Stats.Base[i] = statinfo[i].StartingValue;
-                statamount += diff;
             }
             player.Credits = player.Client.Account.Credits -= 500;
             player.StatPoint += statamount;
             player.Client.Character.FlushAsync();
             player.SendInfo("Succesfully Reseted!");
+        }
+
+        private int GetStatDifference(Player player, int stattype)
+        {
+            var statinfo = player.Manager.Resources.GameData.Classes[player.ObjectType].Stats;
+            if (stattype == 0 || stattype == 1)
+                return player.Stats.Base[stattype] / 5 - -statinfo[stattype].StartingValue / 5;
+            return player.Stats.Base[stattype] - statinfo[stattype].StartingValue;
         }
 
         private void IncreaseStat(Player player, int stat, int amount)

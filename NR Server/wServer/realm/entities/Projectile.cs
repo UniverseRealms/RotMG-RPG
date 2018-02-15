@@ -47,6 +47,7 @@ namespace wServer.realm.entities
             //ProjectileOwner = null;
         }
 
+        CollisionMap<Entity> collision;
         public override void Tick(RealmTime time)
         {
             var elapsed = time.TotalElapsedMs - CreationTime;
@@ -54,6 +55,30 @@ namespace wServer.realm.entities
             {
                 Destroy();
                 return;
+            }
+
+            if (ProjectileOwner is Enemy)
+            {
+                var position = GetPosition(elapsed);
+                double nearestRadius = double.MaxValue;
+                Entity entity = null;
+
+                if (collision == null)
+                    collision = Owner.PlayersCollision;
+
+                foreach (var i in collision.HitTest(position.X, position.Y))
+                {
+                    if (!(i is Player)) return;
+
+                    double xSide = (i.X - position.X) * (i.X - position.X);
+                    double ySide = (i.Y - position.Y) * (i.Y - position.Y);
+
+                    if (xSide <= 0.4 && ySide <= 0.4 && xSide + ySide <= nearestRadius)
+                        entity = i;
+                }
+
+                if (entity != null && entity.HitByProjectile(this, time) == false)
+                    ForceHit(entity, time);
             }
             
             base.Tick(time);

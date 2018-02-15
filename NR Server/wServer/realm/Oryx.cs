@@ -20,8 +20,6 @@ namespace wServer.realm
         
         private readonly Realm _world;
         private readonly Random _rand = new Random();
-        private readonly int[] _enemyMaxCounts = new int[12];
-        private readonly int[] _enemyCounts = new int[12];
         private long _prevTick;
         private int _tenSecondTick;
         private RealmTime dummy_rt = new RealmTime();
@@ -358,120 +356,24 @@ namespace wServer.realm
         #endregion
 
         #region "Spawn data"
-        private static readonly Dictionary<WmapTerrain, Tuple<int, Tuple<string, double>[]>> RegionMobs = 
-            new Dictionary<WmapTerrain, Tuple<int, Tuple<string, double>[]>>()
+        private static readonly Dictionary<ushort, Tuple<int, Tuple<string, double>[]>> RegionMobs = 
+            new Dictionary<ushort, Tuple<int, Tuple<string, double>[]>>()
         {
-            { WmapTerrain.ShoreSand, Tuple.Create(
-                100, new []
+            { 0xbe , Tuple.Create(//0xbe is tiletype, 3000 is amount, Tuple(entityname, chance of spawning)
+                3000, new []
                 {
                     Tuple.Create("Pirate", 0.3),
                     Tuple.Create("Piratess", 0.1),
                     Tuple.Create("Snake", 0.2),
                     Tuple.Create("Scorpion Queen", 0.4),
-                })
-            },
-            { WmapTerrain.ShorePlains, Tuple.Create(
-                150, new []
-                {
                     Tuple.Create("Bandit Leader", 0.4),
                     Tuple.Create("Red Gelatinous Cube", 0.2),
                     Tuple.Create("Purple Gelatinous Cube", 0.2),
                     Tuple.Create("Green Gelatinous Cube", 0.2),
                 })
             },
-            { WmapTerrain.LowPlains, Tuple.Create(
-                200, new []
-                {
-                    Tuple.Create("Hobbit Mage", 0.5),
-                    Tuple.Create("Undead Hobbit Mage", 0.4),
-                    Tuple.Create("Sumo Master", 0.1),
-                })
-            },
-            { WmapTerrain.LowForest, Tuple.Create(
-                200, new []
-                {
-                    Tuple.Create("Elf Wizard", 0.2),
-                    Tuple.Create("Goblin Mage", 0.2),
-                    Tuple.Create("Easily Enraged Bunny", 0.3),
-                    Tuple.Create("Forest Nymph", 0.3),
-                })
-            },
-            { WmapTerrain.LowSand, Tuple.Create(
-                200, new []
-                {
-                    Tuple.Create("Sandsman King", 0.4),
-                    Tuple.Create("Giant Crab", 0.2),
-                    Tuple.Create("Sand Devil", 0.4),
-                })
-            },
-            { WmapTerrain.MidPlains, Tuple.Create(
-                150, new []
-                {
-                    Tuple.Create("Fire Sprite", 0.1),
-                    Tuple.Create("Ice Sprite", 0.1),
-                    Tuple.Create("Magic Sprite", 0.1),
-                    Tuple.Create("Pink Blob", 0.07),
-                    Tuple.Create("Gray Blob", 0.07),
-                    Tuple.Create("Earth Golem", 0.04),
-                    Tuple.Create("Paper Golem", 0.04),
-                    Tuple.Create("Big Green Slime", 0.08),
-                    Tuple.Create("Swarm", 0.05),
-                    Tuple.Create("Wasp Queen", 0.2),
-                    Tuple.Create("Shambling Sludge", 0.03),
-                    Tuple.Create("Orc King", 0.06),
-                    Tuple.Create("Candy Gnome", 0.02)
-                })
-            },
-            { WmapTerrain.MidForest, Tuple.Create(
-                150, new []
-                {
-                    Tuple.Create("Dwarf King", 0.3),
-                    Tuple.Create("Metal Golem", 0.05),
-                    Tuple.Create("Clockwork Golem", 0.05),
-                    Tuple.Create("Werelion", 0.1),
-                    Tuple.Create("Horned Drake", 0.3),
-                    Tuple.Create("Red Spider", 0.1),
-                    Tuple.Create("Black Bat", 0.1)
-                })
-            },
-            { WmapTerrain.MidSand, Tuple.Create(
-                300, new []
-                {
-                    Tuple.Create("Desert Werewolf", 0.25),
-                    Tuple.Create("Fire Golem", 0.1),
-                    Tuple.Create("Darkness Golem", 0.1),
-                    Tuple.Create("Sand Phantom", 0.2),
-                    Tuple.Create("Nomadic Shaman", 0.25),
-                    Tuple.Create("Great Lizard", 0.1),
-                })
-            },
-            { WmapTerrain.HighPlains, Tuple.Create(
-                300, new []
-                {
-                    Tuple.Create("Shield Orc Key", 0.2),
-                    Tuple.Create("Urgle", 0.2),
-                    Tuple.Create("Undead Dwarf God", 0.6)
-                })
-            },
-            { WmapTerrain.HighForest, Tuple.Create(
-                300, new []
-                {
-                    Tuple.Create("Ogre King", 0.4),
-                    Tuple.Create("Dragon Egg", 0.1),
-                    Tuple.Create("Lizard God", 0.5),
-                    Tuple.Create("Beer God", 0.1)
-                })
-            },
-            { WmapTerrain.HighSand, Tuple.Create(
-                250, new []
-                {
-                    Tuple.Create("Minotaur", 0.4),
-                    Tuple.Create("Flayer God", 0.4),
-                    Tuple.Create("Flamer King", 0.2)
-                })
-            },
-            { WmapTerrain.Mountains, Tuple.Create(
-                100, new []
+            {  0x60 , Tuple.Create(
+                3000, new []
                 {
                     Tuple.Create("White Demon", 0.1),
                     Tuple.Create("Sprite God", 0.11),
@@ -500,8 +402,6 @@ namespace wServer.realm
         {
             // 0 <= u < 2^32
             var u = (uint)(rand.NextDouble() * uint.MaxValue);
-            // The magic number below is 1/(2^32 + 2).
-            // The result is strictly between 0 and 1.
             return (u + 1.0) * 2.328306435454494e-10;
         }
 
@@ -537,99 +437,93 @@ namespace wServer.realm
             return objType;
         }
 
-        private int Spawn(ObjectDesc desc, WmapTerrain terrain, int w, int h)
+        private string GetRandomName(IEnumerable<Tuple<string, double>> dat)
         {
-            Entity entity;
-
-            var ret = 0;
-            var pt = new IntPoint();
-
-            if (desc.Spawn != null)
+            double p = _rand.NextDouble();
+            double n = 0;
+            string name = "Pirate";
+            foreach (var k in dat)
             {
-                var num = (int) GetNormal(_rand, desc.Spawn.Mean, desc.Spawn.StdDev);
-                
-                if (num > desc.Spawn.Max)
-                    num = desc.Spawn.Max;
-                else if (num < desc.Spawn.Min) 
-                    num = desc.Spawn.Min;
-
-                do
+                n += k.Item2;
+                if (n > p)
                 {
-                    pt.X = _rand.Next(0, w);
-                    pt.Y = _rand.Next(0, h);
-                } while (_world.Map[pt.X, pt.Y].Terrain != terrain ||
-                         !_world.IsPassable(pt.X, pt.Y) ||
-                         _world.AnyPlayerNearby(pt.X, pt.Y));
-
-                for (var k = 0; k < num; k++)
-                {
-                    entity = Entity.Resolve(_world.Manager, desc.ObjectType);
-                    entity.Move(
-                        pt.X + (float)(_rand.NextDouble() * 2 - 1) * 5,
-                        pt.Y + (float)(_rand.NextDouble() * 2 - 1) * 5);
-                    (entity as Enemy).Terrain = terrain;
-                    _world.EnterWorld(entity);
-                    ret++;
+                    name = k.Item1;
+                    break;
                 }
-                return ret;
             }
+            return name;
+        }
 
-            do
+        IntPoint randomPosition(List<IntPoint> positionlist)
+        {
+            try
             {
-                pt.X = _rand.Next(0, w);
-                pt.Y = _rand.Next(0, h);
-            } while (_world.Map[pt.X, pt.Y].Terrain != terrain ||
-                        !_world.IsPassable(pt.X, pt.Y) ||
-                        _world.AnyPlayerNearby(pt.X, pt.Y));
-
-            entity = Entity.Resolve(_world.Manager, desc.ObjectType);
-            entity.Move(pt.X, pt.Y);
-            (entity as Enemy).Terrain = terrain;
-            _world.EnterWorld(entity);
-            ret++;
-            return ret;
+                int count = _rand.Next(0, positionlist.Count);
+                return positionlist[count];
+            }
+            catch
+            {
+                return new IntPoint(0, 0);
+            }
         }
 
         public void Init()
         {
-            Log.InfoFormat("Oryx is controlling world {0}({1})...", _world.Id, _world.Name);
+            Log.Info("Initializing Realm...");
 
-            var w = _world.Map.Width;
-            var h = _world.Map.Height;
-            var stats = new int[12];
-            
-            for (var y = 0; y < h; y++)
-                for (var x = 0; x < w; x++)
-                {
-                    var tile = _world.Map[x, y];
-                    if (tile.Terrain != WmapTerrain.None)
-                        stats[(int)tile.Terrain - 1]++;
-                }
-
-            Log.Info("Spawning minions...");
+            int w = _world.Map.Width;
+            int h = _world.Map.Height;
+            AddPositions(w, h);
+            SpawnEnemies();
+        }
+        
+        private Dictionary<ushort, List<IntPoint>> positions = new Dictionary<ushort, List<IntPoint>>();
+        private void AddPositions(int w, int h)
+        {
             foreach (var i in RegionMobs)
             {
-                var terrain = i.Key;
-                var idx = (int)terrain - 1;
-                var enemyCount = stats[idx] / i.Value.Item1;
-                _enemyMaxCounts[idx] = enemyCount;
-                _enemyCounts[idx] = 0;
-                
-                for (var j = 0; j < enemyCount; j++)
-                {
-                    var objType = GetRandomObjType(i.Value.Item2);
-                    
-                    if (objType == 0) 
-                        continue;
-
-                    _enemyCounts[idx] += Spawn(_world.Manager.Resources.GameData.ObjectDescs[objType], terrain, w, h);
-                    
-                    if (_enemyCounts[idx] >= enemyCount)
-                        break;
-                }
+                positions.Add(i.Key, new List<IntPoint>());
+                for (var e = 0; e < w; e++)
+                    for (var a = 0; a < h; a++)
+                        if (i.Key == _world.Map[e, a].TileDesc.ObjectType)
+                            positions[i.Key].Add(new IntPoint(e, a));
             }
+            Log.Info("Realm positions initialized.");
+        }
 
-            Log.Info("Oryx is done.");
+        private void SpawnEnemies(bool isrespawned = false)
+        {
+            int currentcount = _world.Enemies.Count;
+            int max = 0;
+            foreach (var i in RegionMobs)
+                max += i.Value.Item1;
+
+            foreach (var i in RegionMobs)
+            {
+                int count = 0;
+                while (count < i.Value.Item1 && currentcount < max)
+                {
+                    string name = GetRandomName(RegionMobs[i.Key].Item2);
+                    if (_world.Map[randomPosition(positions[i.Key]).X, randomPosition(positions[i.Key]).Y].TileDesc.ObjectType == i.Key)
+                    {
+                        SpawnEntity(name, randomPosition(positions[i.Key]).X, randomPosition(positions[i.Key]).Y);
+                        count++;
+                    }
+                }
+                if (!isrespawned)
+                    Log.Info($"Generated tile:[{i.Key}] entities! Amount: {count}");
+                else
+                    Log.Info($"Respawned tile:[{i.Key}] entities! Amount: {count}");
+            }
+            Log.Info("Succesfully finished spawning!");
+        }
+        
+        public void SpawnEntity(string name, int x, int y)
+        {
+            Enemy entity = Entity.Resolve(_world.Manager, name) as Enemy;
+            entity.Move(x, y);
+
+            _world.EnterWorld(entity);
         }
 
         public void Tick(RealmTime time)
@@ -637,273 +531,19 @@ namespace wServer.realm
             if (time.TotalElapsedMs - _prevTick <= 10000)
                 return;
 
-            if (_tenSecondTick % 2 == 0)
-                HandleAnnouncements();
-
             if (_tenSecondTick % 6 == 0)
-                EnsurePopulation();
+            {
+                Log.Info("Controlling population...");
+                SpawnEnemies(true);
+            }
 
             _tenSecondTick++;
             _prevTick = time.TotalElapsedMs;
         }
 
-        private void EnsurePopulation()
+        private ushort IdtoOdjType(string id)
         {
-            Log.Info("Oryx is controlling population...");
-
-            RecalculateEnemyCount();
-
-            var state = new int[12];
-            var diff = new int[12];
-            var c = 0;
-
-            for (var i = 0; i < state.Length; i++)
-            {
-                if (_enemyCounts[i] > _enemyMaxCounts[i] * 1.5) //Kill some
-                {
-                    state[i] = 1;
-                    diff[i] = _enemyCounts[i] - _enemyMaxCounts[i];
-                    c++;
-                    continue;
-                }
-                
-                if (_enemyCounts[i] < _enemyMaxCounts[i] * 0.75) //Add some
-                {
-                    state[i] = 2;
-                    diff[i] = _enemyMaxCounts[i] - _enemyCounts[i];
-                    continue;
-                }
-
-                state[i] = 0;
-            }
-
-            foreach (var i in _world.Enemies) //Kill
-            {
-                var idx = (int) i.Value.Terrain - 1;
-
-                if (idx == -1 || state[idx] == 0 ||
-                    i.Value.GetNearestEntity(10, true) != null ||
-                    diff[idx] == 0)
-                    continue;
-
-                if (state[idx] == 1)
-                {
-                    _world.LeaveWorld(i.Value);
-                    diff[idx]--;
-                    if (diff[idx] == 0)
-                        c--;
-                }
-                
-                if (c == 0) 
-                    break;
-            }
-
-            var w = _world.Map.Width;
-            var h = _world.Map.Height;
-            
-            for (var i = 0; i < state.Length; i++) //Add
-            {
-                if (state[i] != 2) 
-                    continue;
-
-                var x = diff[i];
-                var t = (WmapTerrain)(i + 1);
-                for (var j = 0; j < x; )
-                {
-                    var objType = GetRandomObjType(RegionMobs[t].Item2);
-                    
-                    if (objType == 0)
-                        continue;
-
-                    j += Spawn(_world.Manager.Resources.GameData.ObjectDescs[objType], t, w, h);
-                }
-            }
-            RecalculateEnemyCount();
-
-            //GC.Collect();
-            Log.Info("Oryx is back to sleep.");
-        }
-
-        private void RecalculateEnemyCount()
-        {
-            for (var i = 0; i < _enemyCounts.Length; i++)
-                _enemyCounts[i] = 0;
-
-            foreach (var i in _world.Enemies)
-            {
-                if (i.Value.Terrain == WmapTerrain.None) 
-                    continue;
-
-                _enemyCounts[(int)i.Value.Terrain - 1]++;
-            }
-        }
-
-        private void HandleAnnouncements()
-        {
-            if (_world.Closed)
-                return;
-
-            var taunt = CriticalEnemies[_rand.Next(0, CriticalEnemies.Length)];
-            var count = 0;
-            foreach (var i in _world.Enemies)
-            {
-                var desc = i.Value.ObjectDesc;
-                if (desc == null || desc.ObjectId != taunt.Item1)
-                    continue;
-                count++;
-            }
-
-            if (count == 0) 
-                return;
-            
-            if ((count == 1 && taunt.Item2.Final != null) ||
-                (taunt.Item2.Final != null && taunt.Item2.NumberOfEnemies == null))
-            {
-                var arr = taunt.Item2.Final;
-                var msg = arr[_rand.Next(0, arr.Length)];
-                BroadcastMsg(msg);
-            }
-            else
-            {
-                var arr = taunt.Item2.NumberOfEnemies;
-                if (arr == null)
-                    return;
-                
-                var msg = arr[_rand.Next(0, arr.Length)];
-                msg = msg.Replace("{COUNT}", count.ToString());
-                BroadcastMsg(msg);
-            }
-        }
-
-        private void BroadcastMsg(string message)
-        {
-            _world.Manager.Chat.Oryx(_world, message);
-        }
-
-        public void OnPlayerEntered(Player player)
-        {
-            player.SendInfo("Welcome to Realm of the Mad God");
-            player.SendEnemy("Oryx the Mad God", "You are food for my minions!");
-            player.SendInfo("Use [WASDQE] to move; click to shoot!");
-            player.SendInfo("Type \"/help\" for more help");
-        }
-
-        private void SpawnEvent(string name, ISetPiece setpiece)
-        {
-            var pt = new IntPoint();
-            do
-            {
-                pt.X = _rand.Next(0, _world.Map.Width);
-                pt.Y = _rand.Next(0, _world.Map.Height);
-            } while ((_world.Map[pt.X, pt.Y].Terrain < WmapTerrain.Mountains ||
-                      _world.Map[pt.X, pt.Y].Terrain > WmapTerrain.MidForest) ||
-                      !_world.IsPassable(pt.X, pt.Y, true) ||
-                      _world.AnyPlayerNearby(pt.X, pt.Y));
-
-            pt.X -= (setpiece.Size - 1) / 2;
-            pt.Y -= (setpiece.Size - 1) / 2;
-            setpiece.RenderSetPiece(_world, pt);
-            Log.InfoFormat("Oryx spawned {0} at ({1}, {2}).", name, pt.X, pt.Y);
-        }
-
-        public void OnEnemyKilled(Enemy enemy, Player killer)
-        {
-            // enemy is quest?
-            if (enemy.ObjectDesc == null || !enemy.ObjectDesc.Quest) 
-                return;
-            
-            // is a critical quest?
-            TauntData? dat = null;
-            foreach (var i in CriticalEnemies)
-                if (enemy.ObjectDesc.ObjectId == i.Item1)
-                {
-                    dat = i.Item2;
-                    break;
-                }
-            if (dat == null) 
-                return;
-
-            // has killed message?
-            if (dat.Value.Killed != null)
-            {
-                var arr = dat.Value.Killed;
-                if (killer == null)
-                    arr = arr.Where(m => !m.Contains("{PLAYER}")).ToArray();
-
-                if (arr.Length > 0)
-                {
-                    var msg = arr[_rand.Next(0, arr.Length)];
-                    msg = msg.Replace("{PLAYER}", (killer != null) ? killer.Name : "");
-                    BroadcastMsg(msg);
-                }
-            }
-
-            // 25% for new event ???
-            //if (_rand.NextDouble() > 0.25) 
-            //    return;
-
-            var events = _events;
-            if (_rand.NextDouble() <= 0.01)
-                events = _rareEvents;
-
-            var evt = events[_rand.Next(0, events.Count)];
-            var gameData = _world.Manager.Resources.GameData;
-            if (gameData.ObjectDescs[gameData.IdToObjectType[evt.Item1]].PerRealmMax == 1)
-                events.Remove(evt);
-            SpawnEvent(evt.Item1, evt.Item2);
-
-            // new event is critical?
-            dat = null;
-            foreach (var i in CriticalEnemies)
-                if (evt.Item1 == i.Item1)
-                {
-                    dat = i.Item2;
-                    break;
-                }
-            if (dat == null) 
-                return;
-
-            // has spawn message?
-            if (dat.Value.Spawn != null)
-            {
-                var arr = dat.Value.Spawn;
-                string msg = arr[_rand.Next(0, arr.Length)];
-                BroadcastMsg(msg);
-            }
-
-            foreach (var player in _world.Players) {
-                player.Value.HandleQuest(dummy_rt, true);
-            }
-        }
-
-        public void InitCloseRealm()
-        {
-            Closing = true;
-            _world.Manager.Chat.Announce("Realm closing in 1 minute.", true);
-            _world.Timers.Add(new WorldTimer(60000, (w, t) => CloseRealm()));
-        }
-
-        private void CloseRealm()
-        {
-            _world.Closed = true;
-            BroadcastMsg("I HAVE CLOSED THIS REALM!");
-            BroadcastMsg("YOU WILL NOT LIVE TO SEE THE LIGHT OF DAY!");
-
-            _world.Timers.Add(new WorldTimer(22000, (w, t) => SendToCastle()));
-        }
-
-        private void SendToCastle()
-        {
-            BroadcastMsg("MY MINIONS HAVE FAILED ME!");
-            BroadcastMsg("BUT NOW YOU SHALL FEEL MY WRATH!");
-            BroadcastMsg("COME MEET YOUR DOOM AT THE WALLS OF MY CASTLE!");
-
-            if (_world.Players.Count <= 0)
-                return;
-
-            var castle = _world.Manager.AddWorld(
-                new worlds.logic.Castle(_world.Manager.Resources.Worlds.Data["Castle"], playersEntering: _world.Players.Count));
-            _world.QuakeToWorld(castle);
+            return _world.Manager.Resources.GameData.IdToObjectType[id];
         }
     }
 }

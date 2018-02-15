@@ -21,9 +21,8 @@ namespace wServer.networking.handlers
                 return;
 
             var map = client.Player.Owner;
-            if (map.Id == World.Nexus)
+            if (map.Id == World.Realm)
             {
-                //client.Player.SendInfo("Already in Nexus!");
                 client.Disconnect();
                 return;
             }
@@ -32,8 +31,8 @@ namespace wServer.networking.handlers
             {
                 Host = "",
                 Port = 2050,
-                GameId = World.Nexus,
-                Name = "Nexus",
+                GameId = World.Realm,
+                Name = "Realm",
                 IsFromArena = false //map.Name.Equals("Arena")
             });
         }

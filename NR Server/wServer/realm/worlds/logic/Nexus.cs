@@ -8,7 +8,6 @@ namespace wServer.realm.worlds.logic
 {
     class Nexus : World
     {
-
         public static ProtoWorld Proto;
 
         public Nexus(ProtoWorld proto, Client client = null) : base(proto)
@@ -19,16 +18,15 @@ namespace wServer.realm.worlds.logic
         protected override void Init()
         {
             base.Init();
-            
-            var monitor = Manager.Monitor;
-            foreach (var i in Manager.Worlds.Values)
-            {
-                if (i is Realm)
+            foreach (var i in Players.Values)
+                i.Client.Reconnect(new networking.packets.outgoing.Reconnect
                 {
-                    monitor.AddPortal(i.Id);
-                    continue;
-                }
-            }
+                    Host = "",
+                    Port = 2050,
+                    GameId = World.Realm,
+                    Name = "Realm",
+                    IsFromArena = false 
+                });
         }
     }
 }

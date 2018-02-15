@@ -90,6 +90,7 @@
          <LifetimeMS>350</LifetimeMS>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>3</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>15</feedPower>
    </Object>
@@ -113,6 +114,7 @@
          <LifetimeMS>350</LifetimeMS>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>4</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>22</feedPower>
    </Object>
@@ -136,6 +138,7 @@
          <LifetimeMS>350</LifetimeMS>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>5</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>32</feedPower>
    </Object>
@@ -159,6 +162,7 @@
          <LifetimeMS>350</LifetimeMS>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>6</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>47</feedPower>
    </Object>
@@ -182,6 +186,7 @@
          <LifetimeMS>350</LifetimeMS>
       </Projectile>
       <BagType>2</BagType>
+	  <LevelReq>7</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>70</feedPower>
    </Object>
@@ -206,6 +211,7 @@
       </Projectile>
       <BagType>2</BagType>
       <FameBonus>1</FameBonus>
+	  <LevelReq>8</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>100</feedPower>
    </Object>
@@ -230,6 +236,7 @@
       </Projectile>
       <BagType>2</BagType>
       <FameBonus>1</FameBonus>
+	  <LevelReq>9</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>145</feedPower>
    </Object>
@@ -253,6 +260,7 @@
          <LifetimeMS>350</LifetimeMS>
       </Projectile>
       <BagType>4</BagType>
+	  <LevelReq>10</LevelReq>
       <FameBonus>2</FameBonus>
       <OldSound>bladeSwing</OldSound>
       <feedPower>212</feedPower>
@@ -277,6 +285,7 @@
          <LifetimeMS>350</LifetimeMS>
       </Projectile>
       <BagType>4</BagType>
+	  <LevelReq>12</LevelReq>
       <FameBonus>3</FameBonus>
       <OldSound>bladeSwing</OldSound>
       <feedPower>310</feedPower>
@@ -302,6 +311,7 @@
       </Projectile>
       <BagType>4</BagType>
       <FameBonus>4</FameBonus>
+	  <LevelReq>15</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>450</feedPower>
    </Object>
@@ -325,6 +335,7 @@
       </Projectile>
       <BagType>4</BagType>
       <FameBonus>4</FameBonus>
+	  <LevelReq>20</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>0</feedPower>
       <Soulbound/>
@@ -349,6 +360,7 @@
       </Projectile>
       <BagType>4</BagType>
       <FameBonus>5</FameBonus>
+	  <LevelReq>25</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>0</feedPower>
       <Soulbound/>
@@ -374,6 +386,7 @@
       <Sound>weapon/glass_sword</Sound>
       <BagType>6</BagType>
       <FameBonus>3</FameBonus>
+	  <LevelReq>27</LevelReq>
       <OldSound>bladeSwing</OldSound>
       <feedPower>400</feedPower>
       <Soulbound/>
@@ -397,10 +410,36 @@
          <LifetimeMS>260</LifetimeMS>
       </Projectile>
       <BagType>6</BagType>
-	  <LevelReq>20</LevelReq>
+	  <LevelReq>30</LevelReq>
       <FameBonus>6</FameBonus>
       <NumProjectiles>2</NumProjectiles>
       <ArcGap>40</ArcGap>
+      <OldSound>bladeSwing</OldSound>
+      <feedPower>800</feedPower>
+      <Soulbound/>
+   </Object>
+   <Object type="0x4c72" id="Demon's Autistic Blade">
+      <Class>Equipment</Class>
+      <Item/>
+      <Texture>
+         <File>lofiObj2</File>
+         <Index>0x69</Index>
+      </Texture>
+      <SlotType>1</SlotType>
+      <Description>A swift and hungry blade that gives you autism.</Description>
+      <RateOfFire>1.5</RateOfFire>
+      <Sound>weapon/glass_sword</Sound>
+      <Projectile>
+         <ObjectId>Fire Bolt</ObjectId>
+         <Speed>130</Speed>
+         <MinDamage>690</MinDamage>
+         <MaxDamage>960</MaxDamage>
+         <LifetimeMS>606</LifetimeMS>
+      </Projectile>
+      <BagType>6</BagType>
+      <FameBonus>6</FameBonus>
+	  <LevelReq>120</LevelReq>
+      <NumProjectiles>1</NumProjectiles>
       <OldSound>bladeSwing</OldSound>
       <feedPower>800</feedPower>
       <Soulbound/>
@@ -424,6 +463,7 @@
          <LifetimeMS>400</LifetimeMS>
       </Projectile>
       <BagType>6</BagType>
+	  <LevelReq>30</LevelReq>
       <FameBonus>4</FameBonus>
       <OldSound>bladeSwing</OldSound>
       <feedPower>900</feedPower>
@@ -498,6 +538,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>3</LevelReq>
       <OldSound>magicShoot</OldSound>
       <feedPower>10</feedPower>
    </Object>
@@ -522,6 +563,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>4</LevelReq>
       <OldSound>magicShoot</OldSound>
       <feedPower>15</feedPower>
    </Object>
@@ -546,6 +588,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>5</LevelReq>
       <OldSound>magicShoot</OldSound>
       <feedPower>22</feedPower>
    </Object>
@@ -570,6 +613,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>6</LevelReq>
       <OldSound>magicShoot</OldSound>
       <feedPower>32</feedPower>
    </Object>
@@ -594,6 +638,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>1</BagType>
+	  <LevelReq>8</LevelReq>
       <OldSound>magicShoot</OldSound>
       <feedPower>47</feedPower>
    </Object>
@@ -618,6 +663,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>2</BagType>
+	  <LevelReq>10</LevelReq>
       <OldSound>magicShoot</OldSound>
       <feedPower>70</feedPower>
    </Object>
@@ -642,6 +688,7 @@
          <Frequency>1</Frequency>
       </Projectile>
       <BagType>4</BagType>
+	  <LevelReq>12</LevelReq>
       <OldSound>magicShoot</OldSound>
       <feedPower>200</feedPower>
       <Soulbound/>
@@ -667,6 +714,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>2</BagType>
+	  <LevelReq>14</LevelReq>
       <FameBonus>1</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>100</feedPower>
@@ -692,6 +740,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>2</BagType>
+	  <LevelReq>16</LevelReq>
       <FameBonus>1</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>145</feedPower>
@@ -717,6 +766,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>4</BagType>
+	  <LevelReq>18</LevelReq>
       <FameBonus>2</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>212</feedPower>
@@ -742,6 +792,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>4</BagType>
+	  <LevelReq>20</LevelReq>
       <FameBonus>3</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>310</feedPower>
@@ -767,6 +818,7 @@
          <MultiHit/>
       </Projectile>
       <BagType>4</BagType>
+	  <LevelReq>25</LevelReq>
       <FameBonus>4</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>450</feedPower>
@@ -790,6 +842,7 @@
          <MaxDamage>135</MaxDamage>
       </Projectile>
       <BagType>4</BagType>
+	  <LevelReq>27</LevelReq>
       <FameBonus>4</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>0</feedPower>
@@ -814,6 +867,7 @@
          <MaxDamage>140</MaxDamage>
       </Projectile>
       <BagType>4</BagType>
+	  <LevelReq>29</LevelReq>
       <FameBonus>5</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>0</feedPower>
@@ -839,6 +893,7 @@
          <ArmorPiercing/>
       </Projectile>
       <BagType>6</BagType>
+	  <LevelReq>30</LevelReq>
       <FameBonus>4</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>500</feedPower>
@@ -865,6 +920,7 @@
          <PassesCover/>
       </Projectile>
       <BagType>6</BagType>
+	  <LevelReq>30</LevelReq>
       <FameBonus>6</FameBonus>
       <OldSound>magicShoot</OldSound>
       <feedPower>650</feedPower>

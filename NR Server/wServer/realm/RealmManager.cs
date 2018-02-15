@@ -127,8 +127,8 @@ namespace wServer.realm
             }
             
             // add portal monitor to nexus and initialize worlds
-            if (Worlds.ContainsKey(World.Nexus))
-                Monitor = new PortalMonitor(this, Worlds[World.Nexus]);
+            if (Worlds.ContainsKey(World.Realm))
+                Monitor = new PortalMonitor(this, Worlds[World.Realm]);
             foreach (var world in Worlds.Values)
                 OnWorldAdded(world);
 
@@ -224,7 +224,7 @@ namespace wServer.realm
             int id;
             if (actAsNexus)
             {
-                id = World.Nexus;
+                id = World.Realm;
             }
             else
             {
@@ -310,7 +310,7 @@ namespace wServer.realm
                 .ToArray();
 
             return realms.Length == 0 ?
-                Worlds[World.Nexus] :
+                Worlds[World.Realm] :
                 realms[Environment.TickCount % realms.Length];
         }
     }

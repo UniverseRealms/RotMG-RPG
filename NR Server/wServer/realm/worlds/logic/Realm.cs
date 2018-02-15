@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using common.resources;
 using log4net;
 using wServer.networking;
-using wServer.realm.entities;
 using wServer.realm.setpieces;
 
 namespace wServer.realm.worlds.logic
@@ -27,7 +26,6 @@ namespace wServer.realm.worlds.logic
 
         public override bool AllowedAccess(Client client)
         {
-            // since map gets reset, admins not allowed to join when closed. Possible to crash server otherwise.
             return !Closed && base.AllowedAccess(client);
         }
 
@@ -41,7 +39,6 @@ namespace wServer.realm.worlds.logic
             if (_oryxPresent)
             {
                 _overseer = new Oryx(this);
-                _overseer.Init();
             }
 
             Log.Info("Game World initalized.");
@@ -49,67 +46,8 @@ namespace wServer.realm.worlds.logic
 
         public override void Tick(RealmTime time)
         {
-            if (Closed)
-                Manager.Monitor.ClosePortal(Id);
-            else
-                Manager.Monitor.OpenPortal(Id);
-
+            _overseer.Tick(time);
             base.Tick(time);
-
-            if (IsLimbo || Deleted) 
-                return;
-
-            if (_overseerTask == null || _overseerTask.IsCompleted)
-            {
-                _overseerTask = Task.Factory.StartNew(() =>
-                {
-                    var secondsElapsed = time.TotalElapsedMs/1000;
-                    if (secondsElapsed > 10 && secondsElapsed%1800 < 10 && !IsClosing())
-                        CloseRealm();
-
-                    if (Closed && Players.Count == 0 && _overseer != null)
-                    {
-                        Init(); // will reset everything back to the way it was when made
-                        Closed = false;
-                    }
-
-                    _overseer?.Tick(time);
-                }).ContinueWith(e =>
-                    Log.Error(e.Exception.InnerException.ToString()),
-                    TaskContinuationOptions.OnlyOnFaulted);
-            }
-        }
-
-        public void EnemyKilled(Enemy enemy, Player killer)
-        {
-            if (_overseer != null && !enemy.Spawned)
-                _overseer.OnEnemyKilled(enemy, killer);
-        }
-
-        public override int EnterWorld(Entity entity)
-        {
-            var ret = base.EnterWorld(entity);
-            var player = entity as Player;
-            if (player != null)
-                _overseer?.OnPlayerEntered(player);
-            return ret;
-        }
-
-        public bool CloseRealm()
-        {
-            if (_overseer == null)
-                return false;
-
-            _overseer.InitCloseRealm();
-            return true;
-        }
-
-        public bool IsClosing()
-        {
-            if (_overseer == null)
-                return false;
-
-            return _overseer.Closing;
         }
     }
 }

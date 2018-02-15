@@ -833,21 +833,21 @@ namespace wServer.realm.entities
                 foreach (var player in Owner.Players.Values)
                     player.SendInfo($"{Name}'s {item.DisplayName} breaks and he disappears");
 
-                ReconnectToNexus();
+                ReconnectToRealm();
                 return true;
             }
             return false;
         }
 
-        private void ReconnectToNexus()
+        private void ReconnectToRealm()
         {
             HP = 1;
             _client.Reconnect(new Reconnect()
             {
                 Host = "",
                 Port = 2050,
-                GameId = World.Nexus,
-                Name = "Nexus"
+                GameId = World.Realm,
+                Name = "Realm"
             });
         }
 
@@ -863,24 +863,18 @@ namespace wServer.realm.entities
             if (_client.State == ProtocolState.Disconnected || _dead)
                 return;
 
-
             if (Resurrection())
+            {
+                RemoveItem(4, 0, 3);
                 return;
-
-            CheckPlayer(Level, Rank);
+            }
+           
+            RemoveItem(10, 0, 3);
             AnnounceDeath(killer);
-            ReconnectToNexus();
+            ReconnectToRealm();
         }
 
-        private void CheckPlayer(int level, int rank)
-        {
-            if (rank <= 0)
-                RemoveItem(8, 0, 3);
-            else
-                RemoveItem(8, 0, 2);           
-        }
-
-        private void RemoveItem(int amount,int min,  int max)
+        private void RemoveItem(int amount, int min,  int max)
         {
             Random inv = new Random();
             Random c1 = new Random();
