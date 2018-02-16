@@ -38,18 +38,6 @@ namespace wServer.realm
         {
             var x = 0;
             var y = 0;
-            var realmPortalRegions = _world.Map.Regions.Where(t => t.Value == TileRegion.Realm_Portals).ToArray();
-            if (realmPortalRegions.Length > _portals.Count)
-            {
-                KeyValuePair<IntPoint, TileRegion> sRegion;
-                do
-                {
-                    sRegion = realmPortalRegions.ElementAt(_rand.Next(0, realmPortalRegions.Length));
-                } while (_portals.Values.Any(p => p.X == sRegion.Key.X + 0.5f && p.Y == sRegion.Key.Y + 0.5f));
-                
-                x = sRegion.Key.X;
-                y = sRegion.Key.Y;
-            }
             return new Position() { X = x, Y = y };
         }
 

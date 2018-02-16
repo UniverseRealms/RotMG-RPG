@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using wServer.realm.worlds;
-using wServer.realm.worlds.logic;
+﻿using wServer.realm.worlds;
 
 namespace wServer.realm.setpieces
 {
@@ -18,7 +12,8 @@ namespace wServer.realm.setpieces
 
         public void RenderSetPiece(World world, IntPoint intPoint)
         {
-            int[,] _size = new int[Size, Size];
+            var proto = world.Manager.Resources.Worlds["StrongHold"];
+            SetPieces.RenderFromProto(world, intPoint, proto);
         }
     }
 }

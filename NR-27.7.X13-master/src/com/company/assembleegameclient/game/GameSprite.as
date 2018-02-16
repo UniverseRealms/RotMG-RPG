@@ -201,7 +201,7 @@ public class GameSprite extends AGameSprite {
             this.showWaveCounter();
         }
         _local1 = StaticInjectorContext.getInjector().getInstance(Account);
-        if (map.name_ == Map.NEXUS) {
+        /*if (map.name_ == Map.NEXUS) {
             this.addToQueueSignal.dispatch(PopupNamesConfig.DAILY_LOGIN_POPUP, this.openDailyCalendarPopupSignal, -1, null);
             if (this.beginnersPackageModel.isBeginnerAvailable()) {
                 this.addToQueueSignal.dispatch(PopupNamesConfig.BEGINNERS_OFFER_POPUP, this.showBeginnersPackage, 1, null);
@@ -210,20 +210,11 @@ public class GameSprite extends AGameSprite {
                 this.addToQueueSignal.dispatch(PopupNamesConfig.PACKAGES_OFFER_POPUP, this.showPackage, 1, null);
             }
             this.flushQueueSignal.dispatch();
-        }
-        this.isNexus_ = (map.name_ == Map.NEXUS);
-        if (((this.isNexus_) || ((map.name_ == Map.DAILY_QUEST_ROOM)))) {
-            this.creditDisplay_ = new CreditDisplay(this, true, true);
-        }
-        else {
-            this.creditDisplay_ = new CreditDisplay(this);
-        }
+        }*/
+        this.creditDisplay_ = new CreditDisplay(this, true, true);
         this.creditDisplay_.x = 594;
         this.creditDisplay_.y = 0;
         addChild(this.creditDisplay_);
-
-
-
 
         var _local2:AppEngineClient = StaticInjectorContext.getInjector().getInstance(AppEngineClient);
         var _local3:Object = {
@@ -454,7 +445,7 @@ public class GameSprite extends AGameSprite {
     }
 
     override public function evalIsNotInCombatMapArea():Boolean {
-        return ((((((((((((map.name_ == Map.NEXUS)) || ((map.name_ == Map.VAULT)))) || ((map.name_ == Map.GUILD_HALL)))) || ((map.name_ == Map.CLOTH_BAZAAR)))) || ((map.name_ == Map.NEXUS_EXPLANATION)))) || ((map.name_ == Map.DAILY_QUEST_ROOM))));
+        return (true);
     }
 
     private function onEnterFrame(_arg1:Event):void {

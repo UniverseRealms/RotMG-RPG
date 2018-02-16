@@ -539,7 +539,8 @@ namespace wServer.realm.entities
         {
             var x = 0;
             var y = 0;
-            var spawnRegions = owner.GetSpawnPoints();
+            var spawnRegions = owner.Name == "Realm" ? owner.GetSpawnPoints(true) 
+                : owner.GetSpawnPoints(false);
             if (spawnRegions.Any())
             {
                 var rand = new System.Random();
@@ -704,6 +705,24 @@ namespace wServer.realm.entities
             }
         }
 
+        public void TeleportToSpawn(RealmTime time)
+        {
+            var x = 0;
+            var y = 0;
+
+            var spawnRegions = Owner.Name == "Realm" ? Owner.GetSpawnPoints(true)
+                : Owner.GetSpawnPoints(false);
+            if (spawnRegions.Any())
+            {
+                var rand = new System.Random();
+                var sRegion = spawnRegions.ElementAt(rand.Next(0, spawnRegions.Length));
+                x = sRegion.Key.X;
+                y = sRegion.Key.Y;
+            }
+
+            TeleportPosition(time, x, y, false);
+        }
+
         public void Teleport(RealmTime time, int objId, bool ignoreRestrictions = false)
         {
             var obj = Owner.GetEntity(objId);
@@ -865,16 +884,16 @@ namespace wServer.realm.entities
 
             if (Resurrection())
             {
-                RemoveItem(4, 0, 3);
+                RemoveItem(4, 3);
                 return;
             }
            
-            RemoveItem(10, 0, 3);
+            RemoveItem(10, 3);
             AnnounceDeath(killer);
             ReconnectToRealm();
         }
 
-        private void RemoveItem(int amount, int min,  int max)
+        private void RemoveItem(int amount, int max)
         {
             Random inv = new Random();
             Random c1 = new Random();
@@ -883,12 +902,13 @@ namespace wServer.realm.entities
             for (var i = 0; i < amount; i++)
             {
                 int invnum = inv.Next(0, Inventory.Length);
-                int chance = c1.Next(min, max);
-                int chance2 = c2.Next(min, max);
+                int chance = c1.Next(0 , max);
+                int chance2 = c2.Next(0 , max);
 
                 if (chance != chance2 && Inventory[invnum] != null)
                     Inventory[invnum] = null; 
             }
+            Log.Warn("Item Removed!");
         }
 
         public void Reconnect(World world)

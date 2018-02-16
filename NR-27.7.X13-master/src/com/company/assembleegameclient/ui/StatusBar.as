@@ -185,11 +185,13 @@ public class StatusBar extends Sprite {
 
     public function drawWithMouseOver():void {
         if (this.max_ > 0) {
-            this.valueText_.setStringBuilder(this.valueTextStringBuilder_.setString(((this.val_ + "/") + this.max_)));
+            this.valueText_.setStringBuilder(this.valueTextStringBuilder_.setString(((GetValueText(this.val_) + "/") + GetValueText(this.max_))));
         }
         else {
-            this.valueText_.setStringBuilder(this.valueTextStringBuilder_.setString(("" + this.val_)));
+            this.valueText_.setStringBuilder(this.valueTextStringBuilder_.setString(("" + GetValueText(this.val_))));
         }
+
+
         if (!contains(this.valueText_)) {
             this.valueText_.mouseEnabled = false;
             this.valueText_.mouseChildren = false;
@@ -211,6 +213,18 @@ public class StatusBar extends Sprite {
                 removeChild(this.boostText_);
             }
         }
+    }
+
+    private function GetValueText(_arg1:int):String{
+        var _local1:String = _arg1.toString();
+
+        if (_arg1 > 1000) {
+            _local1 = _local1.slice(0, _local1.length - 2);
+            var _local2:String = _local1.charAt(_local1.length - 1);
+            _local1 = _local1.replace(_local2, "." + _local2);
+            _local1 += "K";
+        }
+        return _local1;
     }
 
     public function showMultiplierText():void {

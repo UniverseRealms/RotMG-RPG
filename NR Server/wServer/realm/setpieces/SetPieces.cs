@@ -34,6 +34,11 @@ namespace wServer.realm.setpieces
             return Tuple.Create(piece, min, max, terrains);
         }
 
+        static Tuple<ISetPiece, IntPoint> CreateNexus(ISetPiece setPiece, IntPoint location)
+        {
+            return Tuple.Create(setPiece, location);
+        }
+
         static readonly List<Tuple<ISetPiece, int, int, WmapTerrain[]>> setPieces = new List<Tuple<ISetPiece, int, int, WmapTerrain[]>>()
         {
             SetPiece(new Building(), 80, 100, WmapTerrain.LowForest, WmapTerrain.LowPlains, WmapTerrain.MidForest),
@@ -46,9 +51,21 @@ namespace wServer.realm.setpieces
             SetPiece(new TempleB(), 10, 20, WmapTerrain.MidForest, WmapTerrain.MidPlains),
             SetPiece(new Oasis(), 0, 5, WmapTerrain.LowSand, WmapTerrain.MidSand),
             SetPiece(new Pyre(), 0, 5, WmapTerrain.MidSand, WmapTerrain.HighSand),
-            SetPiece(new KageKami(), 2, 3, WmapTerrain.HighForest, WmapTerrain.HighPlains),
-            SetPiece(new SPNexus(), 1, 1, WmapTerrain.LowSand, WmapTerrain.LowSand)
+            SetPiece(new KageKami(), 2, 3, WmapTerrain.HighForest, WmapTerrain.HighPlains)
         };
+
+        static readonly List<Tuple<ISetPiece, IntPoint>> MakeNexus = new List<Tuple<ISetPiece, IntPoint>>()
+        { 
+            CreateNexus(new SPNexus(), new IntPoint(380, 380))
+        };
+        
+        public static void GenNexus(World world)
+        {
+            foreach (var i in MakeNexus)
+            {
+                i.Item1.RenderSetPiece(world, i.Item2);
+            }
+        }
 
         public static int[,] rotateCW(int[,] mat)
         {

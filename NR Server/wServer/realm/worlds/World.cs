@@ -152,9 +152,16 @@ namespace wServer.realm.worlds
             return !Closed || client.Account.Admin;
         }
 
-        public virtual KeyValuePair<IntPoint, TileRegion> [] GetSpawnPoints()
+        public virtual KeyValuePair<IntPoint, TileRegion> [] GetSpawnPoints(bool isrealm)
         {
+            if (isrealm)
+                return Map.Regions.Where(t => t.Value == TileRegion.RealmSpawn).ToArray();
             return Map.Regions.Where(t => t.Value == TileRegion.Spawn).ToArray();
+        }
+
+        public IntPoint SpawnPosition(bool isrealm)
+        {
+            return GetSpawnPoints(isrealm)[0].Key;
         }
         
         public virtual World GetInstance(Client client)

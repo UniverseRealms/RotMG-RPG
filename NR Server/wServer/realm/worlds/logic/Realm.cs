@@ -35,6 +35,7 @@ namespace wServer.realm.worlds.logic
 
             FromWorldMap(new MemoryStream(Manager.Resources.Worlds["Realm"].wmap[_mapId - 1]));
             SetPieces.ApplySetPieces(this);
+            SetPieces.GenNexus(this);
             
             if (_oryxPresent)
             {

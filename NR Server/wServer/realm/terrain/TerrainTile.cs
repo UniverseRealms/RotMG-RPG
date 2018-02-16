@@ -25,7 +25,7 @@ namespace terrain
     {
         None,
         Spawn,
-        Realm_Portals,
+        RealSpawn,
         Store_1,
         Store_2,
         Store_3,

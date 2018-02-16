@@ -194,7 +194,7 @@ namespace wServer.realm.entities
             double? bestScore = null;
             var pX = !destination.HasValue ? X : destination.Value.X;
             var pY = !destination.HasValue ? Y : destination.Value.Y;
-            
+
             foreach (var i in Owner.Quests.Values
                 .OrderBy(quest => MathsUtils.DistSqr(quest.X, quest.Y, pX, pY)))
             {
@@ -245,6 +245,7 @@ namespace wServer.realm.entities
             {
                 Level++;
                 StatPoint++;
+                SendInfo("You have gained a statpoint!");
                 ExperienceGoal = GetExpGoal(Level);
 
                 HP = Stats[0];

@@ -4,7 +4,7 @@
    <Region type="0x01" id="Spawn">
       <Color>0x00FF00</Color>
    </Region>
-   <Region type="0x02" id="Realm Portals">
+   <Region type="0x02" id="RealmSpawn">
       <Color>0xFF0000</Color>
    </Region>
    <Region type="0x03" id="Store 1">

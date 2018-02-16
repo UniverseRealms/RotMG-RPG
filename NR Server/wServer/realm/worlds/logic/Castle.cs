@@ -21,7 +21,7 @@ namespace wServer.realm.worlds.logic
             PlayersEntering = 0;
         }
 
-        public override KeyValuePair<IntPoint, TileRegion>[] GetSpawnPoints()
+        public override KeyValuePair<IntPoint, TileRegion>[] GetSpawnPoints(bool isrealm)
         {
             if (PlayersEntering < 20)
             {

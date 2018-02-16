@@ -5,6 +5,7 @@ namespace wServer.networking.packets.incoming
     public class Teleport : IncomingMessage
     {
         public int ObjectId { get; set; }
+        public bool IsRecon { get; set; }
 
         public override PacketId ID => PacketId.TELEPORT;
         public override Packet CreateInstance() { return new Teleport(); }
@@ -12,6 +13,7 @@ namespace wServer.networking.packets.incoming
         protected override void Read(NReader rdr)
         {
             ObjectId = rdr.ReadInt32();
+            IsRecon = rdr.ReadBoolean();
         }
         protected override void Write(NWriter wtr)
         {
