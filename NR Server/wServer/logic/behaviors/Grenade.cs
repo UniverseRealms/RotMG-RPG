@@ -85,7 +85,7 @@ namespace wServer.logic.behaviors
                         }, host, null, PacketPriority.Low);
                         world.AOE(target, radius, true, p =>
                         {
-                            (p as IPlayer).Damage(damage, host);
+                            (p as IPlayer).Damage(damage, host, time);
                             if (!p.HasConditionEffect(ConditionEffects.Invincible) && 
                                 !p.HasConditionEffect(ConditionEffects.Stasis))
                                 p.ApplyConditionEffect(effect, effectDuration);

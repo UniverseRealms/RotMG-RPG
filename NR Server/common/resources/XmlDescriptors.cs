@@ -253,6 +253,20 @@ namespace common.resources
         }
     }
 
+    public class Rune
+    {
+        public string Effect { get; set; }
+        public string Rarity { get; set; }
+
+        public Rune(XElement elem)
+        {
+            if (elem.Element("Effect") != null)
+                Effect = elem.Element("Effect").Value;
+            if (elem.Element("Rarity") != null)
+                Rarity = elem.Element("Rarity").Value;
+        }
+    }
+
     public enum ActivateEffects
     {
         Shoot,
@@ -516,6 +530,7 @@ namespace common.resources
         public ActivateEffect[] ActivateEffects { get; private set; }
         public Crate[] Crates { get; set; }
         public ProjectileDesc[] Projectiles { get; private set; }
+        public Rune[] RuneStone { get; set; }
 
         public Item(ushort type, XElement elem)
         {
@@ -685,9 +700,12 @@ namespace common.resources
             var crate = new List<Crate>();
             foreach (XElement i in elem.Elements("Crate"))
                 crate.Add(new Crate(i));
-            
-                
             Crates = crate.ToArray();
+
+            var runeStone = new List<Rune>();
+            foreach (XElement i in elem.Elements("Rune"))
+                runeStone.Add(new Rune(i));
+            RuneStone = runeStone.ToArray();
 
             var prj = new List<ProjectileDesc>();
             foreach (XElement i in elem.Elements("Projectile"))

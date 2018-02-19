@@ -680,6 +680,12 @@ namespace common
             set { SetValue<ushort[]>("items", value); }
         }
 
+        public ushort RuneStone
+        {
+            get { return GetValue<ushort>("rune"); }
+            set { SetValue<ushort>("rune", value); }
+        }
+
         public int HP
         {
             get { return GetValue<int>("hp"); }

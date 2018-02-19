@@ -178,6 +178,12 @@ namespace wServer.realm.entities
                         return;
                     }
 
+                    if (IsRune(item))
+                    {
+                        SetRune(item);
+                        return;
+                    }
+
                     if (item.Consumable)
                     {
                         var gameData = Manager.Resources.GameData;
@@ -241,6 +247,25 @@ namespace wServer.realm.entities
                 else
                     Client.SendPacket(new InvResult() { Result = 1 });
             }
+        }
+
+        private bool IsRune(Item item)
+        {
+            foreach (var c in item.RuneStone)
+                if (c != null)
+                    return true;
+            return false;
+        }
+
+        private void SetRune(Item item)
+        {
+            RuneStone = item.ObjectType;
+            RSEffect = item.RuneStone[0].Effect;
+            SendInfo("The power flows in you...");
+
+            for (var i = 3; i < Inventory.Length; i++)
+                if (Inventory[i] == item)
+                    Inventory[i] = null;
         }
 
         private bool IsCrate(Item item)

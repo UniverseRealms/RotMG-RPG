@@ -95,6 +95,7 @@ namespace wServer.realm
         HasBackpack = 79,
         Skin = 80,      
         StatPoint = 81,
+        RuneStone = 82,
         Effects2 = 96,
         Tokens = 97,
         DamageMin = 98,

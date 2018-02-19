@@ -1515,6 +1515,9 @@ public class GameServerConnectionConcrete extends GameServerConnection {
                 case StatData.CONDITION_STAT:
                     _arg1.condition_[ConditionEffect.CE_FIRST_BATCH] = _local8;
                     break;
+                case StatData.RUNE_STONE_STAT:
+                    _local4.runeSlot_ = _local8;
+                    break;
                 case StatData.INVENTORY_0_STAT:
                 case StatData.INVENTORY_1_STAT:
                 case StatData.INVENTORY_2_STAT:

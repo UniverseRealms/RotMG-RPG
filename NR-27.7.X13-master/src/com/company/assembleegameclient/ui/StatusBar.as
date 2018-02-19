@@ -4,7 +4,9 @@ import com.company.assembleegameclient.parameters.Parameters;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.events.TimerEvent;
 import flash.filters.DropShadowFilter;
+import flash.utils.Timer;
 
 import kabam.rotmg.text.view.TextFieldDisplayConcrete;
 import kabam.rotmg.text.view.stringBuilder.LineBuilder;
@@ -41,13 +43,16 @@ public class StatusBar extends Sprite {
     private var repetitions:int;
     private var direction:int = -1;
     private var speed:Number = 0.1;
+    private var isHp:Boolean;
+    private var flashtick:int = 0;
 
-    public function StatusBar(_arg1:int, _arg2:int, _arg3:uint, _arg4:uint, _arg5:String = null) {
+    public function StatusBar(_arg1:int, _arg2:int, _arg3:uint, _arg4:uint, _arg5:String = null, _arg6:Boolean = false) {
         this.colorSprite = new Sprite();
         super();
         addChild(this.colorSprite);
         this.w_ = _arg1;
         this.h_ = _arg2;
+        isHp = _arg6;
         this.defaultForegroundColor = (this.color_ = _arg3);
         this.defaultBackgroundColor = (this.backColor_ = _arg4);
         this.textColor_ = 0xFFFFFF;
@@ -116,6 +121,17 @@ public class StatusBar extends Sprite {
         this.internalDraw();
     }
 
+    private function changeActiveColor(_arg1:int, _arg2:int, _arg3:uint):uint {
+        var _local1:int = _arg2 / _arg1;
+        if (_local1 > 1.5 && _local1 < 2.5){
+            return 0xCE6E1A;
+        } else if (_local1 > 2.5){
+            return 0x681104;
+        } else {
+            return _arg3;
+        }
+    }
+
     public function setLabelText(_arg1:String, _arg2:Object = null):void {
         this.labelTextStringBuilder_.setParams(_arg1, _arg2);
         this.labelText_.setStringBuilder(this.labelTextStringBuilder_);
@@ -164,7 +180,11 @@ public class StatusBar extends Sprite {
             this.colorSprite.graphics.beginFill(this.pulseBackColor);
             this.colorSprite.graphics.drawRect(0, 0, this.w_, this.h_);
         }
-        this.colorSprite.graphics.beginFill(this.color_);
+        if (isHp) {
+            this.colorSprite.graphics.beginFill(changeActiveColor(this.val_, this.max_, this.color_));
+        } else {
+            this.colorSprite.graphics.beginFill(this.color_);
+        }
         if (this.max_ > 0) {
             this.colorSprite.graphics.drawRect(0, 0, (this.w_ * (this.val_ / this.max_)), this.h_);
         }
@@ -190,7 +210,6 @@ public class StatusBar extends Sprite {
         else {
             this.valueText_.setStringBuilder(this.valueTextStringBuilder_.setString(("" + GetValueText(this.val_))));
         }
-
 
         if (!contains(this.valueText_)) {
             this.valueText_.mouseEnabled = false;

@@ -85,6 +85,7 @@ public class StatData {
     public static const HASBACKPACK_STAT:int = 79;
     public static const TEXTURE_STAT:int = 80;
     public static const STAT_POINT_STAT:int = 81;
+    public static const RUNE_STONE_STAT:int = 82;
     public static const NEW_CON_STAT:int = 96;
     public static const FORTUNE_TOKEN_STAT:int = 97;
 

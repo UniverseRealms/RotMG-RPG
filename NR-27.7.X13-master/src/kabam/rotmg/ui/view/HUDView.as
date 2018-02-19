@@ -4,6 +4,7 @@ import com.company.assembleegameclient.game.GameSprite;
 import com.company.assembleegameclient.objects.GameObject;
 import com.company.assembleegameclient.objects.Player;
 import com.company.assembleegameclient.ui.RewardNotification;
+import com.company.assembleegameclient.ui.RuneSlot;
 import com.company.assembleegameclient.ui.TradePanel;
 import com.company.assembleegameclient.ui.panels.InteractPanel;
 import com.company.assembleegameclient.ui.panels.itemgrids.EquippedGrid;
@@ -30,11 +31,12 @@ public class HUDView extends Sprite implements UnFocusAble {
 
     private const BG_POSITION:Point = new Point(0, 0);
     private const MAP_POSITION:Point = new Point(4, 4);
-    private const CHARACTER_DETAIL_PANEL_POSITION:Point = new Point(0, 198);
-    private const STAT_METERS_POSITION:Point = new Point(12, 230);
+    private const CHARACTER_DETAIL_PANEL_POSITION:Point = new Point(0, 154);
+    private const STAT_METERS_POSITION:Point = new Point(12, 192);
     private const EQUIPMENT_INVENTORY_POSITION:Point = new Point(14, 304);
     private const TAB_STRIP_POSITION:Point = new Point(7, 346);
     private const INTERACT_PANEL_POSITION:Point = new Point(0, 500);
+    private const RUNE_SLOT_POSITION:Point = new Point(13, 260);
 
     private var background:CharacterWindowBackground;
     private var miniMap:MiniMapImp;
@@ -47,6 +49,7 @@ public class HUDView extends Sprite implements UnFocusAble {
     public var interactPanel:InteractPanel;
     public var tradePanel:TradePanel;
     private var rewardNotification:RewardNotification;
+    private var runeSlot:RuneSlot;
 
     public function HUDView() {
         this.createAssets();
@@ -56,10 +59,11 @@ public class HUDView extends Sprite implements UnFocusAble {
 
     private function createAssets():void {
         this.background = new CharacterWindowBackground();
-        this.miniMap = new MiniMapImp(192, 192);
+        this.miniMap = new MiniMapImp(192, 150);
         this.tabStrip = new TabStripView();
         this.characterDetails = new CharacterDetailsView();
         this.statMeters = new StatMetersView();
+        this.runeSlot = new RuneSlot();
     }
 
     private function addAssets():void {
@@ -81,6 +85,8 @@ public class HUDView extends Sprite implements UnFocusAble {
         this.characterDetails.y = this.CHARACTER_DETAIL_PANEL_POSITION.y;
         this.statMeters.x = this.STAT_METERS_POSITION.x;
         this.statMeters.y = this.STAT_METERS_POSITION.y;
+        this.runeSlot.x = this.RUNE_SLOT_POSITION.x;
+        this.runeSlot.y = this.RUNE_SLOT_POSITION.y;
     }
 
     public function setPlayerDependentAssets(_arg1:GameSprite):void {
@@ -89,6 +95,11 @@ public class HUDView extends Sprite implements UnFocusAble {
         this.createEquippedGrid();
         this.createInteractPanel(_arg1);
         addRewardNotifivation();
+        addRuneSlot();
+    }
+
+    private function addRuneSlot():void {
+        addChild(this.runeSlot);
     }
 
     private function addRewardNotifivation():void {
@@ -138,7 +149,7 @@ public class HUDView extends Sprite implements UnFocusAble {
         var _local1:GraphicsSolidFill = new GraphicsSolidFill(0x676767, 1);
         var _local2:GraphicsPath = new GraphicsPath(new Vector.<int>(), new Vector.<Number>());
         _local3 = new <IGraphicsData>[_local1, _local2, GraphicsUtil.END_FILL];
-        GraphicsUtil.drawCutEdgeRect(0, 0, 178, 46, 6, [1, 1, 1, 1], _local2);
+        GraphicsUtil.drawCutEdgeRect(0, 0, 178, 46, 6, [0, 0, 0, 0], _local2);
         this.equippedGridBG = new Sprite();
         this.equippedGridBG.x = (this.EQUIPMENT_INVENTORY_POSITION.x - 3);
         this.equippedGridBG.y = (this.EQUIPMENT_INVENTORY_POSITION.y - 3);
@@ -146,13 +157,14 @@ public class HUDView extends Sprite implements UnFocusAble {
         addChild(this.equippedGridBG);
     }
 
-    public function draw():void {
+    public function draw(_arg1:Player):void {
         if (this.equippedGrid) {
             this.equippedGrid.draw();
         }
         if (this.interactPanel) {
             this.interactPanel.draw();
         }
+        this.runeSlot.Draw(_arg1);
     }
 
     public function startTrade(_arg1:AGameSprite, _arg2:TradeStart):void {

@@ -34,7 +34,7 @@ public class TabStripView extends Sprite {
     public var currentTabIndex:int;
     public var friendsBtn:IconButton;
 
-    public function TabStripView(_arg1:Number = 186, _arg2:Number = 153) {
+    public function TabStripView(_arg1:Number = 186, _arg2:Number = 127) {
         this.tabs = new Vector.<TabView>();
         this.contents = new Vector.<Sprite>();
         super();
@@ -80,7 +80,7 @@ public class TabStripView extends Sprite {
         var _local1:GraphicsSolidFill = new GraphicsSolidFill(TabConstants.BACKGROUND_COLOR, 1);
         var _local2:GraphicsPath = new GraphicsPath(new Vector.<int>(), new Vector.<Number>());
         var _local3:Vector.<IGraphicsData> = new <IGraphicsData>[_local1, _local2, GraphicsUtil.END_FILL];
-        GraphicsUtil.drawCutEdgeRect(0, 0, this._width, (this._height - TabConstants.TAB_TOP_OFFSET), 6, [1, 1, 1, 1], _local2);
+        GraphicsUtil.drawCutEdgeRect(0, 0, this._width, (this._height), 0, [0, 0, 0, 0], _local2);
         this.background.graphics.drawGraphicsData(_local3);
         this.background.y = TabConstants.TAB_TOP_OFFSET;
         addChild(this.background);

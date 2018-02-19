@@ -2680,6 +2680,25 @@
       <BagType>5</BagType>
       <feedPower>150</feedPower>
    </Object>
+      <Object type="0xc97" id="Healing Rune">
+      <Class>Equipment</Class>
+      <Item/>
+      <Texture>
+         <File>lofiObj2</File>
+         <Index>0x86</Index>
+      </Texture>
+	  <Rune>
+		<Effect>Heals</Effect>
+		<Rarity>Uncommon</Rarity>
+	  </Rune>
+      <SlotType>10</SlotType>
+      <Tier>2</Tier>
+      <Description>This rune increase your health regeneration rate.</Description>
+      <Sound>use_potion</Sound>
+      <IsCrate/>
+      <BagType>5</BagType>
+      <feedPower>150</feedPower>
+   </Object>
    <Object type="0xc95" id="Bronze Key">
       <Class>Equipment</Class>
       <Item/>

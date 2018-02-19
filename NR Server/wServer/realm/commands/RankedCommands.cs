@@ -762,7 +762,7 @@ namespace wServer.realm.commands
                 if (i.Account.Name.EqualsIgnoreCase(args))
                 {
                     i.Player.HP = 0;
-                    i.Player.Death(player.Name);
+                    i.Player.Death(player.Name, time);
                     player.SendInfo("Player killed!");
                     return true;
                 }

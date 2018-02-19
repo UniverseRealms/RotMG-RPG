@@ -40,10 +40,10 @@ namespace wServer.logic.behaviors
                     foreach (var plr in host.Owner.Players.Values
                         .Where(p => !p.HasConditionEffect(ConditionEffects.Hidden)))
                     {
-                        Kill(host, plr);
+                        Kill(host, plr, time);
                     }
                 else
-                    Kill(host, host.AttackTarget);
+                    Kill(host, host.AttackTarget, time);
 
                 // send kill message
                 if (_killMessage != null)
@@ -73,7 +73,7 @@ namespace wServer.logic.behaviors
             state = cool;
         }
 
-        private void Kill(Entity host, Player player)
+        private void Kill(Entity host, Player player, RealmTime time)
         {
             host.Owner.BroadcastPacketNearby(new ShowEffect()
             {
@@ -84,7 +84,7 @@ namespace wServer.logic.behaviors
             }, host, null, PacketPriority.Low);
 
             // kill player
-            player.Death(host.ObjectDesc.DisplayId, rekt: _rekt);
+            player.Death(host.ObjectDesc.DisplayId, time);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace wServer.realm.entities
                         OxygenBar -= 2;
 
                     if (HP <= 0)
-                        Death("suffocation");
+                        Death("suffocation", time);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace wServer.realm.entities
 
                     if (HP <= 0)
                     {
-                        Death(tileDesc.ObjectId, tile:tile);
+                        Death(tileDesc.ObjectId, time);
                         return true;
                     }
                         
@@ -105,7 +105,7 @@ namespace wServer.realm.entities
 
                 if (HP <= 0)
                 {
-                    Death(tileDesc.ObjectId, tile: tile);
+                    Death(tileDesc.ObjectId, time);
                 }
             }
         }

@@ -344,6 +344,8 @@ namespace wServer.realm.worlds
                 EnterWorld(i);
         }
 
+        public Dictionary<ushort, int> EnemyCount = new Dictionary<ushort, int>();
+
         public virtual int EnterWorld(Entity entity)
         {
             if (entity is Player)

@@ -108,7 +108,6 @@
     <Compile Include="networking\packets\outgoing\ClaimDailyRewardResponse.cs" />
     <Compile Include="networking\packets\outgoing\KeyInfoResponse.cs" />
     <Compile Include="networking\packets\outgoing\RewardPacket.cs" />
-    <Compile Include="realm\entities\player\Player.CheckInventory.cs" />
     <Compile Include="realm\ISControl.cs" />
     <Compile Include="logic\behaviors\AnnounceOnDeath.cs" />
     <Compile Include="logic\behaviors\ChangeMusic.cs" />
@@ -315,6 +314,7 @@
     <Compile Include="realm\Inventory.cs" />
     <Compile Include="realm\Market.cs" />
     <Compile Include="realm\ConnectManager.cs" />
+    <Compile Include="realm\RuneSlot.cs" />
     <Compile Include="realm\setpieces\KageKami.cs" />
     <Compile Include="realm\BaseStatManager.cs" />
     <Compile Include="realm\setpieces\SPNexus.cs" />

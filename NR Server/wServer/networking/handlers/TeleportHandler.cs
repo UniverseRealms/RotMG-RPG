@@ -21,7 +21,7 @@ namespace wServer.networking.handlers
             if (player == null || player.Owner == null)
                 return;
 
-            if (packet.IsRecon)
+            if (packet.IsRecon && player.Owner.Name == "Realm")
             {
                 Timer timer = new Timer(5000);
                 timer.Start();
@@ -33,6 +33,10 @@ namespace wServer.networking.handlers
                     player.TeleportToSpawn(time);
                     timer.Stop();
                 }
+            }
+            else if (player.Owner.Name != "Realm" && packet.IsRecon)
+            {
+                player.ReconnectToRealm();
             }
             else
             {

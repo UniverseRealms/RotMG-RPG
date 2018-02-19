@@ -82,7 +82,7 @@ public class HUDMediator extends Mediator {
     }
 
     private function onUpdateHUD(_arg1:Player):void {
-        this.view.draw();
+        this.view.draw(_arg1);
     }
 
     private function onInitializeHUD(_arg1:Player):void {

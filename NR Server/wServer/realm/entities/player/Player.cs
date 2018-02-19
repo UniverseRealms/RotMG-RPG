@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using common;
@@ -7,17 +6,16 @@ using common.resources;
 using wServer.logic;
 using wServer.networking.packets;
 using wServer.networking;
-using wServer.realm.terrain;
 using log4net;
 using wServer.networking.packets.outgoing;
 using wServer.realm.worlds;
-using wServer.realm.worlds.logic;
+using System.Timers;
 
 namespace wServer.realm.entities
 {
     interface IPlayer
     {
-        void Damage(int dmg, Entity src);
+        void Damage(int dmg, Entity src, RealmTime time);
         bool IsVisibleToEnemy();
     }
 
@@ -185,6 +183,14 @@ namespace wServer.realm.entities
             set { _rank.SetValue(value); }
         }
 
+        private readonly SV<ushort> _runestone;
+        public string RSEffect { get; set; }
+        public ushort RuneStone
+        {
+            get { return _runestone.GetValue(); }
+            set { _runestone.SetValue(value); }
+        }
+
         #region rankidentifier
         public Dictionary<string, int> RankIdentifier = new Dictionary<string, int>()
         {
@@ -222,7 +228,7 @@ namespace wServer.realm.entities
         public RInventory DbLink { get; private set; }
         public int[] SlotTypes { get; private set; }
         public Inventory Inventory { get; private set; }
-
+        
         public ItemStacker HealthPots { get; private set; }
         public ItemStacker MagicPots { get; private set; }
         public ItemStacker[] Stacks { get; private set; }
@@ -240,6 +246,7 @@ namespace wServer.realm.entities
                 case StatsType.ExperienceGoal: ExperienceGoal = (int)val; break;
                 case StatsType.Level: Level = (int)val; break;
                 case StatsType.StatPoint: StatPoint = (int)val; break;
+                case StatsType.RuneStone: RuneStone = (ushort)(int)val; break;
                 case StatsType.Fame: Fame = (int)val; break;
                 case StatsType.CurrentFame: CurrentFame = (int)val; break;
                 case StatsType.FameGoal: FameGoal = (int)val; break;
@@ -304,6 +311,7 @@ namespace wServer.realm.entities
             stats[StatsType.ExperienceGoal] = ExperienceGoal;
             stats[StatsType.Level] = Level;
             stats[StatsType.StatPoint] = StatPoint;
+            stats[StatsType.RuneStone] = RuneStone;
             stats[StatsType.CurrentFame] = CurrentFame;
             stats[StatsType.Fame] = Fame;
             stats[StatsType.FameGoal] = FameGoal;
@@ -395,6 +403,7 @@ namespace wServer.realm.entities
             chr.LDBoostTime = LDBoostTime;
             chr.LTBoostTime = LTBoostTime;
             chr.Items = Inventory.GetItemTypes();
+            chr.RuneStone = RuneStone;
         }
 
         public Player(Client client, bool saveInventory = true)
@@ -414,6 +423,8 @@ namespace wServer.realm.entities
             _experienceGoal = new SV<int>(this, StatsType.ExperienceGoal, 0, true);
             _level = new SV<int>(this, StatsType.Level, client.Character.Level);
             _statpoint = new SV<int>(this, StatsType.StatPoint, client.Character.StatPoint);
+            _runestone = new SV<ushort>(this, StatsType.RuneStone, client.Character.RuneStone);
+            
             _currentFame = new SV<int>(this, StatsType.CurrentFame, client.Account.Fame, true);
             _fame = new SV<int>(this, StatsType.Fame, client.Character.Fame, true);
             _fameGoal = new SV<int>(this, StatsType.FameGoal, 0, true);
@@ -564,6 +575,7 @@ namespace wServer.realm.entities
             base.Init(owner);
         }
 
+        private RuneSlot runeSlot;
         public override void Tick(RealmTime time)
         {
             if (!KeepAlive(time))
@@ -572,6 +584,8 @@ namespace wServer.realm.entities
             CheckTradeTimeout(time);
             HandleQuest(time);
 
+            runeSlot = new RuneSlot(this);
+            
             if (!HasConditionEffect(ConditionEffects.Paused))
             {
                 HandleRegen(time);
@@ -579,10 +593,8 @@ namespace wServer.realm.entities
                 HandleOceanTrenchGround(time);
                 TickActivateEffects(time);
                 FameCounter.Tick(time);
-
-                // TODO, server side ground damage
-                //if (HandleGround(time))
-                //    return; // death resulted
+                if (RuneStone != 0x00)
+                    runeSlot.HandleEffects(time, this);
             }
 
             base.Tick(time);
@@ -592,7 +604,7 @@ namespace wServer.realm.entities
 
             if (HP <= 0)
             {
-                Death("Unknown", rekt: true);
+                Death("Unknown", time);
                 return;
             }
         }
@@ -615,7 +627,7 @@ namespace wServer.realm.entities
 
         float _hpRegenCounter;
         float _mpRegenCounter;
-        float _hpPotRegenCounter;
+        public float HpIncRate = 1000f;
         void HandleRegen(RealmTime time)
         {
             // hp regen
@@ -623,7 +635,7 @@ namespace wServer.realm.entities
                 _hpRegenCounter = 0;
             else
             {
-                _hpRegenCounter += Stats.GetHPRegen() * time.ElaspedMsDelta / 1000f;
+                _hpRegenCounter += Stats.GetHPRegen() * time.ElaspedMsDelta / HpIncRate;
                 var regen = (int)_hpRegenCounter;
                 if (regen > 0)
                 {
@@ -784,6 +796,7 @@ namespace wServer.realm.entities
             return false;
         }
 
+        public bool IsDefenseRune = false;
         public override bool HitByProjectile(Projectile projectile, RealmTime time)
         {
             if (projectile.ProjectileOwner is Player ||
@@ -793,6 +806,8 @@ namespace wServer.realm.entities
             }
 
             var dmg = (int)Stats.GetDefenseDamage(projectile.Damage, projectile.ProjDesc.ArmorPiercing);
+            if (IsDefenseRune)
+                dmg = dmg - (int)(dmg / 9);
             if (!HasConditionEffect(ConditionEffects.Invulnerable))
                 HP -= dmg;
             ApplyConditionEffect(projectile.ProjDesc.Effects);
@@ -808,13 +823,12 @@ namespace wServer.realm.entities
 
             if (HP <= 0)
                 Death(projectile.ProjectileOwner.Self.ObjectDesc.DisplayId ??
-                      projectile.ProjectileOwner.Self.ObjectDesc.ObjectId,
-                      projectile.ProjectileOwner.Self);
+                      projectile.ProjectileOwner.Self.ObjectDesc.ObjectId, time);
 
             return base.HitByProjectile(projectile, time);
         }
 
-        public void Damage(int dmg, Entity src)
+        public void Damage(int dmg, Entity src, RealmTime time)
         {
             if (IsInvulnerable())
                 return;
@@ -834,8 +848,7 @@ namespace wServer.realm.entities
 
             if (HP <= 0)
                 Death(src.ObjectDesc.DisplayId ?? 
-                      src.ObjectDesc.ObjectId,
-                      src);
+                      src.ObjectDesc.ObjectId, time);
         }
 
         bool _dead;
@@ -858,7 +871,7 @@ namespace wServer.realm.entities
             return false;
         }
 
-        private void ReconnectToRealm()
+        public void ReconnectToRealm()
         {
             HP = 1;
             _client.Reconnect(new Reconnect()
@@ -877,7 +890,7 @@ namespace wServer.realm.entities
                     i.SendInfo(Name + " was killed by:" + killer + " at level:" + Level); 
         }
 
-        public void Death(string killer, Entity entity = null, WmapTile tile = null, bool rekt = false)
+        public void Death(string killer, RealmTime time)
         {
             if (_client.State == ProtocolState.Disconnected || _dead)
                 return;
@@ -890,23 +903,52 @@ namespace wServer.realm.entities
            
             RemoveItem(10, 3);
             AnnounceDeath(killer);
-            ReconnectToRealm();
-        }
 
-        private void RemoveItem(int amount, int max)
+            ApplyConditionEffect(new ConditionEffect()
+            {
+                Effect = ConditionEffectIndex.Paused,
+                DurationMS = 5000,
+            });
+            SendInfo("5 seconds until respawn...");
+
+            if (Owner.Name == "Realm")
+            {
+                TeleportToSpawn(time);
+                SendInfo("Realm");
+            }
+            else
+            {
+                Timer timer = new Timer(5000);
+                timer.Start();
+
+                timer.Elapsed += new ElapsedEventHandler(ElapedFunction);
+
+                void ElapedFunction(object o, ElapsedEventArgs e)
+                {
+                    ReconnectToRealm();
+                    timer.Stop();
+                }
+            }
+                
+            HP = 5;
+        }
+        
+        private void RemoveItem(int amount, int chance)
         {
             Random inv = new Random();
             Random c1 = new Random();
-            Random c2 = new Random();
 
+            RuneStone = 0x00;
             for (var i = 0; i < amount; i++)
             {
                 int invnum = inv.Next(0, Inventory.Length);
-                int chance = c1.Next(0 , max);
-                int chance2 = c2.Next(0 , max);
+                int removeamount = c1.Next(0, amount);
 
-                if (chance != chance2 && Inventory[invnum] != null)
-                    Inventory[invnum] = null; 
+                if (removeamount % chance != 0 && Inventory[invnum] != null)
+                {
+                    Inventory[invnum] = null;
+                    SendInfo("Removed!!!");
+                }
             }
             Log.Warn("Item Removed!");
         }

@@ -54,7 +54,6 @@ public class EquipmentToolTip extends ToolTip {
     private var uniqueEffects:Vector.<Effect>;
     private var itemSlotTypeId:int;
     private var invType:int;
-    private var inventorySlotID:uint;
     private var inventoryOwnerType:String;
     private var isInventoryFull:Boolean;
     private var playerCanUse:Boolean;

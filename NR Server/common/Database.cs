@@ -969,6 +969,7 @@ namespace common
                 Experience = 0,
                 Fame = 0,
                 Items = InitInventory(playerDesc.Equipment),
+                RuneStone = 0x00,
                 Stats = new int[]
                 {
                     playerDesc.Stats[0].StartingValue,

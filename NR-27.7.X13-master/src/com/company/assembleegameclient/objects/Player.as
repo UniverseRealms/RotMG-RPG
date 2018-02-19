@@ -88,6 +88,7 @@ public class Player extends Character {
     public var nextClassQuestFame_:int = -1;
     public var guildName_:String = null;
     public var guildRank_:int = -1;
+    public var runeSlot_:uint = 0x00;
     public var isFellowGuild_:Boolean = false;
     public var breath_:int = -1;
     public var maxMP_:int = 200;

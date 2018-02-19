@@ -360,7 +360,7 @@ namespace wServer.realm
             new Dictionary<ushort, Tuple<int, Tuple<string, double>[]>>()
         {
             { 0xbe , Tuple.Create(//0xbe is tiletype, 3000 is amount, Tuple(entityname, chance of spawning)
-                3000, new []
+                2000, new []
                 {
                     Tuple.Create("Pirate", 0.3),
                     Tuple.Create("Piratess", 0.1),
@@ -373,7 +373,7 @@ namespace wServer.realm
                 })
             },
             {  0x60 , Tuple.Create(
-                3000, new []
+                2000, new []
                 {
                     Tuple.Create("White Demon", 0.1),
                     Tuple.Create("Sprite God", 0.11),
@@ -491,17 +491,20 @@ namespace wServer.realm
             Log.Info("Realm positions initialized.");
         }
 
-        private void SpawnEnemies(bool isrespawned = false)
+        private int MaxCount()
         {
-            int currentcount = _world.Enemies.Count;
-            int max = 0;
+            int amount = 0;
             foreach (var i in RegionMobs)
-                max += i.Value.Item1;
+                amount += i.Value.Item1;
+            return amount;
+        }
 
+        private void SpawnEnemies()
+        {
             foreach (var i in RegionMobs)
             {
                 int count = 0;
-                while (count < i.Value.Item1 && currentcount < max)
+                while (count < i.Value.Item1)
                 {
                     string name = GetRandomName(RegionMobs[i.Key].Item2);
                     if (_world.Map[randomPosition(positions[i.Key]).X, randomPosition(positions[i.Key]).Y].TileDesc.ObjectType == i.Key)
@@ -510,10 +513,7 @@ namespace wServer.realm
                         count++;
                     }
                 }
-                if (!isrespawned)
-                    Log.Info($"Generated tile:[{i.Key}] entities! Amount: {count}");
-                else
-                    Log.Info($"Respawned tile:[{i.Key}] entities! Amount: {count}");
+                Log.Info($"Generated tile:[{i.Key}] entities! Amount: {count}");
             }
             Log.Info("Succesfully finished spawning!");
         }
@@ -534,7 +534,7 @@ namespace wServer.realm
             if (_tenSecondTick % 6 == 0)
             {
                 Log.Info("Controlling population...");
-                SpawnEnemies(true);
+                //RespawnEnemies();
             }
 
             _tenSecondTick++;

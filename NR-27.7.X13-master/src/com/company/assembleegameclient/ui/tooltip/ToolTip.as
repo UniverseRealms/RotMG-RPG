@@ -112,6 +112,11 @@ public class ToolTip extends Sprite {
         this.position();
     }
 
+    public function setPosition(_arg1:int, _arg2:int):void {
+        x = _arg1;
+        y = _arg1;
+    }
+
     protected function position():void {
         if (stage == null) {
             return;
