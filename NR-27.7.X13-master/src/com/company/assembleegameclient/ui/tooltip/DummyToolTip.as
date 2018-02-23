@@ -16,8 +16,6 @@ import kabam.rotmg.ui.view.SignalWaiter;
 
 public class DummyToolTip extends Sprite{
 
-    private var waiter:SignalWaiter = new SignalWaiter();
-
     private var titleTextField:TextFieldDisplayConcrete;
     private var desText:TextFieldDisplayConcrete;
 
@@ -82,7 +80,7 @@ public class DummyToolTip extends Sprite{
         this.desText.setStringBuilder(new LineBuilder().setParams(String(_arg1)));
         this.desText.setMultiLine(true);
         this.desText.setWordWrap(true);
-        this.desText.setTextWidth(_width);
+        this.desText.setTextWidth(_width - 5);
         this.desText.setTextHeight(_height - line.x);
     }
 

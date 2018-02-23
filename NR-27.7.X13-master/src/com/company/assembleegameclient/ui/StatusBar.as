@@ -223,11 +223,11 @@ public class StatusBar extends Sprite {
                 this.boostText_.mouseChildren = false;
                 addChild(this.boostText_);
             }
-            this.valueText_.x = ((this.w_ / 2) - ((this.valueText_.width + this.boostText_.width) / 2));
-            this.boostText_.x = (this.valueText_.x + this.valueText_.width);
+            this.valueText_.x = ((this.w_ / 2) - ((this.valueText_.width + this.boostText_.width) / 2)) + 7;
+            this.boostText_.x = (this.valueText_.x + this.valueText_.width) + 7;
         }
         else {
-            this.valueText_.x = ((this.w_ / 2) - (this.valueText_.width / 2));
+            this.valueText_.x = ((this.w_ / 2) - (this.valueText_.width / 2)) + 7;
             if (contains(this.boostText_)) {
                 removeChild(this.boostText_);
             }
@@ -237,13 +237,26 @@ public class StatusBar extends Sprite {
     private function GetValueText(_arg1:int):String{
         var _local1:String = _arg1.toString();
 
-        if (_arg1 > 1000) {
-            _local1 = _local1.slice(0, _local1.length - 2);
-            var _local2:String = _local1.charAt(_local1.length - 1);
-            _local1 = _local1.replace(_local2, "." + _local2);
+        if (_arg1 > 1000 && _arg1 < 1000000) {
+            _local1 = _local1.slice(0, GetLevelIndex(_arg1) + 1);
+            _local1 = _local1.slice(0, GetLevelIndex(_arg1)) + "." + _local1.slice(_local1.length - GetLevelIndex(_arg1) + 1);
             _local1 += "K";
+        } else if (_arg1 > 1000000){
+            _local1 = _local1.slice(0, _local1.length - 4);
+            _local1 = _local1.slice(0, _local1.length - 2) + "." +  _local1.slice(_local1.length - 2);
+            _local1 += "M";
         }
         return _local1;
+    }
+
+    private function GetLevelIndex(_arg1:int):int {
+        var _local1:int = _arg1/1000;
+        if (_local1 < 10) { return 1; }
+        else if ((_local1 > 10) && (_local1 < 100)) { return 2; }
+        else if ((_local1 > 100) && (_local1 < 1000)) { return 3; }
+        else if ((_local1 > 1000 ) && _local1 < 10000) { return 4; }
+        else if ((_local1 > 10000)) { return 5; }
+        else { return 1; }
     }
 
     public function showMultiplierText():void {

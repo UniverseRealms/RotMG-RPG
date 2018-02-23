@@ -10,6 +10,8 @@ namespace wServer.realm
 {
     public class RuneSlot
     {
+        private int _tick;
+
         public RuneSlot(Player player)
         {
             
@@ -17,15 +19,30 @@ namespace wServer.realm
 
         public void HandleEffects(RealmTime time, Player player)
         {
-            switch (player.RSEffect)
+            if (_tick % 2 == 0)
             {
-                case "Heals":
-                    IncreaseHealRate(player);
-                    break;
-                case "Defense":
-                    DamageReduction(player);
-                    break;
+                switch (player.RSEffect)
+                {
+                    case "Heals":
+                        IncreaseHealRate(player);
+                        break;
+                    case "Defense":
+                        DamageReduction(player);
+                        break;
+                    case "Damage":
+                        Damage(player);
+                        break;
+                    case "Mp":
+                        IncreaseManaRate(player);
+                        break;
+                }
             }
+            _tick++;
+        }
+
+        private void Damage(Player player)
+        {
+            //todo
         }
 
         private void DamageReduction(Player player)
@@ -33,9 +50,14 @@ namespace wServer.realm
             player.IsDefenseRune = true;
         }
 
+        private void IncreaseManaRate(Player player)
+        {
+            player.MpIncRate = 750f;
+        }
+
         private void IncreaseHealRate(Player player)
         {
-            player.HpIncRate = 750f;
+            player.HpIncRate = 750;
         }
     }
 }

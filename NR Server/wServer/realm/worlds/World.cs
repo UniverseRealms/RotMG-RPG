@@ -344,7 +344,7 @@ namespace wServer.realm.worlds
                 EnterWorld(i);
         }
 
-        public Dictionary<ushort, int> EnemyCount = new Dictionary<ushort, int>();
+        public int EnemyCount;
 
         public virtual int EnterWorld(Entity entity)
         {
@@ -637,6 +637,8 @@ namespace wServer.realm.worlds
                     return;
                 }
 
+                EnemyCount = Enemies.Count;
+
                 for (var i = Timers.Count - 1; i >= 0; i--)
                     try
                     {
@@ -652,21 +654,7 @@ namespace wServer.realm.worlds
 
                 foreach (var i in Players)
                     i.Value.Tick(time);
-                
-                /*(if (EnemiesCollision != null)
-                {
-                    foreach (var i in EnemiesCollision.GetActiveChunks(PlayersCollision))
-                        i.Tick(time);
-                    foreach (var i in StaticObjects.Where(x => x.Value is Decoy))
-                        i.Value.Tick(time);
-                }
-                else
-                {
-                    foreach (var i in Enemies)
-                        i.Value.Tick(time);
-                    foreach (var i in StaticObjects)
-                        i.Value.Tick(time);
-                }*/
+
                 foreach (var i in Projectiles)
                     i.Value.Tick(time);
             }

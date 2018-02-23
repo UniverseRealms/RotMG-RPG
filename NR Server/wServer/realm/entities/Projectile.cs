@@ -48,6 +48,7 @@ namespace wServer.realm.entities
         }
 
         CollisionMap<Entity> collision;
+        private int hittick = 0;
         public override void Tick(RealmTime time)
         {
             var elapsed = time.TotalElapsedMs - CreationTime;
@@ -57,31 +58,27 @@ namespace wServer.realm.entities
                 return;
             }
 
-            if (ProjectileOwner is Enemy)
-            {
-                var position = GetPosition(elapsed);
-                double nearestRadius = double.MaxValue;
-                Entity entity = null;
-
-                if (collision == null)
-                    collision = Owner.PlayersCollision;
-
-                foreach (var i in collision.HitTest(position.X, position.Y))
-                {
-                    if (!(i is Player)) return;
-
-                    double xSide = (i.X - position.X) * (i.X - position.X);
-                    double ySide = (i.Y - position.Y) * (i.Y - position.Y);
-
-                    if (xSide <= 0.4 && ySide <= 0.4 && xSide + ySide <= nearestRadius)
-                        entity = i;
-                }
-
-                if (entity != null && entity.HitByProjectile(this, time) == false)
-                    ForceHit(entity, time);
-            }
+            CheckEntity(time, elapsed);
             
             base.Tick(time);
+        }
+
+
+        private void CheckEntity(RealmTime time, long elapsed)
+        {
+            var x = GetPosition(elapsed).X;
+            var y = GetPosition(elapsed).Y;
+
+            if (ProjectileOwner is Enemy)
+            {
+                collision = Owner.PlayersCollision;
+
+                foreach (var i in collision.HitTest(x, y))
+                {
+                    if (x == i.X || y == i.Y)
+                        Log.Warn("Tick!");
+                }
+            }
         }
 
         public Position GetPosition(long elapsedTicks)

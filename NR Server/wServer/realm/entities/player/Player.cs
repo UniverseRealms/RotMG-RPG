@@ -10,6 +10,7 @@ using log4net;
 using wServer.networking.packets.outgoing;
 using wServer.realm.worlds;
 using System.Timers;
+using System.Diagnostics;
 
 namespace wServer.realm.entities
 {
@@ -306,6 +307,8 @@ namespace wServer.realm.entities
         protected override void ExportStats(IDictionary<StatsType, object> stats)
         {
             base.ExportStats(stats);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             stats[StatsType.AccountId] = AccountId.ToString();
             stats[StatsType.Experience] = Experience - GetLevelExp(Level);
             stats[StatsType.ExperienceGoal] = ExperienceGoal;
@@ -379,6 +382,8 @@ namespace wServer.realm.entities
             stats[StatsType.Rank] = Rank;
             stats[StatsType.Admin] = Admin;
             stats[StatsType.Tokens] = Tokens;
+            Log.Warn(stopwatch.ElapsedMilliseconds);
+            stopwatch.Stop();
         }
 
         public void SaveToCharacter()
@@ -628,6 +633,8 @@ namespace wServer.realm.entities
         float _hpRegenCounter;
         float _mpRegenCounter;
         public float HpIncRate = 1000f;
+        public float MpIncRate = 1000f;
+
         void HandleRegen(RealmTime time)
         {
             // hp regen
@@ -649,7 +656,7 @@ namespace wServer.realm.entities
                 _mpRegenCounter = 0;
             else
             {
-                _mpRegenCounter += Stats.GetMPRegen() * time.ElaspedMsDelta / 1000f;
+                _mpRegenCounter += Stats.GetMPRegen() * time.ElaspedMsDelta / MpIncRate;
                 var regen = (int)_mpRegenCounter;
                 if (regen > 0)
                 {
@@ -801,9 +808,7 @@ namespace wServer.realm.entities
         {
             if (projectile.ProjectileOwner is Player ||
                 IsInvulnerable())
-            {
                 return false;
-            }
 
             var dmg = (int)Stats.GetDefenseDamage(projectile.Damage, projectile.ProjDesc.ArmorPiercing);
             if (IsDefenseRune)
@@ -914,7 +919,6 @@ namespace wServer.realm.entities
             if (Owner.Name == "Realm")
             {
                 TeleportToSpawn(time);
-                SendInfo("Realm");
             }
             else
             {
@@ -929,8 +933,8 @@ namespace wServer.realm.entities
                     timer.Stop();
                 }
             }
-                
-            HP = 5;
+
+            HP = 10;
         }
         
         private void RemoveItem(int amount, int chance)
@@ -945,12 +949,8 @@ namespace wServer.realm.entities
                 int removeamount = c1.Next(0, amount);
 
                 if (removeamount % chance != 0 && Inventory[invnum] != null)
-                {
                     Inventory[invnum] = null;
-                    SendInfo("Removed!!!");
-                }
             }
-            Log.Warn("Item Removed!");
         }
 
         public void Reconnect(World world)

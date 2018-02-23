@@ -68,7 +68,7 @@ public class StatView extends Sprite {
         });
 
         nameText.x = 2;
-        valText.x = 37;
+        valText.x = 30;
         addText.x = 70;
         addText.y = -2;
 

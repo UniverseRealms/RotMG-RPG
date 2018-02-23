@@ -14,8 +14,6 @@ namespace wServer.realm
     //The mad god who look after the realm
     class Oryx
     {
-        public bool Closing;
-
         private static readonly ILog Log = LogManager.GetLogger(typeof(Oryx));
         
         private readonly Realm _world;
@@ -392,6 +390,8 @@ namespace wServer.realm
         };
         #endregion
 
+        List<ushort> ListofObj = new List<ushort>();
+
         public Oryx(Realm world)
         {
             _world = world;
@@ -400,14 +400,12 @@ namespace wServer.realm
 
         private static double GetUniform(Random rand)
         {
-            // 0 <= u < 2^32
             var u = (uint)(rand.NextDouble() * uint.MaxValue);
             return (u + 1.0) * 2.328306435454494e-10;
         }
 
         private static double GetNormal(Random rand)
         {
-            // Use Box-Muller algorithm
             var u1 = GetUniform(rand);
             var u2 = GetUniform(rand);
             var r = Math.Sqrt(-2.0 * Math.Log(u1));
@@ -487,6 +485,7 @@ namespace wServer.realm
                     for (var a = 0; a < h; a++)
                         if (i.Key == _world.Map[e, a].TileDesc.ObjectType)
                             positions[i.Key].Add(new IntPoint(e, a));
+                ListofObj.Add(i.Key);
             }
             Log.Info("Realm positions initialized.");
         }
@@ -526,17 +525,69 @@ namespace wServer.realm
             _world.EnterWorld(entity);
         }
 
+        private Dictionary<ushort, int> currentcount = new Dictionary<ushort, int>();
+        private void MonitorEntityCount()
+        {
+            Dictionary<ushort, List<String>> dictionary = new Dictionary<ushort, List<string>>();
+
+            foreach (var i in RegionMobs)
+            {
+                dictionary.Add(i.Key, new List<string>());
+                foreach (var r in i.Value.Item2)
+                    dictionary[i.Key].Add(r.Item1);
+            }
+
+            foreach (var d in dictionary)
+            {
+                int amount = 0;
+                foreach (var c in d.Value)
+                {
+                    foreach (var i in _world.Enemies)
+                    {
+                        ushort objtpye = _world.Manager.Resources.GameData.IdToObjectType[c];
+
+                        if (i.Value.ObjectType == objtpye)
+                            amount++;
+                    }
+                }
+                if (!currentcount.ContainsKey(d.Key))
+                {
+                    currentcount.Add(d.Key, amount);
+                } else
+                {
+                    currentcount[d.Key] = amount;
+                }
+            }
+        }
+
+        private void RespawnEnemies()
+        {
+            foreach(var i in currentcount)
+            {
+                int amount = RegionMobs[i.Key].Item1 - i.Value;
+
+                for (var a = 0; a < amount; a++)
+                {
+                    string name = GetRandomName(RegionMobs[i.Key].Item2);
+                    SpawnEntity(name, randomPosition(positions[i.Key]).X,
+                        randomPosition(positions[i.Key]).Y);
+                }
+                Log.Info($"Respawned Population: TileType:{i.Key}, Amount:{amount}");
+            }
+        }
+
         public void Tick(RealmTime time)
         {
             if (time.TotalElapsedMs - _prevTick <= 10000)
                 return;
 
-            if (_tenSecondTick % 6 == 0)
+            if (_tenSecondTick % 4 == 0)
             {
-                Log.Info("Controlling population...");
-                //RespawnEnemies();
+                Log.Info("Checking population...");
+                MonitorEntityCount();
+                RespawnEnemies();
             }
-
+            
             _tenSecondTick++;
             _prevTick = time.TotalElapsedMs;
         }
